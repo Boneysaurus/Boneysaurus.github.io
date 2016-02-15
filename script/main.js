@@ -1,12 +1,14 @@
+
+
 var charClass = "";
+
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
-    $(".classB").click(function(){
+    $('a.classSelect').click(function(){
         charClass= $(this).text();
         $("#classL").text(charClass);
-    })
+    });
     
-}
 });
 
 
