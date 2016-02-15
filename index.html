@@ -1,11 +1,163 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8"> <title>Character Simulator</title>
-<link rel="stylesheet" type="text/css" href="stylesheet/main.css">
-</head>
-<body>
-<h1>Hello World</h1>
-<p>Lorem Ipsum</p>
-</body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- Custom stuffs -->
+		<link rel="stylesheet" href="stylesheet/main.css">
+        <script src="script/main.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span> 
+                          </button>
+						<a class="navbar-brand" href="#">Character Simulator</a>
+					</div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Battle</a></li>
+                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Brewing</a></li>
+                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Cooking</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-save"></span> Save</a></li>
+                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                        </ul>
+                    </div>
+				</div>
+			</nav>
+            <!-- Alerts!! -->
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Changelog v0.1.150216</strong> 
+                Added Stuffs!
+            </div>
+            <div class="alert alert-warning fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> Please enable cookies to be able to save your builds.
+            </div>
+            
+            <div class="row">
+                <!-- Character Panel-->
+                <div class="col-sm-8">
+                    
+                    <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Character</div>
+                        <div class="panel-body">
+                            <div class="col-sm-6">
+                                <div class="panel-group">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                        Character Summary</div>
+                                        <div class="panel-body">
+                                            <!---- class image ---->
+                                            <div class="row"><img class="img-responsive" src="img/Novice.png" alt="Novice">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <b>Class:</b> Novice
+                                                </div>
+                                            </div>
+                                            <!---- HP ---->
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <b>HP:</b>
+                                                </div>
+                                                
+                                                <div class="col-sm-9">
+                                                 <div class="progress">
+                                                        
+                                                        <div class="progress-bar progress-bar-success" role="progressbar"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">40 (+1)
+                                                        </div>
+                                                
+                                                    
+                                                </div>   
+                                                    
+                                                </div>
+                                              
+                                            
+                                            </div>
+                                            <!---- SP ---->
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <b>SP:</b>
+                                                </div>
+                                                
+                                                <div class="col-sm-9">
+                                                    
+                                                    <div class="progress">
+                                                        
+                                                        <div class="progress-bar progress-bar-info" role="progressbar"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">11 (+1)
+                                                        </div>
+                                                
+                                                    </div>
+                                               
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                <p class="statsheader"><abbr title="Attack" class:"text-muted">ATK:</abbr></p>  <p class="statsvalue">100 + 50</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                <p class="statsheader"><abbr title="Magic Attack" class:"text-muted">MATK:</abbr></p>  <p class="statsvalue">1000 ~ 5000</p>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                            <!-- Class selector-->
+                            <div class="col-sm-6">    
+                            <div class="panel-group">
+                                    
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Class <span class="label label-primary">Novice</span></div>
+                                            <div class="panel-body">           
+                                          
+                                                <div class="btn-group">
+                                                    <a href="#" type="button" class="btn btn-primary">Novice</a>
+                                                    <a href="#" type="button" class="btn btn-primary">High Novice</a>
+                                                    <a href="#" type="button" class="btn btn-primary">Super Novice</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- Stats-->
+                            <div class="col-sm-6">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Stats</div>
+                                </div>
+                                </div>    
+                            </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- Monster -->
+                    <div class="col-sm-4">
+                    <div class="well well-sm">Monster</div>
+                </div>
+                </div>
+            </div>
+        </div>
+	</body>
 </html>
