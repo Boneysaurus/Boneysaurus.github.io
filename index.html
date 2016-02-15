@@ -24,29 +24,29 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span> 
                           </button>
-						<a class="navbar-brand" href="#">Character Simulator</a>
+						<a class="navbar-brand" href="javascript:;">Character Simulator</a>
 					</div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Battle</a></li>
-                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Brewing</a></li>
-                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Cooking</a></li>
+                            <li class="active"><a href="javascript:;">Battle</a></li>
+                            <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Brewing</a></li>
+                            <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;">Cooking</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-save"></span> Save</a></li>
-                            <li class="disabled"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                            <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-save"></span> Save</a></li>
+                            <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         </ul>
                     </div>
 				</div>
 			</nav>
             <!-- Alerts!! -->
             <div class="alert alert-info">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="javascript:;" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Changelog v0.1.150216</strong> 
                 Added Stuffs!
             </div>
             <div class="alert alert-warning fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="javascript:;" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Warning!</strong> Please enable cookies to be able to save your builds.
             </div>
             
@@ -130,7 +130,7 @@
                             </div>
                             <!-- Class selector-->
                             <div class="col-sm-6">    
-                            <div class="panel-group">
+                            <div class="panel-group" id="classP">
                                     
                                         <div class="panel panel-default">
                                             <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapseClass">Class</a></h4></div>
@@ -144,9 +144,9 @@
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                 <div class="btn-group  btn-group-justified">
-                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">Novice</a>
-                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">High Novice</a>
-                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">Super Novice</a>
+                                                    <a href="javascript:;" type="button" class="btn btn-default btn-sm classB">Novice</a>
+                                                    <a href="javascript:;" type="button" class="btn btn-default btn-sm classB">High Novice</a>
+                                                    <a href="javascript:;" type="button" class="btn btn-default btn-sm classB">Super Novice</a>
                                                         </div>
                                                 </div>
                                                 </div>
@@ -155,24 +155,26 @@
                                                     <b>First Class</b>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="row">
-                                                    <div class="col-xs-12">
-                                                <div class="btn-group  btn-group-justified">
-                                                    <a href="#" type="button" class="btn btn-sw btn-sm classB">Swordman</a>
-                                                    <a href="#" type="button" class="btn btn-ar btn-sm classB">Archer</a>
-                                                    <a href="#" type="button" class="btn btn-ma btn-sm classB">Mage</a>
-                                                    </div>
-                                                        
-                                                        <div class="row">
-                                                    <div class="col-xs-12">
-                                                <div class="btn-group btn-group-justified">
-                                                    <a href="#" type="button" class="btn btn-me btn-sm classB">Merchant</a>
-                                                    <a href="#" type="button" class="btn btn-th btn-sm classB">Thief</a>
-                                                    <a href="#" type="button" class="btn btn-ac btn-sm classB">Acolyte</a>
-                                                        </div>
-                                                </div>
-                                                </div>
-                                                    
+                                                    <div class="col-sm-12">
+                                                    <div class="btn-group btn-block" role="group" aria-label="...">
+                                                        <div class="btn-group">
+                                                        <button type="button" class="btn btn-sw btn-sm classB dropdown-toggle" data-toggle="dropdown">Swordsman <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#">High Swordsman</a></li>
+                                                            <li><a href="#">Knight</a></li>
+                                                            <li><a href="#">Crusader</a></li>
+                                                            <li><a href="#">Lord Knight</a></li>
+                                                            <li><a href="#">Paladin</a></li>
+                                                            </ul></div>
+                                                        <button type="button" class="btn btn-ar btn-sm classB">Archer</button>
+                                                        <button type="button" class="btn btn-ma btn-sm classB">Mage</button>
+                                                        <button type="button" class="btn btn-me btn-sm classB">Merchant</button>
+                                                        <button type="button" class="btn btn-th btn-sm classB">Thief</button>
+                                                        <button type="button" class="btn btn-ac btn-sm classB">Acolyte</button>
+                                                        </div>    
+                                                  
                                                 </div>
                                                 </div>
                                             </div>

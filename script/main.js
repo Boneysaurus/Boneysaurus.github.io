@@ -5,7 +5,8 @@ $(document).ready(function(){
         charClass= $(this).text();
         $("#classL").text(charClass);
     })
-
+    
+}
 });
 
 

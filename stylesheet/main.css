@@ -1,3 +1,4 @@
+
 .img-responsive {
     margin: 0 auto;
 }
@@ -11,6 +12,7 @@
 .panel-heading a.collapsed:after {
     content:"\e080";
 }
+
 .progress {
     margin-bottom:3px;
 }
@@ -43,6 +45,7 @@ sw hov  bd      swhd         #c80000
     color: #fff;
     background-color: #ff0000;
     border-color: #b20000;
+    
 }
 
 .btn-sw:hover,.btn-sw:focus,.btn-sw:active,.btn-sw.active,.open .dropdown-toggle.btn-sw {
@@ -59,7 +62,9 @@ sw hov  bd      swhd         #c80000
     background-color: #ff0000;
     border-color: #b20000;
 }
-
+#classP.panel-group .panel {
+   overflow: visible;
+}
 .btn-sw .badge {
     color: #ff0000;
     background-color: #fff;
