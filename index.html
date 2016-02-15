@@ -54,7 +54,7 @@
                 <!-- Character Panel-->
                 <div class="col-sm-8">
                     
-                    <div class="panel-group">
+                    <div class="panel-group" id="charP">
                     <div class="panel panel-default">
                         <div class="panel-heading">Character</div>
                         <div class="panel-body">
@@ -128,6 +128,7 @@
                                     </div>
                                 </div>    
                             </div>
+                            <div class="row">
                             <!-- Class selector-->
                             <div class="col-sm-6">    
                             <div class="panel-group" id="classP">
@@ -158,21 +159,99 @@
                                                 
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                    <div class="btn-group btn-block" role="group" aria-label="...">
-                                                        <div class="btn-group">
-                                                        <button type="button" class="btn btn-sw btn-sm classB dropdown-toggle" data-toggle="dropdown">Swordsman <span class="caret"></span></button>
+                                                    <div class="btn-group btn-block">
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-sw btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Swordsman <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                            <li><a href="#">High Swordsman</a></li>
-                                                            <li><a href="#">Knight</a></li>
-                                                            <li><a href="#">Crusader</a></li>
-                                                            <li><a href="#">Lord Knight</a></li>
-                                                            <li><a href="#">Paladin</a></li>
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Swordsman</a></li>
+                                                            <li><a href="javascript:;">High Swordsman</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Knight</a></li>
+                                                            <li><a href="javascript:;">Crusader</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">Lord Knight</a></li>
+                                                            <li><a href="javascript:;">Paladin</a></li>
                                                             </ul></div>
-                                                        <button type="button" class="btn btn-ar btn-sm classB">Archer</button>
-                                                        <button type="button" class="btn btn-ma btn-sm classB">Mage</button>
-                                                        <button type="button" class="btn btn-me btn-sm classB">Merchant</button>
-                                                        <button type="button" class="btn btn-th btn-sm classB">Thief</button>
-                                                        <button type="button" class="btn btn-ac btn-sm classB">Acolyte</button>
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-ma btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Mage <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Mage</a></li>
+                                                            <li><a href="javascript:;">High Mage</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Wizard</a></li>
+                                                            <li><a href="javascript:;">Sage</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">High Wizard</a></li>
+                                                            <li><a href="javascript:;">Professor</a></li>
+                                                            </ul></div>
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-ar btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Archer <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Archer</a></li>
+                                                            <li><a href="javascript:;">High Archer</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Hunter</a></li>
+                                                            <li><a href="javascript:;">Bard</a></li>
+                                                            <li><a href="javascript:;">Dancer</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">Sniper</a></li>
+                                                            <li><a href="javascript:;">Clown</a></li>
+                                                            <li><a href="javascript:;">Gypsy</a></li>
+                                                            </ul></div>
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-me btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Merchant <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Merchant</a></li>
+                                                            <li><a href="javascript:;">High Merchant</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Blacksmith</a></li>
+                                                            <li><a href="javascript:;">Alchemist</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">Whitesmith</a></li>
+                                                            <li><a href="javascript:;">Creator</a></li>
+                                                            </ul></div>
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-sw btn-th classB btn-block dropdown-toggle" data-toggle="dropdown">Thief <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Thief</a></li>
+                                                            <li><a href="javascript:;">High Thief</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Assassin</a></li>
+                                                            <li><a href="javascript:;">Rogue</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">Assassin Cross</a></li>
+                                                            <li><a href="javascript:;">Stalker</a></li>
+                                                            </ul></div>
+                                                        <div class="btn-group btn-block">
+                                                        <button type="button" class="btn btn-ac btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Acolyte <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown-header">First Class</li>
+                                                            <li><a href="javascript:;">Acolyte</a></li>
+                                                            <li><a href="javascript:;">High Acolyte</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Second Class</li>
+                                                            <li><a href="javascript:;">Priest</a></li>
+                                                            <li><a href="javascript:;">Monk</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li class="dropdown-header">Trans Class</li>
+                                                            <li><a href="javascript:;">High Priest</a></li>
+                                                            <li><a href="javascript:;">Champion</a></li>
+                                                            </ul></div>
                                                         </div>    
                                                   
                                                 </div>
@@ -194,7 +273,7 @@
                                 </div>
                                 </div>    
                             </div>
-                              
+                            </div>
                             </div>
                         </div>
                     </div>
