@@ -1,15 +1,258 @@
 .img-responsive {
     margin: 0 auto;
 }
+/*collapse indicator*/
+.panel-heading a:after {
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
 .progress {
     margin-bottom:3px;
 }
-.statsheader {
-    font-weight:bold;
-    float: left;
-    text-align:left;
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
 }
-.statsvalue {
-    float: right;
-    text-align:right;
+.nopaddingleft {
+   padding: 0px 20px 0px 0px  !important;
+   margin: 0 !important;
+}
+.row{
+    margin-bottom: 3px;
+}
+
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+sw body bg      swbb         #ff0000
+sw body bd      swbd         #d60000
+sw hov  bg      swhb         #cf0000
+sw hov  bd      swhd         #c80000
+
+#ff0000
+#b20000
+#cc0000
+#7f0000
+*/
+
+.btn-sw {
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #b20000;
+}
+
+.btn-sw:hover,.btn-sw:focus,.btn-sw:active,.btn-sw.active,.open .dropdown-toggle.btn-sw {
+    color: #fff;
+    background-color: #cc0000;
+    border-color: #7f0000;
+}
+
+.btn-sw:active,.btn-sw.active,.open .dropdown-toggle.btn-sw {
+    background-image: none;
+}
+
+.btn-sw.disabled,.btn-sw[disabled],fieldset[disabled] .btn-sw,.btn-sw.disabled:hover,.btn-sw[disabled]:hover,fieldset[disabled] .btn-sw:hover,.btn-sw.disabled:focus,.btn-sw[disabled]:focus,fieldset[disabled] .btn-sw:focus,.btn-sw.disabled:active,.btn-sw[disabled]:active,fieldset[disabled] .btn-sw:active,.btn-sw.disabled.active,.btn-sw[disabled].active,fieldset[disabled] .btn-sw.active {
+    background-color: #ff0000;
+    border-color: #b20000;
+}
+
+.btn-sw .badge {
+    color: #ff0000;
+    background-color: #fff;
+}
+
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+ar body bg      arbb         #ff0000
+ar body bd      arbd         #d60000
+ar hov  bg      arhb         #cf0000
+ar hov  bd      arhd         #c80000
+
+#b3dc5a
+#8fb048
+#a1c651
+#7d9a3e 
+*/
+
+.btn-ar {
+    color: #fff;
+    background-color: #b3dc5a;
+    border-color: #8fb048;
+}
+
+.btn-ar:hover,.btn-ar:focus,.btn-ar:active,.btn-ar.active,.open .dropdown-toggle.btn-ar {
+    color: #fff;
+    background-color: #a1c651;
+    border-color: #7d9a3e;
+}
+
+.btn-ar:active,.btn-ar.active,.open .dropdown-toggle.btn-ar {
+    background-image: none;
+}
+
+.btn-ar.disabled,.btn-ar[disabled],fieldset[disabled] .btn-ar,.btn-ar.disabled:hover,.btn-ar[disabled]:hover,fieldset[disabled] .btn-ar:hover,.btn-ar.disabled:focus,.btn-ar[disabled]:focus,fieldset[disabled] .btn-ar:focus,.btn-ar.disabled:active,.btn-ar[disabled]:active,fieldset[disabled] .btn-ar:active,.btn-ar.disabled.active,.btn-ar[disabled].active,fieldset[disabled] .btn-ar.active {
+    background-color: #b3dc5a;
+    border-color: #8fb048;
+}
+
+.btn-ar .badge {
+    color: #b3dc5a;
+    background-color: #fff;
+}
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+ma body bg      mabb         #ff0000
+ma body bd      mabd         #d60000
+ma hov  bg      mahb         #cf0000
+ma hov  bd      mahd         #c80000
+
+#0097b2
+#00788e
+#0087a0
+#00697c
+*/
+
+.btn-ma {
+    color: #fff;
+    background-color: #0097b2;
+    border-color: #00788e;
+}
+
+.btn-ma:hover,.btn-ma:focus,.btn-ma:active,.btn-ma.active,.open .dropdown-toggle.btn-ma {
+    color: #fff;
+    background-color: #0087a0;
+    border-color: #00697c;
+}
+
+.btn-ma:active,.btn-ma.active,.open .dropdown-toggle.btn-ma {
+    background-image: none;
+}
+
+.btn-ma.disabled,.btn-ma[disabled],fieldset[disabled] .btn-ma,.btn-ma.disabled:hover,.btn-ma[disabled]:hover,fieldset[disabled] .btn-ma:hover,.btn-ma.disabled:focus,.btn-ma[disabled]:focus,fieldset[disabled] .btn-ma:focus,.btn-ma.disabled:active,.btn-ma[disabled]:active,fieldset[disabled] .btn-ma:active,.btn-ma.disabled.active,.btn-ma[disabled].active,fieldset[disabled] .btn-ma.active {
+    background-color: #0097b2;
+    border-color: #00788e;
+}
+
+.btn-ma .badge {
+    color: #0097b2;
+    background-color: #fff;
+}
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+me body bg      mebb         #ff0000
+me body bd      mebd         #d60000
+me hov  bg      mehb         #cf0000
+me hov  bd      mehd         #c80000
+
+#fad089
+#c8a66d
+#e1bb7b
+#af915f
+*/
+
+.btn-me {
+    color: #fff;
+    background-color: #fad089;
+    border-color: #c8a66d;
+}
+
+.btn-me:hover,.btn-me:focus,.btn-me:active,.btn-me.active,.open .dropdown-toggle.btn-me {
+    color: #fff;
+    background-color: #e1bb7b;
+    border-color: #af915f;
+}
+
+.btn-me:active,.btn-me.active,.open .dropdown-toggle.btn-me {
+    background-image: none;
+}
+
+.btn-me.disabled,.btn-me[disabled],fieldset[disabled] .btn-me,.btn-me.disabled:hover,.btn-me[disabled]:hover,fieldset[disabled] .btn-me:hover,.btn-me.disabled:focus,.btn-me[disabled]:focus,fieldset[disabled] .btn-me:focus,.btn-me.disabled:active,.btn-me[disabled]:active,fieldset[disabled] .btn-me:active,.btn-me.disabled.active,.btn-me[disabled].active,fieldset[disabled] .btn-me.active {
+    background-color: #fad089;
+    border-color: #c8a66d;
+}
+
+.btn-me .badge {
+    color: #fad089;
+    background-color: #fff;
+}
+
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+th body bg      thbb         #ff0000
+th body bd      thbd         #d60000
+th hov  bg      thhb         #cf0000
+th hov  bd      thhd         #c80000
+
+#730073
+#500050
+#5c005c
+#450045
+*/
+
+.btn-th {
+    color: #fff;
+    background-color: #730073;
+    border-color: #500050;
+}
+
+.btn-th:hover,.btn-th:focus,.btn-th:active,.btn-th.active,.open .dropdown-toggle.btn-th {
+    color: #fff;
+    background-color: #5c005c;
+    border-color: #450045;
+}
+
+.btn-th:active,.btn-th.active,.open .dropdown-toggle.btn-th {
+    background-image: none;
+}
+
+.btn-th.disabled,.btn-th[disabled],fieldset[disabled] .btn-th,.btn-th.disabled:hover,.btn-th[disabled]:hover,fieldset[disabled] .btn-th:hover,.btn-th.disabled:focus,.btn-th[disabled]:focus,fieldset[disabled] .btn-th:focus,.btn-th.disabled:active,.btn-th[disabled]:active,fieldset[disabled] .btn-th:active,.btn-th.disabled.active,.btn-th[disabled].active,fieldset[disabled] .btn-th.active {
+    background-color: #730073;
+    border-color: #500050;
+}
+
+.btn-th .badge {
+    color: #730073;
+    background-color: #fff;
+}
+/********************* Colour reference chart****************
+************ comment ****** colour ******** 
+ac body bg      acbb         #ff0000
+ac body bd      acbd         #d60000
+ac hov  bg      achb         #cf0000
+ac hov  bd      achd         #c80000
+
+#c5e0dc
+#768684
+#899c9a
+#62706e
+*/
+
+.btn-ac {
+    color: #fff;
+    background-color: #c5e0dc;
+    border-color: #768684;
+}
+
+.btn-ac:hover,.btn-ac:focus,.btn-ac:active,.btn-ac.active,.open .dropdown-toggle.btn-ac {
+    color: #fff;
+    background-color: #899c9a;
+    border-color: #62706e;
+}
+
+.btn-ac:active,.btn-ac.active,.open .dropdown-toggle.btn-ac {
+    background-image: none;
+}
+
+.btn-ac.disabled,.btn-ac[disabled],fieldset[disabled] .btn-ac,.btn-ac.disabled:hover,.btn-ac[disabled]:hover,fieldset[disabled] .btn-ac:hover,.btn-ac.disabled:focus,.btn-ac[disabled]:focus,fieldset[disabled] .btn-ac:focus,.btn-ac.disabled:active,.btn-ac[disabled]:active,fieldset[disabled] .btn-ac:active,.btn-ac.disabled.active,.btn-ac[disabled].active,fieldset[disabled] .btn-ac.active {
+    background-color: #c5e0dc;
+    border-color: #768684;
+}
+
+.btn-ac .badge {
+    color: #c5e0dc;
+    background-color: #fff;
 }

@@ -6,11 +6,11 @@
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         
 		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!-- Custom stuffs -->
+        <link rel="stylesheet" href="stylesheet/bootstrap.min.css">
 		<link rel="stylesheet" href="stylesheet/main.css">
         <script src="script/main.js"></script>
 	</head>
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <b>Class:</b> Novice
+                                                    <b>Class:</b> <span id="classL">Novice</span>
                                                 </div>
                                             </div>
                                             <!---- HP ---->
@@ -109,15 +109,21 @@
                                                 </div>
                                               
                                             </div>
+                                            
                                             <div class="row">
-                                                <div class="col-sm-6">
-                                                <p class="statsheader"><abbr title="Attack" class:"text-muted">ATK:</abbr></p>  <p class="statsvalue">100 + 50</p>
+                                                
+                                                <div class="col-xs-2" style="font-weight:bold">
+                                                <abbr title="Attack" class:"text-muted">ATK:</abbr>  
                                                 </div>
-                                                <div class="col-sm-6">
-                                                <p class="statsheader"><abbr title="Magic Attack" class:"text-muted">MATK:</abbr></p>  <p class="statsvalue">1000 ~ 5000</p>
+                                                
+                                                    <div class="col-sm-4 nopaddingleft" style="text-align:right">100 + 50
+                                                </div><div class="col-xs-2" style="font-weight:bold">
+                                                <abbr title="Magic Attack" class:"text-muted">MATK:</abbr>  
                                                 </div>
+                                                    <div class="col-sm-4 nopaddingleft" style="text-align:right">1000 ~ 5000
+                                                </div>
+                                     
                                             </div>
-                                        
                                         </div>
                                     </div>
                                 </div>    
@@ -127,14 +133,49 @@
                             <div class="panel-group">
                                     
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Class <span class="label label-primary">Novice</span></div>
-                                            <div class="panel-body">           
-                                          
-                                                <div class="btn-group">
-                                                    <a href="#" type="button" class="btn btn-primary">Novice</a>
-                                                    <a href="#" type="button" class="btn btn-primary">High Novice</a>
-                                                    <a href="#" type="button" class="btn btn-primary">Super Novice</a>
+                                            <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapseClass">Class</a></h4></div>
+                                            <div id="collapseClass" class="panel-collapse collapse in">
+                                            <div class="panel-body">       
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                    <b>Novice</b>
+                                                    </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                <div class="btn-group  btn-group-justified">
+                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">Novice</a>
+                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">High Novice</a>
+                                                    <a href="#" type="button" class="btn btn-default btn-sm classB">Super Novice</a>
+                                                        </div>
+                                                </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                    <b>First Class</b>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                <div class="btn-group  btn-group-justified">
+                                                    <a href="#" type="button" class="btn btn-sw btn-sm classB">Swordman</a>
+                                                    <a href="#" type="button" class="btn btn-ar btn-sm classB">Archer</a>
+                                                    <a href="#" type="button" class="btn btn-ma btn-sm classB">Mage</a>
+                                                    </div>
+                                                        
+                                                        <div class="row">
+                                                    <div class="col-xs-12">
+                                                <div class="btn-group btn-group-justified">
+                                                    <a href="#" type="button" class="btn btn-me btn-sm classB">Merchant</a>
+                                                    <a href="#" type="button" class="btn btn-th btn-sm classB">Thief</a>
+                                                    <a href="#" type="button" class="btn btn-ac btn-sm classB">Acolyte</a>
+                                                        </div>
+                                                </div>
+                                                </div>
+                                                    
+                                                </div>
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +184,11 @@
                             <div class="col-sm-6">
                             <div class="panel-group">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">Stats</div>
+                                    <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapseStats">Stats</a></h4></div>
+                                    <div id="collapseStats" class="panel-collapse collapse in">
+                                        <div class="panel-body">Test</div>
+                                    </div>
+                                    
                                 </div>
                                 </div>    
                             </div>
