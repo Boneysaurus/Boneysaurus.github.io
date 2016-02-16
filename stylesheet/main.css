@@ -1,3 +1,6 @@
+.statsright{
+    text-align: right;
+}
 .cd-top {
   display: inline-block;
   position: fixed;
@@ -51,8 +54,15 @@
   }
 }
 
+.input-small99 {
+    padding-right:5px;
+}
+.vcenter {
+    display: inline-block; 
+    vertical-align: baseline;
+    float: none;
+}
 .label{
-    
     margin-left: 15px;
     
 }
@@ -79,6 +89,10 @@
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
+}
+.nopaddingright {
+   padding: 0px 0px 0px 20px  !important;
+   margin:  !important;
 }
 .nopaddingleft {
    padding: 0px 20px 0px 0px  !important;
