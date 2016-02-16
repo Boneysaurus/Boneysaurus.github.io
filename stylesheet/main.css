@@ -64,7 +64,18 @@
 }
 .label-leftmargin{
     margin-left: 10px !important;
-    
+}
+a #classLabel{
+    opacity:0;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+a.collapsed #classLabel {
+    opacity:1;
+    vertical-align: middle;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
 }
 #classLabel a {
     text-decoration: none !important;
