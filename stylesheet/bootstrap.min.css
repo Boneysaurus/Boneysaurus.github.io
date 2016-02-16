@@ -4611,7 +4611,7 @@ textarea.input-group-sm>.form-control,textarea.input-group-sm>.input-group-addon
 
 .label[href]:hover,.label[href]:focus {
     color: #fff;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
 }
 

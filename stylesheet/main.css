@@ -1,4 +1,11 @@
-
+.label{
+    
+    margin-left: 15px;
+    
+}
+#classLabel a {
+    text-decoration: none !important;
+}
 .img-responsive {
     margin: 0 auto;
 }
