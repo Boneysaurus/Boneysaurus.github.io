@@ -3,11 +3,28 @@
 var charClass = "";
 
 $(document).ready(function(){
+    
     $('[data-toggle="tooltip"]').tooltip(); 
-    $('a.classSelect').click(function(){
+    $('a.classSelect').mousedown(function(){
+        $(".btn").button('reset');
+        $(".btn").removeClass('active');
         charClass= $(this).text();
         $("#classLabel").text(charClass);
         $("#classL").text(charClass);
+    });
+    $('a.classSelect').mouseup( function(){
+        
+        $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
+        $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
+        $(this).parent().parent().siblings(".btn:first-child").addClass('active');
+        
+    });
+    
+    /*focus when hovered*/
+    $(".input-sm").hover(function(){
+        $(this).focus()
+    }, function () {
+        $(this).blur().val('');
     });
     
     /* Back to top*/

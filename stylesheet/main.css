@@ -62,8 +62,8 @@
     vertical-align: baseline;
     float: none;
 }
-.label{
-    margin-left: 15px;
+.label-leftmargin{
+    margin-left: 10px !important;
     
 }
 #classLabel a {
