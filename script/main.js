@@ -1,19 +1,20 @@
 
 
 var charClass = "";
-
+var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mousedown';
+var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
 $(document).ready(function(){
     
     $('[data-toggle="tooltip"]').tooltip(); 
-    $('a.classSelect').bind('mousedown touchstart', function(){
+    $('a.classSelect').on(mdown, function(){
+        
         $(".btn").button('reset');
         $(".btn").removeClass('active');
         charClass= $(this).text();
         $("#classLabel").text(charClass);
         $("#classL").text(charClass);
     });
-    $('a.classSelect').bind('mouseup touchend', function(){
-        
+    $('a.classSelect').on(mup, function(){
         $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
         $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
         $(this).parent().parent().siblings(".btn:first-child").addClass('active');
