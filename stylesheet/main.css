@@ -3,6 +3,18 @@
     background-color: #f5f5f5;
     border-color: transparent;
 }
+hr.small{
+    margin:7px 0px;
+}
+/*stats label*/
+.statsLabel{
+    font-weight:bold;
+    font-size:0.95em;
+    vertical-align: middle;
+}
+#statsPointsLeft{
+    float:right;
+}
 
 /*class img transition*/
 #classImg{

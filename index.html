@@ -80,35 +80,26 @@
                                                     <b>Class:</b> <span class="label label-default" id="classL"></span>
                                                 </div>
                                             </div>
+                                            <hr class="small">
                                             <!---- HP ---->
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-xs-2 col-md-2 col-lg-2">
                                                     <b><abbr title="Hit Point">HP:</abbr></b>
                                                 </div>
-                                                
-                                                <div class="col-sm-9">
-                                                 <div class="progress">
-                                                        
+                                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                                 <div class="progress">  
                                                         <div class="progress-bar progress-bar-success" role="progressbar"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"><span id="statsMHP">40</span> (+1)
                                                         </div>
-                                                
-                                                    
                                                 </div>   
-                                                    
                                                 </div>
-                                              
-                                            
                                             </div>
                                             <!---- SP ---->
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-xs-2 col-md-2 col-lg-2">
                                                     <b><abbr title="Spell Point">SP:</abbr></b>
                                                 </div>
-                                                
-                                                <div class="col-sm-9">
-                                                    
+                                                <div class="col-xs-10 col-md-10 col-lg-10">
                                                     <div class="progress">
-                                                        
                                                         <div class="progress-bar progress-bar-info" role="progressbar"  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">11 (+1)
                                                         </div>
                                                 
@@ -372,21 +363,29 @@
                                         <div class="panel-body">
                                              <div class="row">
                                                          
-                                                             <div class="col-sm-3">
-                                                             <label for="baseInput"><span style="vertical-align:middle"><b>Base Lvl:</b></span></label>
+                                                             <div class="col-xs-2 col-sm-6 col-md-2 col-lg-3">
+                                                                 <label for="baseInput"><div class="statsLabel">Base Lvl:</div></label>
                                                                  </div>
-                                                                 <div class="col-sm-3">
+                                                                 <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3">
                                                              <input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-sm statsright" id="baseInput" value="1" />
                                                          </div>
                                                     
-                                                            <div class="col-sm-3">
-                                                                <label for="jobInput"><span style="vertical-align:middle"><b>Job Lvl:</b></span></label>
+                                                            <div class="col-xs-2 col-sm-6 col-md-2 col-lg-3">
+                                                                <label for="jobInput"><div class="statsLabel">Job Lvl:</div></label>
                                                             </div>
-                                                            <div class="col-sm-3">
+                                                            <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3">
                                                             <input type="number" min="1" max="70" maxlength="2" step="1" class="form-control input-sm statsright" id="jobInput" value="1" />
                                                                 </div>
                                                 
                                                     
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="">Auto Adjust Base Level</label>
+                                            </div>
+                                            <hr class="small">
+                                            <div class="row">
+                                                <div class="col-xs-9"><div class="statsLabel">Remaining Stats Points: </div></div>
+                                                <div class="col-xs-3"><span style="text-align:right" id="statsPointsLeft">100</span></div>
                                             </div>
                                         </div>
                                     </div>

@@ -90,10 +90,13 @@ $(document).ready(function(){
      
     
     /*focus when hovered*/
-    $(".input-sm").hover(function(){
-        $(this).focus()
+    $(".input-sm").mouseenter(function(){
+        $(this).focus();   
     });
-    
+
+    $(".input-sm").focus(function(){
+       $(this).select(); 
+    });
     /* Back to top*/
        	var offset = 250,
 		//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
