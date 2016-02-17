@@ -24,7 +24,7 @@ $(document).ready(function(){
     
     
     $('[data-toggle="tooltip"]').tooltip(); 
-    $('a.classSelect').on(mdown, function(){
+    $('.classSelect').on(mdown, function(){
         
         $(".btn").button('reset');
         $(".btn").removeClass('active');
@@ -35,12 +35,18 @@ $(document).ready(function(){
         $("#classL").text(charClass[0].class_name);
         
     });
-    $('a.classSelect').on(mup, function(){
+    $('.classSelect').on(mup, function(){
         /*change button label*/
-        $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
-        $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
-        $(this).parent().parent().siblings(".btn:first-child").addClass('active');
-        
+        if ($(this).hasClass("btn")){
+            $(this).html($(this).text()+' <span class="label label-default">Selected</span>');
+            $(this).val($(this).text());
+            $(this).addClass('active');
+        } else{
+            $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
+            $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
+            $(this).parent().parent().siblings(".btn:first-child").addClass('active');
+            
+        }
         /*change background on release*/
         if ($(window).width() > 768) { 
             $('body').css({"background-image":"url(/img/class-e/"+charClass[0].bg_link_f+")"});
