@@ -1,31 +1,65 @@
 
 
-var charClass = "";
+var charClass=[];
 var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mousedown';
 var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
+var classDB
 $(document).ready(function(){
+    var charClass=[];
+    
+    
+    
+    /*import class database*/
+    Tabletop.init( { key: '1lK4auOQYRzUMnikY0zfraeYnoPGZZSPg6oOGPo5hqZE',
+                   callback: function(data, tabletop) {
+                       classDB = data},
+                   simpleSheet: true 
+    });
+        
+   function getClassByName(name) {
+        return classDB.filter(
+            function(data){
+                return data.class_name == name; }
+        );
+    };
+    
     
     $('[data-toggle="tooltip"]').tooltip(); 
     $('a.classSelect').on(mdown, function(){
         
         $(".btn").button('reset');
         $(".btn").removeClass('active');
-        charClass= $(this).text();
-        $("#classLabel").text(charClass);
-        $("#classL").text(charClass);
+        var found = getClassByName($(this).text());
+        console.log(found[0]);
+        charClass[0]=found[0];
+        $("#classLabel").text(charClass[0].class_name);
+        $("#classL").text(charClass[0].class_name);
+        
     });
     $('a.classSelect').on(mup, function(){
         $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
         $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
         $(this).parent().parent().siblings(".btn:first-child").addClass('active');
         
+        /*change background on release*/
+        if ($(window).width() > 768) { 
+            $('body').css({"background-image":"url(/img/class-B/"+charClass[0].image_link+")"});
+        };
+        
     });
+    
+    /* background when resize*/
+     $(window).resize(function() {
+        if ($(window).width() > 768) { 
+            $('body').css({"background-image":"url(/img/class-B/"+charClass[0].image_link+")"});} else{
+            $('body').css({"background-image":"url()"});
+            }
+        });
+     
     
     /*focus when hovered*/
     $(".input-sm").hover(function(){
         $(this).focus()
-    }, function () {
-        $(this).blur().val('');
     });
     
     /* Back to top*/

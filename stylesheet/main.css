@@ -1,3 +1,17 @@
+/* background image on desktop only */
+@media only screen and (min-width: 768px){
+    
+body {
+    background-image: url("/img/class-B/Lord-Knight.PNG");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-attachment: fixed;
+    background-color: rgba(255, 255, 255, .85);
+    background-blend-mode: color;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+}
 .statsright{
     text-align: right;
 }
