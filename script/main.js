@@ -43,7 +43,7 @@ $(document).ready(function(){
         
         /*change background on release*/
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].image_link+")"});
+            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].bg_link+")"});
         };
         
     });
@@ -51,7 +51,7 @@ $(document).ready(function(){
     /* background when resize*/
      $(window).resize(function() {
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].image_link+")"});} else{
+            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].bg_link+")"});} else{
             $('body').css({"background-image":"url()"});
             }
         });
