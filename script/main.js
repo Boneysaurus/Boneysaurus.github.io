@@ -8,7 +8,6 @@ $(document).ready(function(){
     var charClass=[];
     
     
-    
     /*import class database*/
     Tabletop.init( { key: '1lK4auOQYRzUMnikY0zfraeYnoPGZZSPg6oOGPo5hqZE',
                    callback: function(data, tabletop) {
@@ -44,12 +43,15 @@ $(document).ready(function(){
         
         /*change background on release*/
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].bg_link+")"});
+            $('body').css({"background-image":"url(/img/class-e/"+charClass[0].bg_link_f+")"});
         };
         
+        /*set panel heading by class*/
+        $('#panel-class-heading').css({"color":"white"});
+        $('#panel-class-heading').css({"background-color":charClass[0].color_hex_dark});
         /*set label color by class*/
-        $('#classLabel').css({"background":charClass[0].color_hex})
-        $('#classL').css({"background":charClass[0].color_hex})
+        $('#classLabel').css({"background":charClass[0].color_hex_dark})
+        $('#classL').css({"background":charClass[0].color_hex_dark})
         
         /*set image*/
         $('#classImg').attr('src',"img/class/"+charClass[0].image_link);
@@ -60,7 +62,7 @@ $(document).ready(function(){
     /* background when resize*/
      $(window).resize(function() {
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-b/"+charClass[0].bg_link+")"});} else{
+            $('body').css({"background-image":"url(/img/class-e/"+charClass[0].bg_link_f+")"});} else{
             $('body').css({"background-image":"url()"});
             }
         });
