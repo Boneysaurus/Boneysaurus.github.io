@@ -37,6 +37,7 @@ $(document).ready(function(){
         
     });
     $('a.classSelect').on(mup, function(){
+        /*change button label*/
         $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
         $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
         $(this).parent().parent().siblings(".btn:first-child").addClass('active');
@@ -45,6 +46,14 @@ $(document).ready(function(){
         if ($(window).width() > 768) { 
             $('body').css({"background-image":"url(/img/class-b/"+charClass[0].bg_link+")"});
         };
+        
+        /*set label color by class*/
+        $('#classLabel').css({"background":charClass[0].color_hex})
+        $('#classL').css({"background":charClass[0].color_hex})
+        
+        /*set image*/
+        $('#classImg').attr('src',"img/class/"+charClass[0].image_link);
+        $('#classImg').attr('alt',charClass[0].class_name);
         
     });
     
