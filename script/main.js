@@ -5,17 +5,31 @@ var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mous
 var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
 var classDB
 $(document).ready(function(){
-    var charClass=[];
-    
-    
     /*import class database*/
     Tabletop.init( { key: '1lK4auOQYRzUMnikY0zfraeYnoPGZZSPg6oOGPo5hqZE',
                    callback: function(data, tabletop) {
-                       classDB = data},
+                       classDB = data;
+                   charClass[0]=classDB[0]},
                    simpleSheet: true 
     });
+    /*declare novice*/
+    
+    
+    /*limit input to 99*/
+    $("#baseInput").change( function(){
+        if($(this).val()<1) $(this).val(1); 
+        if($(this).val()>99) $(this).val(99); 
+        updateStats();
+    });
+    $("#jobInput").change( function(){
+        if($(this).val()<1) $(this).val(1); 
+        if($(this).val()>70) $(this).val(70);
+        updateStats();
+    });
+    
+    
         
-   function getClassByName(name) {
+    function getClassByName(name) {
         return classDB.filter(
             function(data){
                 return data.class_name == name; }
@@ -62,6 +76,7 @@ $(document).ready(function(){
         /*set image*/
         $('#classImg').attr('src',"img/class/"+charClass[0].image_link);
         $('#classImg').attr('alt',charClass[0].class_name);
+        updateStats();
         
     });
     
@@ -105,6 +120,20 @@ $(document).ready(function(){
 		);
 	});
 
+    
+    function updateStats (){
+        var i=0;
+        var baseHP=35;
+        var baseLevel=$("#baseInput").val()
+        var hpModB = charClass[0].hp_mod_b;
+        var hpModA = charClass[0].hp_mod;
+        baseHP += baseLevel*hpModB;
+        for(i=2;i<=baseLevel;i++){
+            baseHP += Math.round(hpModA*i);
+        }
+        $("#statsMHP").text(baseHP);
+        console.log(baseHP);
+    }
 
 });
 
