@@ -37,6 +37,7 @@ $(document).ready(function(){
     $("#jobInput").change( function(){
         if($(this).val()<1) $(this).val(1); 
         if($(this).val()>maxJob) $(this).val(maxJob);
+        maxJobSwitch = false;
         updateStats();
     });
     
@@ -109,6 +110,7 @@ $(document).ready(function(){
     
     $(".input-xs").mouseleave(function(){
         updateStats();
+        $(this).blur();
     });
     
     $(".input-xs").focus(function(){
@@ -152,16 +154,21 @@ $(document).ready(function(){
     });
     
     function updateMaxJob(){
-        if(maxJobSwitch){
-            
+        
         if(charClass[0].trans==1){
             maxJob = 70;
         }else if(charClass[0].class=="super_novice"){
             maxJob = 99;
+        }else if(charClass[0].class=="novice"||charClass[0].class=="high_novice"){
+            maxJob = 10;
         }else{
             maxJob = 50;
         }
+        if(maxJobSwitch){
         $("#jobInput").val(maxJob);
+        }
+        if ($("#jobInput").val()>maxJob){
+            $("#jobInput").val(maxJob);
         }
     };
     
