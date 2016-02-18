@@ -4,16 +4,26 @@ var charClass=[];
 var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mousedown';
 var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
 var classDB
+var statsPointDB
+
+
+
 $(document).ready(function(){
+    /*enable popover*/
+    $('[data-toggle="popover"]').popover();
     /*import class database*/
     Tabletop.init( { key: '1lK4auOQYRzUMnikY0zfraeYnoPGZZSPg6oOGPo5hqZE',
-                   callback: function(data, tabletop) {
-                       classDB = data;
-                   charClass[0]=classDB[0]},
-                   simpleSheet: true 
+                   callback: getInfo,
+                   simpleSheet: false 
     });
     /*declare novice*/
     
+    function getInfo(data, tabletop) {
+        classDB = tabletop.sheets('class').all(); 
+        statsPointDB = tabletop.sheets('statspoint').all(); 
+        //init first element
+        charClass[0]=classDB[0]
+    }
     
     /*limit input to 99*/
     $("#baseInput").change( function(){
@@ -43,7 +53,6 @@ $(document).ready(function(){
         $(".btn").button('reset');
         $(".btn").removeClass('active');
         var found = getClassByName($(this).text());
-        console.log(found[0]);
         charClass[0]=found[0];
         $("#classLabel").text(charClass[0].class_name);
         $("#classL").text(charClass[0].class_name);
@@ -93,7 +102,11 @@ $(document).ready(function(){
     $(".input-sm").mouseenter(function(){
         $(this).focus();   
     });
-
+    
+    $(".input-sm").mouseleave(function(){
+        updateStats();
+    });
+    
     $(".input-sm").focus(function(){
        $(this).select(); 
     });
@@ -127,15 +140,34 @@ $(document).ready(function(){
     function updateStats (){
         var i=0;
         var baseHP=35;
+        var filter;
+        var statsTotal=48;
         var baseLevel=$("#baseInput").val()
         var hpModB = charClass[0].hp_mod_b;
         var hpModA = charClass[0].hp_mod;
+        
+        //base HP calculation
         baseHP += baseLevel*hpModB;
         for(i=2;i<=baseLevel;i++){
             baseHP += Math.round(hpModA*i);
         }
+        
+        //MaxHP display
         $("#statsMHP").text(baseHP);
         console.log(baseHP);
+        
+        //statspoints calculation
+        filter = statsPointDB.filter( function(data){
+            return data.level == baseLevel;
+        });
+        if (charClass[0].trans == 0){
+            statsTotal=parseInt(filter[0].total);
+        } else{
+            statsTotal=parseInt(filter[0].total)+52;
+        }
+        $("#statsPointsLeft").text(statsTotal);
+        console.log('total stats '+statsTotal);
+        
     }
 
 });
