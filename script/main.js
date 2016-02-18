@@ -5,7 +5,8 @@ var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mous
 var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
 var classDB
 var statsPointDB
-
+var maxJobSwitch = false;
+var maxJob = 50;
 
 
 $(document).ready(function(){
@@ -16,14 +17,16 @@ $(document).ready(function(){
                    callback: getInfo,
                    simpleSheet: false 
     });
-    /*declare novice*/
     
+    /*declare novice*/
     function getInfo(data, tabletop) {
         classDB = tabletop.sheets('class').all(); 
         statsPointDB = tabletop.sheets('statspoint').all(); 
         //init first element
         charClass[0]=classDB[0]
     }
+    
+   
     
     /*limit input to 99*/
     $("#baseInput").change( function(){
@@ -33,7 +36,7 @@ $(document).ready(function(){
     });
     $("#jobInput").change( function(){
         if($(this).val()<1) $(this).val(1); 
-        if($(this).val()>70) $(this).val(70);
+        if($(this).val()>maxJob) $(this).val(maxJob);
         updateStats();
     });
     
@@ -85,6 +88,7 @@ $(document).ready(function(){
         /*set image*/
         $('#classImg').attr('src',"img/class/"+charClass[0].image_link);
         $('#classImg').attr('alt',charClass[0].class_name);
+        updateMaxJob();
         updateStats();
         
     });
@@ -136,6 +140,30 @@ $(document).ready(function(){
 		);
 	});
 
+     /*max base/job*/
+    $("#buttonMaxBase").click(function(){
+        $("#baseInput").val(99);
+        updateStats();
+    });
+    $("#buttonMaxJob").click(function(){
+        maxJobSwitch=true;
+        updateMaxJob();
+        updateStats();
+    });
+    
+    function updateMaxJob(){
+        if(maxJobSwitch){
+            
+        if(charClass[0].trans==1){
+            maxJob = 70;
+        }else if(charClass[0].class=="super_novice"){
+            maxJob = 99;
+        }else{
+            maxJob = 50;
+        }
+        $("#jobInput").val(maxJob);
+        }
+    };
     
     function updateStats (){
         var i=0;
