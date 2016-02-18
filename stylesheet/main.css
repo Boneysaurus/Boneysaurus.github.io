@@ -1,3 +1,8 @@
+.dropdown-menu {
+  min-width:auto;
+  width:100%;
+}
+
 /*fix header formatting*/
 .noformat{
     color:#444;
@@ -9,6 +14,9 @@
 .table tbody > tr > td:last-child { border:none; }
 td{
     padding-right: 10px!important;
+}
+td:nth-child(2){
+    padding-right: 3px!important;
 }
 th{
     text-align:center!important;
@@ -114,7 +122,18 @@ body {
     bottom: 20px;
 }
 
+/*fix input in table width*/
+.input-table{
+}
 
+/*smaller input*/
+.input-xs {
+    height: 24px;
+    padding: 1px 2px;
+    font-size: 14px;
+    line-height: ;
+    border-radius: 2px;
+}
 
 .input-small99 {
     padding-right:5px;

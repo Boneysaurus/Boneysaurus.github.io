@@ -313,7 +313,7 @@
                                                             <li><a href="javascript:;" class="classSelect">Acolyte</a></li>
                                                             <li><a href="javascript:;" class="classSelect">High Acolyte</a></li>
                                                             </ul></div>
-                                                        </div>    
+                                                    </div>    
                                                   
                                                 </div>
                                                 </div>
@@ -367,18 +367,15 @@
                                                                  <label for="baseInput"><div class="statsLabel">Base Lvl:</div></label>
                                                                  </div>
                                                                  <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3">
-                                                             <input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-sm statsright" id="baseInput" value="1" />
+                                                             <input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright" id="baseInput" value="1" />
                                                          </div>
                                                     
                                                             <div class="col-xs-2 col-sm-6 col-md-2 col-lg-3">
                                                                 <label for="jobInput"><div class="statsLabel">Job Lvl:</div></label>
                                                             </div>
                                                             <div class="col-xs-4 col-sm-6 col-md-4 col-lg-3">
-                                                            <input type="number"     min="1" max="70" maxlength="2" step="1" class="form-control input-sm statsright" id="jobInput" value="1" />
-                                                                </div>
-                                                <div class="col-md-12"><button type="button" class="btn btn-block btn-default">Set both levels to max</button></div>
-                                            
-                                                    
+                                                            <input type="number"     min="1" max="70" maxlength="2" step="1" class="form-control input-xs statsright" id="jobInput" value="1" />
+                                                                </div>                                                    
                                             </div>
                                             <div class="checkbox">
                                                 <label><input type="checkbox" value="">Auto Adjust Base Level</label>
@@ -391,6 +388,12 @@
                                             <hr class="small">
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped">
+                                                    <colgroup>
+                                                        <col style="width:20%">
+                                                        <col style="width:20%">
+                                                        <col style="width:20%">
+                                                        <col style="width:20%">
+                                                    </colgroup>  
                                                     <thead>
                                                         <tr>
                                                             <th>Stats</th>
@@ -402,13 +405,63 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>Str</td>
-                                                            <td align="right">99</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
+                                                            <td align="right">+ 150</td>
+                                                            <td align="right">249</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Agi</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
+                                                            <td align="right">+ 150</td>
+                                                            <td align="right">249</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Vit</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
+                                                            <td align="right">+ 150</td>
+                                                            <td align="right">249</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Int</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
+                                                            <td align="right">+ 150</td>
+                                                            <td align="right">249</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Dex</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
+                                                            <td align="right">+ 150</td>
+                                                            <td align="right">249</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Luk</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
                                                             <td align="right">+ 150</td>
                                                             <td align="right">249</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <hr class="small">
+                                                <span style="font-weight:bold">Quick Apply</span>
+                                            <div class="row no-pad">
+                                                <div class="col-lg-4 col-sm-6"><button type="button" class="btn btn-ma btn-block">Total Dex 150</button></div>
+                                                <div class="col-lg-4  col-sm-6"><button type="button" class="btn btn-ar btn-block">Total Vit 100</button></div>
+                                                <div class="col-lg-4 col-sm-6"><div class="btn-group btn-block">
+                                                    <button type="button" class="col-xs-9 btn btn-ac">Fill Rest</button>
+                                                    <button type="button" class="col-xs-3 btn btn-ac dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="javascript:;">STR</a></li>
+                                                        <li><a href="javascript:;">AGI</a></li>
+                                                        <li><a href="javascript:;">VIT</a></li>
+                                                        <li><a href="javascript:;">INT</a></li>
+                                                        <li><a href="javascript:;">DEX</a></li>
+                                                        <li><a href="javascript:;">LUK</a></li>
+                                                    </ul>
+                                                    </div></div>
+                                            </div>
+                                            <hr class="small">
+                                            <button type="button" class="btn btn-sw btn-block">Reset Stats</button>
                                         </div>
                                     </div>
                                     

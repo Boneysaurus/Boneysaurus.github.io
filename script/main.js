@@ -99,15 +99,15 @@ $(document).ready(function(){
      
     
     /*focus when hovered*/
-    $(".input-sm").mouseenter(function(){
+    $(".input-xs").mouseenter(function(){
         $(this).focus();   
     });
     
-    $(".input-sm").mouseleave(function(){
+    $(".input-xs").mouseleave(function(){
         updateStats();
     });
     
-    $(".input-sm").focus(function(){
+    $(".input-xs").focus(function(){
        $(this).select(); 
     });
     /* Back to top*/
