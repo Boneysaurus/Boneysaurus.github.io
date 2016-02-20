@@ -49,13 +49,16 @@ $(document).ready(function(){
                 return data.class_name == name; }
         );
     };
-    
+    $('.btn-weapon').on(mup, function(){
+        $('.btn-weapon').removeClass('active');
+        $(this).addClass('active'); 
+    });
     
     $('[data-toggle="tooltip"]').tooltip(); 
     $('.classSelect').on(mdown, function(){
         
-        $(".btn").button('reset');
-        $(".btn").removeClass('active');
+        $(".classB").button('reset');
+        $(".classB").removeClass('active');
         var found = getClassByName($(this).text());
         charClass[0]=found[0];
         $("#classLabel").text(charClass[0].class_name);

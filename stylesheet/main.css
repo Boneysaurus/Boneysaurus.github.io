@@ -432,3 +432,37 @@ a.collapsed #classLabel {
     color: #A8A7A7;
     background-color: #fff;
 }
+
+
+.btn-weapon{
+    color: #000;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    height:70px;
+    white-space:normal;
+    box-sizing: border-box!important;
+}
+.btn-weapon:hover,.btn-weapon:focus,.btn-weapon:active,.btn-weapon.active,.open .dropdown-toggle.btn-weapon {
+    color: #000;
+    background-color: #dedede;
+    border-color: #bbb;
+}
+.btn-weapon:active,.btn-weapon.active,.open .dropdown-toggle.btn-weapon {
+    background-image: none;
+}
+.btn-weapon.disabled,.btn-weapon[disabled],fieldset[disabled] .btn-weapon,.btn-weapon.disabled:hover,.btn-weapon[disabled]:hover,fieldset[disabled] .btn-weapon:hover,.btn-weapon.disabled:focus,.btn-weapon[disabled]:focus,fieldset[disabled] .btn-weapon:focus,.btn-weapon.disabled:active,.btn-weapon[disabled]:active,fieldset[disabled] .btn-weapon:active,.btn-weapon.disabled.active,.btn-weapon[disabled].active,fieldset[disabled] .btn-weapon.active {
+    background-color: #fbfbfb;
+}
+.btn-weapon .badge {
+    color: #fbfbfb;
+    background-color: #fff;
+}
+/*theme fix*/
+.btn{
+    margin-top:0px!important;
+    border-bottom-width: 3px!important;
+}
+/*remove button outline*/
+.btn:focus,.btn:active {
+   outline: none !important;
+}

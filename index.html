@@ -56,8 +56,7 @@
             </div>
             
             <div class="row">
-                <!-- Character Panel-->
-                
+                <!-- Character Panel-->               
                 <div class="col-sm-8">
                     <div class="panel-group" id="charP">
                     <div class="panel panel-default">
@@ -346,9 +345,9 @@
                                 </div>
                             </div>
                             
-                            <!-- Stats-->
                             <div class="row">
-                            
+                                
+                            <!-- Stats-->
                             <div class="col-sm-6">
                             <div class="panel-group">
                                 <div class="panel panel-default">
@@ -370,8 +369,8 @@
                                                                 </div>                                                    
                                             </div>
                                             <div class="row no-pad" style="margin-top:7px">
-                                            <div class="col-sm-6"><button type="button" id="buttonMaxBase" class="btn btn-ar btn-block">Max Base</button></div>
-                                            <div class="col-sm-6"><button type="button" id="buttonMaxJob" class="btn btn-ma btn-block">Max Job</button></div>
+                                            <div class="col-xs-6"><button type="button" id="buttonMaxBase" class="btn btn-ar btn-block">Max Base</button></div>
+                                            <div class="col-xs-6"><button type="button" id="buttonMaxJob" class="btn btn-ma btn-block">Max Job</button></div>
                                             </div>
                                             <div class="checkbox">
                                                 <label><input type="checkbox" value="">Auto Adjust Base Level</label>
@@ -465,18 +464,70 @@
                                 </div>    
                             </div>
                             <!-- Weapon-->
+                                
                             <div class="col-sm-6">
                             <div class="panel-group">
                                 <div class="panel panel-default">
                                     <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapseWeapon">Weapon</a></h4></div>
                                     <div id="collapseWeapon" class="panel-collapse collapse in">
-                                        <div class="panel-body">Test</div>
+                                        <div class="panel-body">
+                                            <!--weapon buttons-->
+                                            <div class="row no-pad">
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonDagger"><img class="img-responsive" src="img/wpn/dagger.gif">Dagger</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonSword"><img class="img-responsive" src="img/wpn/sword.gif">Sword</button></div>
+                                                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="button2Sword" style="font-size:0.6em"><img class="img-responsive" src="img/wpn/two-handed_sword.gif">Two-Handed Sword</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonSpear"><img class="img-responsive" src="img/wpn/spear.gif">Spear</button></div>
+                                                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="button2Spear" style="font-size:0.6em"><img class="img-responsive" src="img/wpn/two-handed_spear.gif">Two-Handed Spear</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonKatar"><img class="img-responsive" src="img/wpn/katar.gif">Katar</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonBow"><img class="img-responsive" src="img/wpn/bow.gif">Bow</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonAxe"><img class="img-responsive" src="img/wpn/axe.gif">Axe</button></div>
+                                                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="button2Axe" style="font-size:0.6em"><img class="img-responsive" src="img/wpn/two-handed_axe.gif">Two-Handed Axe</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonMace"><img class="img-responsive" src="img/wpn/mace.gif">Mace</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonBook"><img class="img-responsive" src="img/wpn/book.gif">Book</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonRod"><img class="img-responsive" src="img/wpn/rod.gif">Rod</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonFist"><img class="img-responsive" src="img/wpn/fist.gif">Fist</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonInstrument" style="font-size:0.65em"><img class="img-responsive" src="img/wpn/violin.gif">Instrument</button></div>
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                                    <button type="button" class="btn btn-block btn-weapon" id="buttonWhipe"><img class="img-responsive" src="img/wpn/whip.gif">Whip</button>
+                                                </div>
+                                            </div>
+                                            <hr class="small">
+                                            <div class="row no-pad">
+                                                <div class="form-group">
+                                                  <label for="weaponSel">Choose a weapon:</label>
+                                                    <select class="form-control input-sm" id="monsterSel">
+                                                        <optgroup label="Super Quest Item">
+                                                            <option>Artemis Bow [3]</option>
+                                                        </optgroup>
+                                                        <optgroup label="Others">
+                                                            <option>Composite Bow</option>
+                                                            <option>Burning Bow</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                 </div>
                                 </div>    
                             </div>
                                 </div>
+                            
                             <div class="row">
                                 <!-- Gears-->
                             <div class="col-sm-12">
@@ -494,8 +545,7 @@
                          
                         </div>
                         </div>
-                    </div>
-                
+                    </div>        
                 <!-- Monster -->
                 <div class="col-sm-4">
                     
