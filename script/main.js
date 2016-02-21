@@ -5,8 +5,23 @@ var mdown = ('ontouchstart' in document.documentElement)  ? 'touchstart' : 'mous
 var mup =  ('ontouchend' in document.documentElement)  ? 'touchend' : 'mouseup';
 var classDB
 var statsPointDB
+var jobBonusDB
 var maxJobSwitch = false;
 var maxJob = 50;
+var char = {
+    "charBonusStr":"0",
+    "charBonusAgi":"0",
+    "charBonusVit":"0",
+    "charBonusInt":"0",
+    "charBonusDex":"0",
+    "charBonusLuk":"0",  
+    "charTotalStr":"0",
+    "charTotalAgi":"0",
+    "charTotalVit":"0",
+    "charTotalInt":"0",
+    "charTotalDex":"0",
+    "charTotalLuk":"0",  
+}
 
 
 $(document).ready(function(){
@@ -18,15 +33,25 @@ $(document).ready(function(){
                    simpleSheet: false 
     });
     
-    /*declare novice*/
+    /*DB init*/
     function getInfo(data, tabletop) {
         classDB = tabletop.sheets('class').all(); 
-        statsPointDB = tabletop.sheets('statspoint').all(); 
+        statsPointDB = tabletop.sheets('statspoint').all();
+        jobBonusDB = tabletop.sheets('job_bonus').all(); 
         //init first element
         charClass[0]=classDB[0]
     }
     
-   
+    /*reset stats to 1*/
+    $("#btnStatsReset").on(mdown, function(){
+        $("#panelStats").find(":input").val('1');
+        updateStats();        
+    });
+    
+    /*remove annoying focus state on buttons*/
+    $(".btn").on(mup,function(){
+        $(this).blur();
+    });
     
     /*limit input to 99*/
     $("#baseInput").change( function(){
@@ -75,6 +100,7 @@ $(document).ready(function(){
             $(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="label label-default">Selected</span> <span class="caret"></span>');
             $(this).parent().parent().siblings(".btn:first-child").val($(this).text());
             $(this).parent().parent().siblings(".btn:first-child").addClass('active');
+            console.log(eval('jobBonusDB[2].'+charClass[0].class)); 
             
         }
         /*change background on release*/
@@ -175,12 +201,20 @@ $(document).ready(function(){
         }
     };
     
+    /*very important function*/
     function updateStats (){
         var i=0;
         var baseHP=35;
+        var jobBonusStr=0;
+        var jobBonusAgi=0;
+        var jobBonusVit=0;
+        var jobBonusInt=0;
+        var jobBonusDex=0;
+        var jobBonusLuk=0;
         var filter;
         var statsTotal=48;
         var baseLevel=$("#baseInput").val()
+        var jobLevel=$("#jobInput").val()
         var hpModB = charClass[0].hp_mod_b;
         var hpModA = charClass[0].hp_mod;
         
@@ -192,7 +226,6 @@ $(document).ready(function(){
         
         //MaxHP display
         $("#statsMHP").text(baseHP);
-        console.log(baseHP);
         
         //statspoints calculation
         filter = statsPointDB.filter( function(data){
@@ -203,8 +236,51 @@ $(document).ready(function(){
         } else{
             statsTotal=parseInt(filter[0].total)+52;
         }
+        
+        /*stats from job function*/ 
+        for(i=0;i<jobLevel;i++){
+            switch (parseInt(eval('jobBonusDB['+i+'].'+charClass[0].class))){
+                case 0:break;
+                case 1:jobBonusStr+=1;break;
+                case 2:jobBonusAgi+=1;break;
+                case 3:jobBonusVit+=1;break;
+                case 4:jobBonusInt+=1;break;
+                case 5:jobBonusDex+=1;break;
+                case 6:jobBonusLuk+=1;break;
+            }
+             
+        }
+        
+        char.charBonusStr=jobBonusStr;
+        char.charBonusAgi=jobBonusAgi;
+        char.charBonusVit=jobBonusVit;
+        char.charBonusInt=jobBonusInt;
+        char.charBonusDex=jobBonusDex;
+        char.charBonusLuk=jobBonusLuk;
+        
+        char.charTotalStr=parseInt($("#iStr").val())+parseInt(char.charBonusStr);
+        char.charTotalAgi=parseInt($("#iAgi").val())+parseInt(char.charBonusAgi);
+        char.charTotalVit=parseInt($("#iVit").val())+parseInt(char.charBonusVit);
+        char.charTotalInt=parseInt($("#iInt").val())+parseInt(char.charBonusInt);
+        char.charTotalDex=parseInt($("#iDex").val())+parseInt(char.charBonusDex);
+        char.charTotalLuk=parseInt($("#iLuk").val())+parseInt(char.charBonusLuk);
+        
+        
+        $("#sBonusStr").text(char.charBonusStr);
+        $("#sBonusAgi").text(char.charBonusAgi);
+        $("#sBonusVit").text(char.charBonusVit);
+        $("#sBonusInt").text(char.charBonusInt);
+        $("#sBonusDex").text(char.charBonusDex);
+        $("#sBonusLuk").text(char.charBonusLuk);
+        
+        $("#sTotalStr").text(char.charTotalStr);
+        $("#sTotalAgi").text(char.charTotalAgi);
+        $("#sTotalVit").text(char.charTotalVit);
+        $("#sTotalInt").text(char.charTotalInt);
+        $("#sTotalDex").text(char.charTotalDex);
+        $("#sTotalLuk").text(char.charTotalLuk);
+        
         $("#statsPointsLeft").text(statsTotal);
-        console.log('total stats '+statsTotal);
         
     }
 

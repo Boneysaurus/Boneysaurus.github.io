@@ -329,6 +329,7 @@
                                                     <div class="col-sm-12">
                                                         <button type="button" class="btn btn-nj btn-sm classB btn-block classSelect">Ninja</button></div>
                                                     <div class="col-sm-12">
+                                                        <div class="btn-group btn-block">
                                                         <button type="button" class="btn btn-tk btn-sm classB btn-block dropdown-toggle" data-toggle="dropdown">Taekwon <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
                                                             <li class="dropdown-header">Second Class</li>
@@ -337,7 +338,10 @@
                                                             <li role="separator" class="divider"></li>
                                                             <li class="dropdown-header">First Class</li>
                                                             <li><a href="javascript:;" class="classSelect">Taekwon</a></li>                             
-                                                        </ul></div></div>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div> 
                                             </div>
                                         </div>
@@ -353,7 +357,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapseStats">Stats</a></h4></div>
                                     <div id="collapseStats" class="panel-collapse collapse in">
-                                        <div class="panel-body">
+                                        <div class="panel-body" id="panelStats">
                                              <div class="row">
                                                              <div class="col-xs-2 col-sm-6 col-md-2 col-lg-3">
                                                                  <label for="baseInput"><div class="statsLabel">Base Lvl:</div></label>
@@ -369,8 +373,8 @@
                                                                 </div>                                                    
                                             </div>
                                             <div class="row no-pad" style="margin-top:7px">
-                                            <div class="col-xs-6"><button type="button" id="buttonMaxBase" class="btn btn-ar btn-block">Max Base</button></div>
-                                            <div class="col-xs-6"><button type="button" id="buttonMaxJob" class="btn btn-ma btn-block">Max Job</button></div>
+                                            <div class="col-xs-6"><button type="button" id="buttonMaxBase" class="btn btn-sm btn-ar btn-block">Max Base</button></div>
+                                            <div class="col-xs-6"><button type="button" id="buttonMaxJob" class="btn btn-sm btn-ma btn-block">Max Job</button></div>
                                             </div>
                                             <div class="checkbox">
                                                 <label><input type="checkbox" value="">Auto Adjust Base Level</label>
@@ -400,39 +404,39 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>Str</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iStr" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusStr">0</span></td>
+                                                            <td align="right"><span id="sTotalStr">1</span></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Agi</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iAgi" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusAgi">0</span></td>
+                                                            <td align="right"><span id="sTotalAgi">1</span></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Vit</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iVit" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusVit">0</span></td>
+                                                            <td align="right"><span id="sTotalVit">1</span></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Int</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iInt" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusInt">0</span></td>
+                                                            <td align="right"><span id="sTotalInt">1</span></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Dex</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iDex" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusDex">0</span></td>
+                                                            <td align="right"><span id="sTotalDex">1</span></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Luk</td>
-                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="strInput" value="1" /></td>
-                                                            <td align="right">+ 150</td>
-                                                            <td align="right">249</td>
+                                                            <td align="right"><input type="number" min="1" max="99" maxlength="2" step="1"  class="form-control input-xs statsright input-table" id="iLuk" value="1" /></td>
+                                                            <td align="right">+ <span id="sBonusLuk">0</span></td>
+                                                            <td align="right"><span id="sTotalLuk">1</span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -440,8 +444,8 @@
                                             <hr class="small">
                                                 <span style="font-weight:bold">Quick Apply</span>
                                             <div class="row no-pad">
-                                                <div class="col-lg-4 col-sm-6"><button type="button" class="btn btn-ma btn-sm btn-block">Total Dex 150</button></div>
-                                                <div class="col-lg-4  col-sm-6"><button type="button" class="btn btn-ar btn-sm btn-block">Total Vit 100</button></div>
+                                                <div class="col-lg-4 col-sm-6"><button type="button" class="btn btn-ma btn-sm btn-block" id="btnDex150">Total Dex 150</button></div>
+                                                <div class="col-lg-4  col-sm-6"><button type="button" class="btn btn-ar btn-sm btn-block" id="btnVit100">Total Vit 100</button></div>
                                                 <div class="col-lg-4 col-sm-6"><div class="btn-group btn-block">
                                                     <button type="button" class="col-xs-9 btn btn-ac btn-sm">Fill Rest</button>
                                                     <button type="button" class="col-xs-3 btn btn-ac btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
@@ -456,7 +460,7 @@
                                                     </div></div>
                                             </div>
                                             <hr class="small">
-                                            <button type="button" class="btn btn-sw btn-block">Reset Stats</button>
+                                            <button type="button" class="btn btn-sw btn-block" id="btnStatsReset">Reset Stats</button>
                                         </div>
                                     </div>
                                     
