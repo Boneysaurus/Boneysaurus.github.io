@@ -105,7 +105,7 @@ $(document).ready(function(){
         }
         /*change background on release*/
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-e/"+charClass[0].bg_link_f+")"});
+            $('body').css({"background-image":"url(../img/class-e/"+charClass[0].bg_link_f+")"});
         };
         
         /*set panel heading by class*/
@@ -116,7 +116,7 @@ $(document).ready(function(){
         $('#classL').css({"background":charClass[0].color_hex_dark})
         
         /*set image*/
-        $('#classImg').attr('src',"img/class/"+charClass[0].image_link);
+        $('#classImg').attr('src',"../img/class/"+charClass[0].image_link);
         $('#classImg').attr('alt',charClass[0].class_name);
         updateMaxJob();
         updateStats();
@@ -126,7 +126,7 @@ $(document).ready(function(){
     /* background when resize*/
      $(window).resize(function() {
         if ($(window).width() > 768) { 
-            $('body').css({"background-image":"url(/img/class-e/"+charClass[0].bg_link_f+")"});} else{
+            $('body').css({"background-image":"url(../img/class-e/"+charClass[0].bg_link_f+")"});} else{
             $('body').css({"background-image":"url()"});
             }
         });
