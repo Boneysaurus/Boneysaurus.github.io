@@ -470,3 +470,17 @@ a.collapsed #classLabel {
     color: #A8A7A7;
     background-color: #fff;
 }
+
+/*tablekaho styling*/
+#tableKaho th{
+    font-size:18px;
+}
+#tableKaho td{
+    font-size: 14px;    
+    vertical-align: middle !important;
+}
+#tableKaho td:not(:first-child)
+{
+
+ text-align:center !important;
+}

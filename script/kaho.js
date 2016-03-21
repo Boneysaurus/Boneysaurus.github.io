@@ -43,12 +43,12 @@ $(document).ready(function(){
         $('#tableKaho').DataTable({
             data: kahoDB,
             columns: [
-                { data: 'name'},
-                { data: 'id'},
-                { data: 'small',
+                { data: 'name',"width": "40%"},
+                { data: 'id',"width": "10%"},
+                { data: 'small',"width": "20%", 
                 "render": function(data, type, row) {
                     return '<img src="'+data+'" />';}},
-                { data: 'big',
+                { data: 'big', "width": "20%",
                 "render": function(data, type, row) {
                     return '<img src="'+data+'" />';}},
             ]
@@ -56,5 +56,6 @@ $(document).ready(function(){
         
         );
     }
+    
     
 });
