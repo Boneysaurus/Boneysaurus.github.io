@@ -80,7 +80,13 @@ body {
     transition: 0.2s;
 }
 }
-
+select{
+    text-align: right;
+    text-align: -webkit-right;
+}
+option{
+    direction: rtl;
+}
 
 .statsright{
     text-align: right;
