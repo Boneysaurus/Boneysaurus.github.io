@@ -7,7 +7,7 @@ weekday[3]="Wednesday";
 weekday[4]="Thursday";
 weekday[5]="Friday";
 weekday[6]="Saturday";
-var gmcToday=[];
+
 var today = new moment();
 var zone = "Europe/Berlin";
 
@@ -47,7 +47,6 @@ $(document).ready(function(){
         var d = new moment();
         d.locale(locale);
         $("#dateLocal").text(d.format('LTS') + " " + d.format('dddd'));
-        
         setTimeout(getTime,1000);
     }
     function compareTime(){
@@ -55,24 +54,40 @@ $(document).ready(function(){
         console.log(today.tz('Europe/Berlin').hour());
         console.log(today.tz('Europe/Berlin').minute());
     }
+    function nextTime(){
+        var gmcToday=[];
+        var gmcNext= new moment();
+        var gmcCheck =false;
+        var currentTime = new moment();
+        for (var i=0; i<gmcTime[today.tz(zone).day()].length;i++){
+            var gmcTD = new moment();
+            var x = new moment()
+            gmcTD.date(today.date());
+            gmcTD.hour(gmcTime[today.tz(zone).day()][i]);
+            gmcTD.minute(0);
+            gmcTD.second(0);
+            gmcTD.millisecond(0);
+            x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
+            x.tz(moment.tz.guess());
+            x.locale(locale);
+            gmcToday.push(" "+x.calendar());
+            if (moment().hour()<x.hour() && gmcCheck == false){
+                gmcNext = x;
+                gmcCheck =true;
+                console.log(gmcNext);
+            }
+        }        
+        $("#todayGMC").text(gmcToday);
+        $('#nextGMC').text(moment(gmcNext).countdown()+" ("+gmcNext.format('LT')+")");
+        $('#nextGMCv2').text(moment(gmcNext).fromNow()+" ("+gmcNext.format('LT')+")");
+        setTimeout(nextTime,1000);
+    }
+    nextTime();
     compareTime();
     
-    for (var i=0; i<gmcTime[today.tz(zone).day()].length;i++){
-        var gmcTD = new moment();
-        var x = new moment()
-        gmcTD.date(today.date());
-        gmcTD.hour(gmcTime[today.tz(zone).day()][i]);
-        gmcTD.minute(0);
-        gmcTD.second(0);
-        gmcTD.millisecond(0);
-        x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
-        x.tz(moment.tz.guess());
-        x.locale(locale);
-        console.log(x.format())
-        gmcToday.push(" "+x.calendar());
-    }
 
-    $("#todayGMC").text(gmcToday);
+
+    
     getTime();
     
     
