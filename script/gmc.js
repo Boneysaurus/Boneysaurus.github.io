@@ -118,6 +118,10 @@ $(document).ready(function(){
             x.locale(locale);
             gmcToday.push(" "+x.calendar());
             if (moment()<x && gmcNextThreeIndex<3){
+                if (gmcCheck == false){
+                    gmcNext = x;
+                    gmcCheck = true;
+                }
                 gmcNextThree.push(" "+x.calendar());
                 gmcNextThreeIndex++;
             }
@@ -135,6 +139,10 @@ $(document).ready(function(){
             x.tz(moment.tz.guess());
             x.locale(locale);
             if (gmcNextThreeIndex<3){
+                if (gmcCheck == false){
+                    gmcNext = x;
+                    gmcCheck = true;
+                }
                 gmcNextThree.push(" "+x.calendar());
                 gmcNextThreeIndex++;
             }
