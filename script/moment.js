@@ -3996,9 +3996,9 @@
         var years    = round(duration.as('y'));
 
         var a = seconds < thresholds.s && ['s', seconds]  ||
-                minutes <= 1           && ['m']           ||
+                minutes <= 1           && ['m']		  ||
                 minutes < thresholds.m && ['mm', minutes] ||
-                hours   <= 1           && ['h']           ||
+                hours   <= 1           && ['h'] 	  ||
                 hours   < thresholds.h && ['hh', hours]   ||
                 days    <= 1           && ['d']           ||
                 days    < thresholds.d && ['dd', days]    ||

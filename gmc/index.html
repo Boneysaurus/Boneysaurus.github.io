@@ -11,8 +11,9 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!-- Custom stuffs -->
         
+        <link rel="stylesheet" href="../stylesheet/font-awesome.min.css">
         <link rel="stylesheet" href="../stylesheet/bootstrap.min.css">
-		<link rel="stylesheet" href="../stylesheet/main.css">
+        <link rel="stylesheet" href="../stylesheet/gmc.css">
         <script src="../script/tabletop.js"></script>
         <script src="../script/moment-with-locales.js"></script>
         <script src="../script/countdown.min.js"></script>
@@ -50,13 +51,69 @@
 				</div>
 			</nav>
             <!-- Body -->
-            <div class=well>
+            <div class="well">
                 <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
                 <div>Next GMC: <span id="nextGMC"></span></div>
                 <div>Next GMCv2: <span id="nextGMCv2"></span></div>
+                <div>Next 3 GMCs: <span id="nextThreeGMC"></span></div>
                 <div>Today's (Server) GMC: <span id="todayGMC"></span></div>
             </div>
-            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Ayyy caramba!</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit account</button>
+                                    <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo last</button>
+                                    
+                                    <!-- Modal -->
+                                    <div id="editAccount" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Accounts</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <ul class="list-group" id="listAccount">
+                                                                <li class="list-group-item">Account1 <button type="button" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</button></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="Add account...">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" type="button"><i class="fa fa-plus"></i> Add!</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="small">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered" id="tableCD">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
         </div>
     </body>

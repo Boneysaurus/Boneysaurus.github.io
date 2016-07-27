@@ -1,0 +1,15 @@
+.table-bordered {
+  border: 0px solid #ddd;
+}
+.table-bordered > thead > tr > td:last-child {
+  border-top: 0px !important;
+}
+
+.table-bordered > thead > tr > th:last-child,
+.table-bordered > tbody > tr > th:last-child,
+.table-bordered > tfoot > tr > th:last-child,
+.table-bordered > thead > tr > td:last-child,
+.table-bordered > tbody > tr > td:last-child,
+.table-bordered > tfoot > tr > td:last-child {
+  border: 0px !important;
+}
