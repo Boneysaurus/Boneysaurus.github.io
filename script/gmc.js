@@ -1,35 +1,37 @@
 var locale = window.navigator.userLanguage || window.navigator.language;
-    var weekday=new Array(7);
-    weekday[0]="Sunday";
-    weekday[1]="Monday";
-    weekday[2]="Tuesday";
-    weekday[3]="Wednesday";
-    weekday[4]="Thursday";
-    weekday[5]="Friday";
-    weekday[6]="Saturday";
+var weekday=new Array(7);
+weekday[0]="Sunday";
+weekday[1]="Monday";
+weekday[2]="Tuesday";
+weekday[3]="Wednesday";
+weekday[4]="Thursday";
+weekday[5]="Friday";
+weekday[6]="Saturday";
 
-    var zone = "Europe/Berlin";
-    var today = new moment();
-    var tomorrow = new moment().add(1,'day');
-    moment.locale(locale);
+var zone = "Europe/Berlin";
+var today = new moment();
+var tomorrow = new moment().add(1,'day');
+moment.locale(locale);
 
-    /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
-        this.name = name;
-        this.cooldown = cooldown;
-        this.blacktalon = blacktalon;
-        this.boreas = boreas;
-        this.seiren = seiren;
-        this.howl = howl;
-        this.shiris = shiris;
-        this.muui = muui;
-        this.sushi = sushi;
-        this.gemini = gemini;
-    }
+/*account object*/
+function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
+    this.name = name;
+    this.cooldown = cooldown;
+    this.blacktalon = blacktalon;
+    this.boreas = boreas;
+    this.seiren = seiren;
+    this.howl = howl;
+    this.shiris = shiris;
+    this.muui = muui;
+    this.sushi = sushi;
+    this.gemini = gemini;
+}
 
-    var gmcAccount = [];
+var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini"]
 
-    var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
+var gmcAccount = [];
+
+var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
 
 $(document).ready(function(){    
     var loadAcc = localStorage.getItem("storeAccount");
@@ -232,32 +234,34 @@ $(document).ready(function(){
             ttC.innerHTML = gmcAccount[i].cooldown;
         }
         ttC = ttR.insertCell(gmcAccount.length+1);    
-
-        ttR = tokenTable.insertRow(2);
-        ttC = ttR.insertCell(0);
-        ttC.innerHTML = '<img src="../img/gmc/blacktalon.gif" align="bottom"></img><b> BlackTalon</b>';
-        for (var i = 0; i<gmcAccount.length; i++){
-            ttC = ttR.insertCell(i+1);            
-            ttC.appendChild(document.createTextNode(gmcAccount[i].blacktalon));
-            var buttonGroup = document.createElement('div');
-            $(buttonGroup).data('gmc', 'blacktalon');
-            $(buttonGroup).data('col', i);
-            buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
-            buttonGroup.setAttribute('role', 'group');
-            buttonGroup.setAttribute('aria-label', '...')
-            var buttonP = document.createElement('button')
-            buttonP.innerHTML = '<i class="fa fa-plus"></i>';
-            buttonP.setAttribute('class', 'btn btn-success');
-            buttonP.onclick = addToken;
-            buttonGroup.appendChild(buttonP);
-            var buttonM = document.createElement('button')
-            buttonM.innerHTML = '<i class="fa fa-minus"></i>';
-            buttonM.setAttribute('class', 'btn btn-danger');
-            buttonM.onclick = delToken;
-            buttonGroup.appendChild(buttonM);
-            ttC.appendChild(buttonGroup);
+        
+        for (var h=0; h<gmcList.length;h++){
+            ttR = tokenTable.insertRow(h+2);
+            ttC = ttR.insertCell(0);
+            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img><b> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1)+'</b>';
+            for (var i = 0; i<gmcAccount.length; i++){
+                ttC = ttR.insertCell(i+1);            
+                ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
+                var buttonGroup = document.createElement('div');
+                $(buttonGroup).data('gmc', gmcList[h]);
+                $(buttonGroup).data('col', i);
+                buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
+                buttonGroup.setAttribute('role', 'group');
+                buttonGroup.setAttribute('aria-label', '...')
+                var buttonP = document.createElement('button')
+                buttonP.innerHTML = '<i class="fa fa-plus"></i>';
+                buttonP.setAttribute('class', 'btn btn-success');
+                buttonP.onclick = addToken;
+                buttonGroup.appendChild(buttonP);
+                var buttonM = document.createElement('button')
+                buttonM.innerHTML = '<i class="fa fa-minus"></i>';
+                buttonM.setAttribute('class', 'btn btn-danger');
+                buttonM.onclick = delToken;
+                buttonGroup.appendChild(buttonM);
+                ttC.appendChild(buttonGroup);
+            }
+            ttC = ttR.insertCell(gmcAccount.length+1);
         }
-        ttC = ttR.insertCell(gmcAccount.length+1);
     }
     
    function addToken(){
