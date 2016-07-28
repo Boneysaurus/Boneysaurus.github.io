@@ -1,15 +1,47 @@
-.table-bordered {
-  border: 0px solid #ddd;
+.table-curved > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
 }
-.table-bordered > thead > tr > td:last-child {
-  border-top: 0px !important;
+.table-curved > tbody > tr:nth-of-type(odd) > td:last-child {
+  background-color: #fff !important;
+}
+.panel {
+    overflow: auto;
 }
 
-.table-bordered > thead > tr > th:last-child,
-.table-bordered > tbody > tr > th:last-child,
-.table-bordered > tfoot > tr > th:last-child,
-.table-bordered > thead > tr > td:last-child,
-.table-bordered > tbody > tr > td:last-child,
-.table-bordered > tfoot > tr > td:last-child {
-  border: 0px !important;
+.table-curved{
+    border-collapse: separate;     
+}
+
+.table-curved td, .table-curved th {
+    border-left: 1px solid #ccc;
+}
+.table-curved tr:first-child td:first-child {
+    border-radius: 12px 0 0 0;
+}
+.table-curved tr:first-child td:nth-last-child(2) {
+    border-radius: 0 12px 0 0;
+}
+.table-curved tr:only-child{
+    border-radius: 12px 12px 0 0;
+}
+.table-curved tr:last-child td:first-child {
+    border-radius: 0 0 0 12px;
+}
+.table-curved tr:last-child td:nth-last-child(2) {
+    border-radius: 0 0 12px 0 !important;
+}
+.table-curved tr td:nth-last-child(2){
+    border-right: 1px solid #ccc;
+}
+.table-curved tr:last-child td{
+    border-bottom: 2px solid #ccc;
+}
+
+.table-curved > thead > tr > th:last-child,
+.table-curved > tbody > tr > th:last-child,
+.table-curved > tfoot > tr > th:last-child,
+.table-curved > thead > tr > td:last-child,
+.table-curved > tbody > tr > td:last-child,
+.table-curved > tfoot > tr > td:last-child {
+  border: none !important;
 }
