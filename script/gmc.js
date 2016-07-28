@@ -28,16 +28,16 @@ function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,g
 }
 
 var gmcAccount = [
-    new account("iela",0,0,0,0,0,0,0,0,0),
-    new account("is",0,0,0,0,0,0,0,0,0),
-    new account("cool",0,0,0,0,0,0,0,0,0)
 ]
 
 $(document).ready(function(){
     var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
     
-
-    
+    var loadAcc = localStorage.getItem("storeAccount");
+    gmcAccount = JSON.parse(loadAcc);
+    function storeAcc(){
+        localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
+    }
     /*enable popover*/
     $('[data-toggle="popover"]').popover();
     /* Back to top*/
@@ -107,16 +107,26 @@ $(document).ready(function(){
         }
         for (var i=0; i<gmcTime[today.tz(zone).day()].length;i++){
             var gmcTD = new moment();
-            var x = new moment();
             gmcTD.date(today.tz(zone).date());
             gmcTD.hour(gmcTime[today.tz(zone).day()][i]);
             gmcTD.minute(0);
             gmcTD.second(0);
             gmcTD.millisecond(0);
-            x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
+            var x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
             x.tz(moment.tz.guess());
             x.locale(locale);
+            var y = moment(x);
+            y.add(2,'h')
             gmcToday.push(" "+x.calendar());
+            if(moment()>x && moment()<y){
+                $('#finishGMC').text(moment().countdown(y,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2))
+                $('#currentStatus').removeClass('alert-info').addClass('alert-success');
+                $('#statusOngoing').show();
+            }
+            else if(moment()>y) {
+                $('#statusOngoing').hide();
+                $('#currentStatus').removeClass('alert-success').addClass('alert-info');
+            }
             if (moment()<x && gmcNextThreeIndex<3){
                 if (gmcCheck == false){
                     gmcNext = x;
@@ -150,55 +160,90 @@ $(document).ready(function(){
 
         $("#nextThreeGMC").text(gmcNextThree);
         $("#todayGMC").text(gmcToday);
-        $('#nextGMC').text(moment(gmcNext).countdown()+" ("+gmcNext.format('LT')+")");
-        $('#nextGMCv2').text(moment(gmcNext).fromNow()+" ("+gmcNext.format('LT')+")");
+        $('#upcomingGMC').text(moment().countdown(gmcNext,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+" ("+gmcNext.format('LT')+")");
         setTimeout(nextTime,1000);
     }
     
     /*list account temp*/
-    var list = document.getElementById('listAccount')
-    for (var i = 0; i<gmcAccount.length; i++){
-        var account = document.createElement('li');
-        account.className = 'list-group-item';
-        account.appendChild(document.createTextNode(gmcAccount[i].name));
-        list.appendChild(account);
+    function updateEditAcc(){
+        var list = document.getElementById('listAccount')
+        $(list).empty();
+        for (var i = 0; i<gmcAccount.length; i++){
+            var account = document.createElement('li');
+            account.className = 'list-group-item';
+            account.appendChild(document.createTextNode(gmcAccount[i].name));
+            var button = document.createElement('button');
+            button.innerHTML ='<i class="fa fa-trash"></i> Delete';
+            button.onclick = deleteAccount;
+            button.setAttribute('class','btn btn-danger btn-xs pull-right btnDeleteAcc')
+            account.appendChild(button);
+            /*account.innerHTML = gmcAccount[i].name+
+                '<button type="button" class="btn btn-danger btn-xs pull-right btnDeleteAcc"><i class="fa fa-trash"></i> Delete</button>'*/
+            list.appendChild(account);
+        }
+        storeAcc();
     }
+    function emptyEditAcc(){
+        var list = document.getElementById('listAccount')
+        $(list).empty();
+        alert('yes')
+    }
+    
+    //put this in button edit later!!!!!!
+    updateEditAcc();
+    
+    //button delete
+    function deleteAccount(){
+        gmcAccount.splice($(this).parent().index(),1);
+        updateEditAcc();
+        updateTable();
+    }
+    
+    $('#buttonAddAcc').on('click',function(){
+        var name = $('#formAddAcc').val();
+        var newAcc = new account(name,0,0,0,0,0,0,0,0,0)
+        gmcAccount.push(newAcc)
+        updateEditAcc();
+        updateTable();
+    })
     
     /*cooldown & token table*/
-    var tokenTable = document.getElementById('tableCD');
-    var ttH, ttR, ttC;
-    ttR = tokenTable.insertRow(0);
-    ttC = ttR.insertCell(0);
-    ttC.style.width = '200px';
-    ttC.innerHTML = "<h4>GMC</h4>";
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-        ttC.style.width = '80px';
-        ttC.innerHTML = '<h4><span style="margin:auto">'+gmcAccount[i].name+'</span></h4>';
+    function updateTable(){
+        var tokenTable = document.getElementById('tableCD');
+        $(tokenTable).empty();
+        var ttH, ttR, ttC;
+        ttR = tokenTable.insertRow(0);
+        ttC = ttR.insertCell(0);
+        ttC.style.width = '200px';
+        ttC.innerHTML = "<h4>GMC</h4>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            ttC.style.width = '80px';
+            ttC.innerHTML = '<h5><span style="margin:auto">'+gmcAccount[i].name+'</span></h5>';
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
+
+        ttR = tokenTable.insertRow(1);
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = "<b>Cooldown</b>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            ttC.innerHTML = gmcAccount[i].cooldown;
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);    
+
+        ttR = tokenTable.insertRow(2);
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = '<img src="../img/gmc/blacktalon.gif" align="bottom"></img><b> BlackTalon</b>';
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            ttC.innerHTML = gmcAccount[i].blacktalon+'<div class="btn-group btn-group-xs pull-right" role="group" aria-label="..."><button type="button" class="btn  btn-success"><i class="fa fa-plus"></i></button><button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button></div>';
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
     }
-    ttC = ttR.insertCell(gmcAccount.length+1);
-    
-    ttR = tokenTable.insertRow(1);
-    ttC = ttR.insertCell(0);
-    ttC.innerHTML = "<b>Cooldown</b>";
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-        ttC.innerHTML = gmcAccount[i].cooldown;
-    }
-    ttC = ttR.insertCell(gmcAccount.length+1);    
-    
-    ttR = tokenTable.insertRow(2);
-    ttC = ttR.insertCell(0);
-    ttC.innerHTML = '<img src="../img/gmc/blacktalon.gif" align="bottom"></img><b> BlackTalon</b>';
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-        ttC.innerHTML = gmcAccount[i].blacktalon+'<div class="btn-group btn-group-xs pull-right" role="group" aria-label="..."><button type="button" class="btn  btn-success"><i class="fa fa-plus"></i></button><button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button></div>';
-    }
-    ttC = ttR.insertCell(gmcAccount.length+1);
-    
+    updateTable();
     nextTime();
     compareTime();    
     getTime();
-    localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
     
 });

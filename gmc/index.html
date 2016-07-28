@@ -51,22 +51,25 @@
 				</div>
 			</nav>
             <!-- Body -->
+            
             <div class="well">
+                <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
+                <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
+                </div>
                 <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
-                <div>Next GMC: <span id="nextGMC"></span></div>
-                <div>Next GMCv2: <span id="nextGMCv2"></span></div>
-                <div>Next 3 GMCs: <span id="nextThreeGMC"></span></div>
-                <div>Today's (Server) GMC: <span id="todayGMC"></span></div>
+                <!--- Locale version <div>Next GMCv2: <span id="nextGMCv2"></span></div> --->
+                <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
+                <!--- Today<div>Today's (Server) GMC: <span id="todayGMC"></span></div> --->
             </div>
-            <div class="row">
+            <div class="row">   
                 <div class="col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">Ayyy caramba!</div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit account</button>
-                                    <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo last</button>
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
+                                    <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo Last</button>
                                     
                                     <!-- Modal -->
                                     <div id="editAccount" class="modal fade" role="dialog">
@@ -80,24 +83,22 @@
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <ul class="list-group" id="listAccount">
-                                                                <li class="list-group-item">Account1 <button type="button" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash"></i> Delete</button></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="Add account...">
+                                                                <input type="text" class="form-control" id="formAddAcc" placeholder="Add account...">
                                                                 <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="button"><i class="fa fa-plus"></i> Add!</button>
+                                                                    <button class="btn btn-default" type="button" id="buttonAddAcc"><i class="fa fa-plus"></i> Add!</button>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Save & Close</button>
                                                 </div>
                                             </div>
 
