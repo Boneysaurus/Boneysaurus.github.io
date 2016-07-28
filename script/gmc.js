@@ -1,6 +1,4 @@
-
-$(document).ready(function(){
-    var locale = window.navigator.userLanguage || window.navigator.language;
+var locale = window.navigator.userLanguage || window.navigator.language;
     var weekday=new Array(7);
     weekday[0]="Sunday";
     weekday[1]="Monday";
@@ -29,13 +27,15 @@ $(document).ready(function(){
         this.gemini = gemini;
     }
 
-    var gmcAccount = [
-    ]
+    var gmcAccount = [];
 
     var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
-    
+
+$(document).ready(function(){    
     var loadAcc = localStorage.getItem("storeAccount");
-    gmcAccount = JSON.parse(loadAcc);
+    if(localStorage.getItem("storeAccount") != null){
+        gmcAccount = JSON.parse(loadAcc);
+    }
     function storeAcc(){
         localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
     }
