@@ -1,36 +1,37 @@
-var locale = window.navigator.userLanguage || window.navigator.language;
-var weekday=new Array(7);
-weekday[0]="Sunday";
-weekday[1]="Monday";
-weekday[2]="Tuesday";
-weekday[3]="Wednesday";
-weekday[4]="Thursday";
-weekday[5]="Friday";
-weekday[6]="Saturday";
-
-var zone = "Europe/Berlin";
-var today = new moment();
-var tomorrow = new moment().add(1,'day');
-moment.locale(locale);
-
-/*account object*/
-function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
-    this.name = name;
-    this.cooldown = cooldown;
-    this.blacktalon = blacktalon;
-    this.boreas = boreas;
-    this.seiren = seiren;
-    this.howl = howl;
-    this.shiris = shiris;
-    this.muui = muui;
-    this.sushi = sushi;
-    this.gemini = gemini;
-}
-
-var gmcAccount = [
-]
 
 $(document).ready(function(){
+    var locale = window.navigator.userLanguage || window.navigator.language;
+    var weekday=new Array(7);
+    weekday[0]="Sunday";
+    weekday[1]="Monday";
+    weekday[2]="Tuesday";
+    weekday[3]="Wednesday";
+    weekday[4]="Thursday";
+    weekday[5]="Friday";
+    weekday[6]="Saturday";
+
+    var zone = "Europe/Berlin";
+    var today = new moment();
+    var tomorrow = new moment().add(1,'day');
+    moment.locale(locale);
+
+    /*account object*/
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
+        this.name = name;
+        this.cooldown = cooldown;
+        this.blacktalon = blacktalon;
+        this.boreas = boreas;
+        this.seiren = seiren;
+        this.howl = howl;
+        this.shiris = shiris;
+        this.muui = muui;
+        this.sushi = sushi;
+        this.gemini = gemini;
+    }
+
+    var gmcAccount = [
+    ]
+
     var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
     
     var loadAcc = localStorage.getItem("storeAccount");
