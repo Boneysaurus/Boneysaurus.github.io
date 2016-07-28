@@ -237,11 +237,48 @@ $(document).ready(function(){
         ttC = ttR.insertCell(0);
         ttC.innerHTML = '<img src="../img/gmc/blacktalon.gif" align="bottom"></img><b> BlackTalon</b>';
         for (var i = 0; i<gmcAccount.length; i++){
-            ttC = ttR.insertCell(i+1);
-            ttC.innerHTML = gmcAccount[i].blacktalon+'<div class="btn-group btn-group-xs pull-right" role="group" aria-label="..."><button type="button" class="btn  btn-success"><i class="fa fa-plus"></i></button><button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button></div>';
+            ttC = ttR.insertCell(i+1);            
+            ttC.appendChild(document.createTextNode(gmcAccount[i].blacktalon));
+            var buttonGroup = document.createElement('div');
+            $(buttonGroup).data('gmc', 'blacktalon');
+            $(buttonGroup).data('col', i);
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
+            buttonGroup.setAttribute('role', 'group');
+            buttonGroup.setAttribute('aria-label', '...')
+            var buttonP = document.createElement('button')
+            buttonP.innerHTML = '<i class="fa fa-plus"></i>';
+            buttonP.setAttribute('class', 'btn btn-success');
+            buttonP.onclick = addToken;
+            buttonGroup.appendChild(buttonP);
+            var buttonM = document.createElement('button')
+            buttonM.innerHTML = '<i class="fa fa-minus"></i>';
+            buttonM.setAttribute('class', 'btn btn-danger');
+            buttonM.onclick = delToken;
+            buttonGroup.appendChild(buttonM);
+            ttC.appendChild(buttonGroup);
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
     }
+    
+   function addToken(){
+        var gmc = $(this).parent().data('gmc');
+        var accIndex = $(this).parent().data('col');
+        console.log(gmcAccount[accIndex][gmc])
+        gmcAccount[accIndex][gmc] += 1;
+        updateTable();
+        storeAcc();
+    }
+    
+    function delToken(){
+        var gmc = $(this).parent().data('gmc');
+        var accIndex = $(this).parent().data('col');
+        console.log(gmcAccount[accIndex][gmc]);
+        gmcAccount[accIndex][gmc] -= 1;
+        updateTable();
+        storeAcc();
+    
+    }
+    
     updateTable();
     nextTime();
     compareTime();    
