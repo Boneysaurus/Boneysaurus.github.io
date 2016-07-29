@@ -19,6 +19,7 @@
         <script src="../script/countdown.min.js"></script>
         <script src="../script/moment-countdown.min.js"></script>
         <script src="../script/moment-timezone-with-data.js"></script>
+        <script src="../script/moment-duration-format.js"></script>
         <script src="../script/gmc.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
         
@@ -92,6 +93,73 @@
                             <h4 class="modal-title">Help</h4>
                         </div>
                         <div class="modal-body">
+                            <h4>Timezone</h4>
+                            <p>All time listed here is in your local time! You don't have to add, subtract hours for your own timezone and stuffs anymore \o/.</p>
+                            <p>Countdown, Timezone, Offset, DST are all taken care off.</p>
+                            <hr class="small">
+                            <h4>Notification</h4>
+                            Click on the <div class="btn btn-default btn-sm"><span class="glyphicon glyphicon-cog"></span> Settings</div> button on the top right hand corner to enable sound notification.
+                            <hr class="small">
+                            <h4>Editing</h4>
+                            <p>Here's a brief summary of what each button does:</p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Button</th>
+                                        <th>What it does?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><div class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Account</div></td>
+                                        <td>Prompts a popup for <b>adding / deleting your game accounts.</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-success btn-sm"><i class="fa fa-question"></i> Help!</div></td>
+                                        <td>You know what, that's a good question. I wonder what the Help! button actually does.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-info btn-sm"><i class="fa fa-info"></i> Info</div></td>
+                                        <td>Open a popup with <b>information on GMC Giftboxes.</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo Last</div></td>
+                                        <td><b>Undo your last action</b>, whatever it was. Only one action is stored and undoable at any time.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></div></td>
+                                        <td><b>Manually add/edit cooldown</b> associated to the account.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></div></td>
+                                        <td><b>Remove cooldown</b> associated to the account.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-info btn-xs">Dual</div></td>
+                                        <td><b>Add a cooldown without token associated.</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-warning btn-xs">Fail</div></td>
+                                        <td><b>Add a cooldown until the next server day</b>. Like how it works when you fail a GMC.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-success btn-xs"><i class="fa fa-plus"></i></div></td>
+                                        <td><b>Add one token</b> and <b>automatically applies cooldown.</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-danger btn-xs"><i class="fa fa-minus"></i></div></td>
+                                        <td><b>Remove one token</b>. Doesn't have any impact on the cooldown.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn-group-vertical btn-group-xs"><button class="btn btn-default">Normal</button><button class="btn btn-danger">Crimson</button><button class="btn btn-info">Cerulean</button><button class="btn btn-warning">Saffron</button></div></td>
+                                        <td><p><b>Removes the necessary tokens to make a box</b> and <b>prompts up a popup to record your prize from said box</b>.</p> <p>Only appears when you meet the corresponding token requirements.</p></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <hr class="small">
+                            <h4>tRO Wiki Link</h4>
+                            <a href="http://wiki.talonro.com/GMC" target="_blank">http://wiki.talonro.com/GMC</a>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -108,14 +176,14 @@
                             <h4 class="modal-title">Info</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="table">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>GiftBox</th>
-                                        <th>Normal</th>
-                                        <th>Crimson</th>
-                                        <th>Cerulean</th>
-                                        <th>Saffron</th>
+                                        <th><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
+                                        <th><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
+                                        <th><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
+                                        <th><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
                                     </tr>
                                 </thead>
                                 
@@ -149,7 +217,7 @@
                                     <tr><td>1x <img src="../img/gmc/muui.gif"> Muui</td></tr>
                                     <tr><td>1x <img src="../img/gmc/sushi.gif"> Sushi</td></tr>
                                 </tbody>
-                            </div>
+                            </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -208,6 +208,7 @@ $(document).ready(function(){
         gmcAccount.push(newAcc)
         updateEditAcc();
         updateTable();
+        $('#formAddAcc').val('');
     })
     
     /*cooldown & token table*/
@@ -225,45 +226,55 @@ $(document).ready(function(){
             ttC.innerHTML = '<h5><b>'+gmcAccount[i].name+'</b></h5>';
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
-
+        
         ttR = tokenTable.insertRow(1);
         ttC = ttR.insertCell(0);
         ttC.innerHTML = "<b>Cooldown</b>";
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
-            ttC.appendChild(document.createTextNode(gmcAccount[i].cooldown));
-            var buttonGroup = document.createElement('div');
-            buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
-            buttonGroup.setAttribute('role', 'group');
-            buttonGroup.setAttribute('aria-label', '...');
-            var buttonE = document.createElement('button');
-            buttonE.innerHTML='<i class="fa fa-edit"></i>'
-            buttonE.setAttribute('class', 'btn btn-primary');
-            //add onclick here
-            buttonGroup.appendChild(buttonE);
-            ttC.appendChild(buttonGroup);
+            var cutOff = moment(gmcAccount[i].cooldown);
+            var now = new moment();
+            ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));
             
             var hr = document.createElement('hr');
             hr.setAttribute('class','small')
             ttC.appendChild(hr)
             
+            var buttonGroup = document.createElement('div');
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
+            buttonGroup.setAttribute('role', 'group');
+            buttonGroup.setAttribute('aria-label', '...');
+            $(buttonGroup).data('col', i);
+            var buttonE = document.createElement('a');
+            buttonE.innerHTML='<i class="fa fa-edit"></i>'
+            buttonE.setAttribute('class', 'btn btn-primary');
+            buttonE.onclick = editCD;
+            buttonGroup.appendChild(buttonE);
+            var buttonR = document.createElement('a');
+            buttonR.innerHTML='<i class="fa fa-remove"></i>'
+            buttonR.setAttribute('class', 'btn btn-danger');
+            buttonR.onclick = removeCD;
+            buttonGroup.appendChild(buttonR);
+            ttC.appendChild(buttonGroup);
+            
             var buttonGroup2 = document.createElement('div');
-            buttonGroup2.setAttribute('class', 'btn-group btn-group-xs pull-right btn-group-justified');
+            buttonGroup2.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
             buttonGroup2.setAttribute('role', 'group');
             buttonGroup2.setAttribute('aria-label', '...');
+            $(buttonGroup2).data('col', i);
             var buttonD = document.createElement('a');
             buttonD.innerHTML='Dual'
             buttonD.setAttribute('class', 'btn btn-info');
-            //add onclick here
+            buttonD.onclick = dualCD;
             buttonGroup2.appendChild(buttonD);
             var buttonF = document.createElement('a');
             buttonF.innerHTML='Fail'
             buttonF.setAttribute('class', 'btn btn-warning');
-            //add onclick here
+            buttonF.onclick = failCD;
             buttonGroup2.appendChild(buttonF);
             ttC.appendChild(buttonGroup2);
         }
-        ttC = ttR.insertCell(gmcAccount.length+1);    
+        ttC = ttR.insertCell(gmcAccount.length+1);
         
         for (var h=0; h<gmcList.length;h++){
             ttR = tokenTable.insertRow(h+2);
@@ -294,6 +305,7 @@ $(document).ready(function(){
             ttC = ttR.insertCell(gmcAccount.length+1);
         }
         
+        
         //other actions
         ttR = tokenTable.insertRow(gmcList.length+2);
         ttC = ttR.insertCell(0);
@@ -314,33 +326,39 @@ $(document).ready(function(){
             buttonGroupV.setAttribute('class', 'btn-group-vertical btn-group-xs btn-block');
             buttonGroupV.setAttribute('role', 'group');
             buttonGroupV.setAttribute('aria-label', '...');
+            $(buttonGroupV).data('col', i);
             var buttonG = document.createElement('button');
             buttonG.innerHTML='Normal'
             buttonG.setAttribute('class', 'btn btn-default');
+            buttonG.onclick = claimNormal;
             $(buttonG).prop('disabled',true);
             if (normBox){$(buttonG).prop('disabled',false)
             buttonGroupV.appendChild(buttonG)};
             var buttonCrimson = document.createElement('button');
             buttonCrimson.innerHTML='Crimson'
             buttonCrimson.setAttribute('class', 'btn btn-danger');
+            buttonCrimson.onclick = claimCrimson;
             $(buttonCrimson).prop('disabled',true);
             if (crimBox){$(buttonCrimson).prop('disabled',false)
             buttonGroupV.appendChild(buttonCrimson)};
             var buttonCerulean = document.createElement('button');
             buttonCerulean.innerHTML='Cerulean'
             buttonCerulean.setAttribute('class', 'btn btn-info');
+            buttonCerulean.onclick = claimCerulean;
             $(buttonCerulean).prop('disabled',true);
             if (ceruBox){$(buttonCerulean).prop('disabled',false)
             buttonGroupV.appendChild(buttonCerulean)};
             var buttonSaffron = document.createElement('button');
             buttonSaffron.innerHTML='Saffron'
             buttonSaffron.setAttribute('class', 'btn btn-warning');
+            buttonSaffron.onclick = claimSaffron;
             $(buttonSaffron).prop('disabled',true);
             if (saffBox){$(buttonSaffron).prop('disabled',false)
             buttonGroupV.appendChild(buttonSaffron)};
             ttC.appendChild(buttonGroupV);
         }
-        ttC = ttR.insertCell(gmcAccount.length+1);    
+        ttC = ttR.insertCell(gmcAccount.length+1);
+        
     }
     
    function addToken(){
@@ -348,6 +366,7 @@ $(document).ready(function(){
         var accIndex = $(this).parent().data('col');
         console.log(gmcAccount[accIndex][gmc])
         gmcAccount[accIndex][gmc] += 1;
+        gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
         updateTable();
         storeAcc();
     }
@@ -360,6 +379,81 @@ $(document).ready(function(){
         updateTable();
         storeAcc();
     
+    }
+    
+    //box functions
+    function claimNormal(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].blacktalon -= 1;
+        gmcAccount[accIndex].boreas -= 1;
+        gmcAccount[accIndex].seiren -= 1;
+        gmcAccount[accIndex].howl -= 1;
+        gmcAccount[accIndex].shiris -= 1;
+        gmcAccount[accIndex].muui -= 1;
+        gmcAccount[accIndex].sushi -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimCrimson(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].muui -= 3;
+        gmcAccount[accIndex].shiris -= 3;
+        gmcAccount[accIndex].howl -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimCerulean(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].howl -= 3;
+        gmcAccount[accIndex].seiren -= 3;
+        gmcAccount[accIndex].blacktalon -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimSaffron(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].sushi -= 3;
+        gmcAccount[accIndex].boreas -= 3;
+        gmcAccount[accIndex].shiris -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    
+    //cooldown functions
+    function editCD(){
+        var accIndex = $(this).parent().data('col');
+        updateTable();
+        storeAcc();
+    }
+    function removeCD(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].cooldown = null;
+        updateTable();
+        storeAcc();
+    }
+    function dualCD(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
+        updateTable();
+        storeAcc();
+    }
+    function failCD(){
+        var accIndex = $(this).parent().data('col');
+        var gmcTD = new moment();
+        var x = new moment();
+        gmcTD.date(tomorrow.tz(zone).date());
+        gmcTD.hour();                
+        gmcTD.minute(0);
+        gmcTD.second(0);
+        gmcTD.millisecond(0);
+        x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
+        x.tz(moment.tz.guess());
+        gmcAccount[accIndex].cooldown = x;
+        updateTable();
+        storeAcc();
     }
     
     updateTable();

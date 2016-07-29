@@ -16,7 +16,7 @@ h5{
 
 .table-curved{
     border-collapse: separate;  
-    table-layout: fixed;
+    table-layout: fixed !important;
 }
 
 .table-curved td, .table-curved th {
