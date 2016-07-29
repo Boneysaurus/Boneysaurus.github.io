@@ -362,7 +362,7 @@ $(document).ready(function(){
             ttC.appendChild(buttonGroupV);
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
-        setTimeout(updateTablea,60000);
+        setTimeout(updateTable,60000);
         
     }
     
