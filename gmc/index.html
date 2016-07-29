@@ -51,16 +51,6 @@
 				</div>
 			</nav>
             <!-- Body -->
-            
-            <div class="well">
-                <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
-                <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
-                </div>
-                <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
-                <!--- Locale version <div>Next GMCv2: <span id="nextGMCv2"></span></div> --->
-                <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
-                <!--- Today<div>Today's (Server) GMC: <span id="todayGMC"></span></div> --->
-            </div>
             <!-- Modal -->
             <div id="editAccount" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -110,6 +100,77 @@
 
                 </div>
             </div>
+            <div id="siteInfo" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table">
+                                <thead>
+                                    <tr>
+                                        <th>GiftBox</th>
+                                        <th>Normal</th>
+                                        <th>Crimson</th>
+                                        <th>Cerulean</th>
+                                        <th>Saffron</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="7">Token <br>Requirement</th>
+                                        <td>1x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
+                                        <td>3x <img src="../img/gmc/muui.gif"> Muui</td>
+                                        <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
+                                        <td>3x <img src="../img/gmc/sushi.gif"> Sushi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1x <img src="../img/gmc/boreas.gif"> Boreas</td>
+                                        <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
+                                        <td>3x <img src="../img/gmc/seiren.gif"> Seiren</td>
+                                        <td>3x <img src="../img/gmc/boreas.gif"> Boreas</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1x <img src="../img/gmc/seiren.gif"> Seiren</td>
+                                        <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
+                                        <td>3x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
+                                        <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1x <img src="../img/gmc/howl.gif"> Howl</td>
+                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                    </tr>
+                                    <tr><td>1x <img src="../img/gmc/shiris.gif"> Shiris</td></tr>
+                                    <tr><td>1x <img src="../img/gmc/muui.gif"> Muui</td></tr>
+                                    <tr><td>1x <img src="../img/gmc/sushi.gif"> Sushi</td></tr>
+                                </tbody>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="well">
+                <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
+                <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
+                </div>
+                <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
+                <!--- Locale version <div>Next GMCv2: <span id="nextGMCv2"></span></div> --->
+                <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
+                <!--- Today<div>Today's (Server) GMC: <span id="todayGMC"></span></div> --->
+            </div>
+            
+            
+            <!-- table thing -->
             <div class="row">   
                 <div class="col-sm-12">
                     <div class="panel panel-default">
@@ -118,6 +179,7 @@
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
                                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> Info</button>
                                     <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo Last</button>
                                     
                                     

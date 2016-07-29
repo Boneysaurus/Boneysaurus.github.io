@@ -286,6 +286,7 @@ $(document).ready(function(){
                 var buttonM = document.createElement('button')
                 buttonM.innerHTML = '<i class="fa fa-minus"></i>';
                 buttonM.setAttribute('class', 'btn btn-danger');
+                if (gmcAccount[i][gmcList[h]]==0){$(buttonM).prop('disabled',true)}
                 buttonM.onclick = delToken;
                 buttonGroup.appendChild(buttonM);
                 ttC.appendChild(buttonGroup);
@@ -299,7 +300,16 @@ $(document).ready(function(){
         ttC.innerHTML = "<b>Claim Box</b>";
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
+            
+            var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
+            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
+            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
+            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
             //box things
+            
+            if (!(normBox || crimBox || ceruBox || saffBox)){
+                ttC.appendChild(document.createTextNode("None"));}
+            
             var buttonGroupV = document.createElement('div');
             buttonGroupV.setAttribute('class', 'btn-group-vertical btn-group-xs btn-block');
             buttonGroupV.setAttribute('role', 'group');
@@ -307,19 +317,27 @@ $(document).ready(function(){
             var buttonG = document.createElement('button');
             buttonG.innerHTML='Normal'
             buttonG.setAttribute('class', 'btn btn-default');
-            buttonGroupV.appendChild(buttonG);
+            $(buttonG).prop('disabled',true);
+            if (normBox){$(buttonG).prop('disabled',false)
+            buttonGroupV.appendChild(buttonG)};
             var buttonCrimson = document.createElement('button');
             buttonCrimson.innerHTML='Crimson'
             buttonCrimson.setAttribute('class', 'btn btn-danger');
-            buttonGroupV.appendChild(buttonCrimson);
+            $(buttonCrimson).prop('disabled',true);
+            if (crimBox){$(buttonCrimson).prop('disabled',false)
+            buttonGroupV.appendChild(buttonCrimson)};
             var buttonCerulean = document.createElement('button');
             buttonCerulean.innerHTML='Cerulean'
             buttonCerulean.setAttribute('class', 'btn btn-info');
-            buttonGroupV.appendChild(buttonCerulean);
+            $(buttonCerulean).prop('disabled',true);
+            if (ceruBox){$(buttonCerulean).prop('disabled',false)
+            buttonGroupV.appendChild(buttonCerulean)};
             var buttonSaffron = document.createElement('button');
             buttonSaffron.innerHTML='Saffron'
             buttonSaffron.setAttribute('class', 'btn btn-warning');
-            buttonGroupV.appendChild(buttonSaffron);
+            $(buttonSaffron).prop('disabled',true);
+            if (saffBox){$(buttonSaffron).prop('disabled',false)
+            buttonGroupV.appendChild(buttonSaffron)};
             ttC.appendChild(buttonGroupV);
         }
         ttC = ttR.insertCell(gmcAccount.length+1);    
