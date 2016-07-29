@@ -1,34 +1,41 @@
 .table-curved > tbody > tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
+  background-color: #fcfcfc;
 }
 .table-curved > tbody > tr:nth-of-type(odd) > td:last-child {
   background-color: #fff !important;
+}
+h5{
+    word-wrap: break-word;
+}
+.table-curved tr:first-child{
+    background-color: #f8f8f8 !important;
 }
 .panel {
     overflow: auto;
 }
 
 .table-curved{
-    border-collapse: separate;     
+    border-collapse: separate;  
+    table-layout: fixed;
 }
 
 .table-curved td, .table-curved th {
     border-left: 1px solid #ccc;
 }
 .table-curved tr:first-child td:first-child {
-    border-radius: 12px 0 0 0;
+    border-radius: 6px 0 0 0;
 }
 .table-curved tr:first-child td:nth-last-child(2) {
-    border-radius: 0 12px 0 0;
+    border-radius: 0 6px 0 0;
 }
 .table-curved tr:only-child{
-    border-radius: 12px 12px 0 0;
+    border-radius: 6px 6px 6px 6px;
 }
 .table-curved tr:last-child td:first-child {
-    border-radius: 0 0 0 12px;
+    border-radius: 0 0 0 6px;
 }
 .table-curved tr:last-child td:nth-last-child(2) {
-    border-radius: 0 0 12px 0 !important;
+    border-radius: 0 0 6px 0 !important;
 }
 .table-curved tr td:nth-last-child(2){
     border-right: 1px solid #ccc;
@@ -44,4 +51,8 @@
 .table-curved > tbody > tr > td:last-child,
 .table-curved > tfoot > tr > td:last-child {
   border: none !important;
+}
+
+hr.small{
+    margin:4px 0px;
 }

@@ -217,12 +217,12 @@ $(document).ready(function(){
         var ttH, ttR, ttC;
         ttR = tokenTable.insertRow(0);
         ttC = ttR.insertCell(0);
-        ttC.style.width = '200px';
+        ttC.style.width = '170px';
         ttC.innerHTML = "<h4>GMC</h4>";
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
-            ttC.style.width = '80px';
-            ttC.innerHTML = '<h5><span style="margin:auto">'+gmcAccount[i].name+'</span></h5>';
+            ttC.style.width = '100px';
+            ttC.innerHTML = '<h5><b>'+gmcAccount[i].name+'</b></h5>';
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
 
@@ -231,14 +231,44 @@ $(document).ready(function(){
         ttC.innerHTML = "<b>Cooldown</b>";
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
-            ttC.innerHTML = gmcAccount[i].cooldown;
+            ttC.appendChild(document.createTextNode(gmcAccount[i].cooldown));
+            var buttonGroup = document.createElement('div');
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
+            buttonGroup.setAttribute('role', 'group');
+            buttonGroup.setAttribute('aria-label', '...');
+            var buttonE = document.createElement('button');
+            buttonE.innerHTML='<i class="fa fa-edit"></i>'
+            buttonE.setAttribute('class', 'btn btn-primary');
+            //add onclick here
+            buttonGroup.appendChild(buttonE);
+            ttC.appendChild(buttonGroup);
+            
+            var hr = document.createElement('hr');
+            hr.setAttribute('class','small')
+            ttC.appendChild(hr)
+            
+            var buttonGroup2 = document.createElement('div');
+            buttonGroup2.setAttribute('class', 'btn-group btn-group-xs pull-right btn-group-justified');
+            buttonGroup2.setAttribute('role', 'group');
+            buttonGroup2.setAttribute('aria-label', '...');
+            var buttonD = document.createElement('a');
+            buttonD.innerHTML='Dual'
+            buttonD.setAttribute('class', 'btn btn-info');
+            //add onclick here
+            buttonGroup2.appendChild(buttonD);
+            var buttonF = document.createElement('a');
+            buttonF.innerHTML='Fail'
+            buttonF.setAttribute('class', 'btn btn-warning');
+            //add onclick here
+            buttonGroup2.appendChild(buttonF);
+            ttC.appendChild(buttonGroup2);
         }
         ttC = ttR.insertCell(gmcAccount.length+1);    
         
         for (var h=0; h<gmcList.length;h++){
             ttR = tokenTable.insertRow(h+2);
             ttC = ttR.insertCell(0);
-            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img><b> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1)+'</b>';
+            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1);
             for (var i = 0; i<gmcAccount.length; i++){
                 ttC = ttR.insertCell(i+1);            
                 ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
@@ -247,8 +277,8 @@ $(document).ready(function(){
                 $(buttonGroup).data('col', i);
                 buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
                 buttonGroup.setAttribute('role', 'group');
-                buttonGroup.setAttribute('aria-label', '...')
-                var buttonP = document.createElement('button')
+                buttonGroup.setAttribute('aria-label', '...');
+                var buttonP = document.createElement('button');
                 buttonP.innerHTML = '<i class="fa fa-plus"></i>';
                 buttonP.setAttribute('class', 'btn btn-success');
                 buttonP.onclick = addToken;
@@ -262,6 +292,37 @@ $(document).ready(function(){
             }
             ttC = ttR.insertCell(gmcAccount.length+1);
         }
+        
+        //other actions
+        ttR = tokenTable.insertRow(gmcList.length+2);
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = "<b>Claim Box</b>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            //box things
+            var buttonGroupV = document.createElement('div');
+            buttonGroupV.setAttribute('class', 'btn-group-vertical btn-group-xs btn-block');
+            buttonGroupV.setAttribute('role', 'group');
+            buttonGroupV.setAttribute('aria-label', '...');
+            var buttonG = document.createElement('button');
+            buttonG.innerHTML='Normal'
+            buttonG.setAttribute('class', 'btn btn-default');
+            buttonGroupV.appendChild(buttonG);
+            var buttonCrimson = document.createElement('button');
+            buttonCrimson.innerHTML='Crimson'
+            buttonCrimson.setAttribute('class', 'btn btn-danger');
+            buttonGroupV.appendChild(buttonCrimson);
+            var buttonCerulean = document.createElement('button');
+            buttonCerulean.innerHTML='Cerulean'
+            buttonCerulean.setAttribute('class', 'btn btn-info');
+            buttonGroupV.appendChild(buttonCerulean);
+            var buttonSaffron = document.createElement('button');
+            buttonSaffron.innerHTML='Saffron'
+            buttonSaffron.setAttribute('class', 'btn btn-warning');
+            buttonGroupV.appendChild(buttonSaffron);
+            ttC.appendChild(buttonGroupV);
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);    
     }
     
    function addToken(){

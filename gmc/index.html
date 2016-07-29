@@ -61,6 +61,55 @@
                 <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
                 <!--- Today<div>Today's (Server) GMC: <span id="todayGMC"></span></div> --->
             </div>
+            <!-- Modal -->
+            <div id="editAccount" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Accounts</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="list-group" id="listAccount">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="formAddAcc" placeholder="Add account..." maxlength="12">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" id="buttonAddAcc"><i class="fa fa-plus"></i> Add!</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Save & Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="siteHelp" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Help</h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div class="row">   
                 <div class="col-sm-12">
                     <div class="panel panel-default">
@@ -68,45 +117,14 @@
                         <div class="panel-body">
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
+                                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                     <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo Last</button>
                                     
-                                    <!-- Modal -->
-                                    <div id="editAccount" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Edit Accounts</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <ul class="list-group" id="listAccount">
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" id="formAddAcc" placeholder="Add account...">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="button" id="buttonAddAcc"><i class="fa fa-plus"></i> Add!</button>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Save & Close</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             <hr>
                                 <div class="col-sm-12">
-                                    <table class="table table-curved table-striped table-custom" id="tableCD">
+                                    <table class="table table-curved" id="tableCD">
                                     </table>
                                 </div>
                         </div>
