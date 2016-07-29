@@ -234,7 +234,11 @@ $(document).ready(function(){
             ttC = ttR.insertCell(i+1);
             var cutOff = moment(gmcAccount[i].cooldown);
             var now = new moment();
-            ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));
+            if(gmcAccount[i].cooldown != null) {
+                ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));}
+            else{
+                ttC.appendChild(document.createTextNode("No CD"));
+            }
             
             var hr = document.createElement('hr');
             hr.setAttribute('class','small')
@@ -358,6 +362,7 @@ $(document).ready(function(){
             ttC.appendChild(buttonGroupV);
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
+        setTimeout(updateTablea,60000);
         
     }
     
