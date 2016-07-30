@@ -13,13 +13,14 @@
         
         <link rel="stylesheet" href="../stylesheet/font-awesome.min.css">
         <link rel="stylesheet" href="../stylesheet/bootstrap.min.css">
+        <link rel="stylesheet" href="../stylesheet/bootstrap-datetimepicker.min.css">
         <link rel="stylesheet" href="../stylesheet/gmc.css">
-        <script src="../script/tabletop.js"></script>
         <script src="../script/moment-with-locales.js"></script>
         <script src="../script/countdown.min.js"></script>
         <script src="../script/moment-countdown.min.js"></script>
         <script src="../script/moment-timezone-with-data.js"></script>
         <script src="../script/moment-duration-format.js"></script>
+        <script src="../script/bootstrap-datetimepicker.min.js"></script>
         <script src="../script/gmc.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
         
@@ -111,6 +112,15 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td><div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>
+                                            <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:red">Off</span></b></div></td>
+                                        <td>When <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>, the <div class="btn btn-success btn-xs"><i class="fa fa-plus"></i></div> button automatically add a 48h cooldown.
+                                            <br>
+                                            Switch to 
+                                            <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:red">Off</span></b></div> mode to populate an account with tokens without disturbing the cooldown associated.
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td><div class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Account</div></td>
                                         <td>Prompts a popup for <b>adding / deleting your game accounts.</b></td>
                                     </tr>
@@ -144,7 +154,7 @@
                                     </tr>
                                     <tr>
                                         <td><div class="btn btn-success btn-xs"><i class="fa fa-plus"></i></div></td>
-                                        <td><b>Add one token</b> and <b>automatically applies cooldown.</b></td>
+                                        <td><b>Add one token</b> and <b>automatically applies a 48h cooldown if <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>.</b></td>
                                     </tr>
                                     <tr>
                                         <td><div class="btn btn-danger btn-xs"><i class="fa fa-minus"></i></div></td>
@@ -226,6 +236,30 @@
 
                 </div>
             </div>
+            <div id="timePicker" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">GMC Completion Time</h4>
+                        </div>
+                        <div class="modal-body" id="timePickModal">
+                            <div class="form-group">
+                                <div class='input-group date' id='completePicker'>
+                                    <input type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Save & Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             
             <div class="well">
                 <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
@@ -234,9 +268,7 @@
                 <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
                 <!--- Locale version <div>Next GMCv2: <span id="nextGMCv2"></span></div> --->
                 <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
-                <!--- Today<div>Today's (Server) GMC: <span id="todayGMC"></span></div> --->
             </div>
-            
             
             <!-- table thing -->
             <div class="row">   
@@ -245,6 +277,7 @@
                         <div class="panel-heading">Ayyy caramba!</div>
                         <div class="panel-body">
                                 <div class="col-sm-12">
+                                    <button type="button" class="btn btn-sm btn-default" id="autoCoolButton"><b>Auto Cooldown: <span style="color:green">On</span></b></button>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
                                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> Info</button>

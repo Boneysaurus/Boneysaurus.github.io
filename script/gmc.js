@@ -11,6 +11,8 @@ weekday[6]="Saturday";
 var zone = "Europe/Berlin";
 var today = new moment();
 var tomorrow = new moment().add(1,'day');
+var autoCoolState = true;
+var gAccIndex;
 moment.locale(locale);
 
 /*account object*/
@@ -33,7 +35,7 @@ var gmcAccount = [];
 
 var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
 
-$(document).ready(function(){    
+$(document).ready(function(){
     var loadAcc = localStorage.getItem("storeAccount");
     if(localStorage.getItem("storeAccount") != null){
         gmcAccount = JSON.parse(loadAcc);
@@ -41,8 +43,6 @@ $(document).ready(function(){
     function storeAcc(){
         localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
     }
-    /*enable popover*/
-    $('[data-toggle="popover"]').popover();
     /* Back to top*/
     var offset = 250,
     //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -251,7 +251,7 @@ $(document).ready(function(){
             $(buttonGroup).data('col', i);
             var buttonE = document.createElement('a');
             buttonE.innerHTML='<i class="fa fa-edit"></i>'
-            buttonE.setAttribute('class', 'btn btn-primary');
+            buttonE.setAttribute('class', 'btn btn-primary testbutt');
             buttonE.onclick = editCD;
             buttonGroup.appendChild(buttonE);
             var buttonR = document.createElement('a');
@@ -260,6 +260,7 @@ $(document).ready(function(){
             buttonR.onclick = removeCD;
             buttonGroup.appendChild(buttonR);
             ttC.appendChild(buttonGroup);
+            
             
             var buttonGroup2 = document.createElement('div');
             buttonGroup2.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
@@ -371,7 +372,7 @@ $(document).ready(function(){
         var accIndex = $(this).parent().data('col');
         console.log(gmcAccount[accIndex][gmc])
         gmcAccount[accIndex][gmc] += 1;
-        gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
+        if (autoCoolState) {gmcAccount[accIndex].cooldown = new moment().add(48, 'hours')};
         updateTable();
         storeAcc();
     }
@@ -427,12 +428,26 @@ $(document).ready(function(){
         storeAcc();
     }
     
-    //cooldown functions
+    //cooldown functions 
     function editCD(){
-        var accIndex = $(this).parent().data('col');
+        gAccIndex = $(this).parent().data('col');
+        
+        $('#timePicker').modal({backdrop: 'static', keyboard: false});
         updateTable();
         storeAcc();
     }
+    $('#timePicker').on('shown.bs.modal', function () {
+        var picker = $('#completePicker').datetimepicker({locale:locale});
+        var cd = moment(gmcAccount[gAccIndex].cooldown).format();
+        if (gmcAccount[gAccIndex].cooldown != null) {picker.data("DateTimePicker").date(moment(cd));}
+        else {picker.data("DateTimePicker").date(moment());}
+    })
+    $('#saveCD').on('click',function(){
+        var picker = document.getElementById('completePicker')
+        gmcAccount[gAccIndex].cooldown= moment($(picker).data("DateTimePicker").date());
+        updateTable();
+        storeAcc();
+    })
     function removeCD(){
         var accIndex = $(this).parent().data('col');
         gmcAccount[accIndex].cooldown = null;
@@ -450,7 +465,7 @@ $(document).ready(function(){
         var gmcTD = new moment();
         var x = new moment();
         gmcTD.date(tomorrow.tz(zone).date());
-        gmcTD.hour();                
+        gmcTD.hour(0);                
         gmcTD.minute(0);
         gmcTD.second(0);
         gmcTD.millisecond(0);
@@ -460,6 +475,14 @@ $(document).ready(function(){
         updateTable();
         storeAcc();
     }
+    
+    //edit mode button
+    $('#autoCoolButton').on('click', function(){
+        autoCoolState = !autoCoolState;
+        if (autoCoolState){$(this).html('<b>Auto Cooldown: <span style="color:green">On</span></b>')}
+        else{ $(this).html('<b>Auto Cooldown: <span style="color:red">Off</span></b>')}
+        
+    })
     
     updateTable();
     nextTime();
