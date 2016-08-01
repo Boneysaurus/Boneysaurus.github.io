@@ -1,8 +1,12 @@
+
 .table-curved > tbody > tr:nth-of-type(odd) {
   background-color: #fcfcfc;
 }
 .table-curved > tbody > tr:nth-of-type(odd) > td:last-child {
   background-color: #fff !important;
+}
+td:empty {
+  visibility: hidden;
 }
 h5{
     word-wrap: break-word;
@@ -23,19 +27,16 @@ h5{
     border-left: 1px solid #ccc;
 }
 .table-curved tr:first-child td:first-child {
-    border-radius: 6px 0 0 0;
+    border-top-left-radius: 6px;
 }
 .table-curved tr:first-child td:nth-last-child(2) {
-    border-radius: 0 6px 0 0;
-}
-.table-curved tr:only-child{
-    border-radius: 6px 6px 6px 6px;
+    border-top-right-radius: 6px;
 }
 .table-curved tr:last-child td:first-child {
-    border-radius: 0 0 0 6px;
+    border-bottom-left-radius: 6px;
 }
 .table-curved tr:last-child td:nth-last-child(2) {
-    border-radius: 0 0 6px 0 !important;
+    border-bottom-right-radius: 6px;
 }
 .table-curved tr td:nth-last-child(2){
     border-right: 1px solid #ccc;
@@ -55,4 +56,63 @@ h5{
 
 hr.small{
     margin:4px 0px;
+}
+
+/*purple*/
+.btn-purple {
+  color: #fff;
+  background-color: #b7337a;
+  border-color: #a42e6d;
+}
+.btn-purple:focus,
+.btn-purple.focus {
+  color: #fff;
+  background-color: #902860;
+  border-color: #40122b;
+}
+.btn-purple:hover {
+  color: #fff;
+  background-color: #902860;
+  border-color: #74204d;
+}
+.btn-purple:active,
+.btn-purple.active,
+.open > .dropdown-toggle.btn-purple {
+  color: #fff;
+  background-color: #902860;
+  border-color: #74204d;
+}
+.btn-purple:active:hover,
+.btn-purple.active:hover,
+.open > .dropdown-toggle.btn-purple:hover,
+.btn-purple:active:focus,
+.btn-purple.active:focus,
+.open > .dropdown-toggle.btn-purple:focus,
+.btn-purple:active.focus,
+.btn-purple.active.focus,
+.open > .dropdown-toggle.btn-purple.focus {
+  color: #fff;
+  background-color: #74204d;
+  border-color: #40122b;
+}
+.btn-purple:active,
+.btn-purple.active,
+.open > .dropdown-toggle.btn-purple {
+  background-image: none;
+}
+.btn-purple.disabled:hover,
+.btn-purple[disabled]:hover,
+fieldset[disabled] .btn-purple:hover,
+.btn-purple.disabled:focus,
+.btn-purple[disabled]:focus,
+fieldset[disabled] .btn-purple:focus,
+.btn-purple.disabled.focus,
+.btn-purple[disabled].focus,
+fieldset[disabled] .btn-purple.focus {
+  background-color: #b7337a;
+  border-color: #a42e6d;
+}
+.btn-purple .badge {
+  color: #b7337a;
+  background-color: #fff;
 }

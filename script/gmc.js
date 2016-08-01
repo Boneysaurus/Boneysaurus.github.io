@@ -8,6 +8,10 @@ weekday[4]="Thursday";
 weekday[5]="Friday";
 weekday[6]="Saturday";
 
+var previousGMC;
+var nextGMC;
+var fullGMC=[];
+
 var zone = "Europe/Berlin";
 var today = new moment();
 var tomorrow = new moment().add(1,'day');
@@ -33,9 +37,14 @@ var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","ge
 
 var gmcAccount = [];
 
-var gmcTime=[[0,11,15],[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18]];
+var gmcTime=[[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18],[0,11,15]];
 
 $(document).ready(function(){
+    $('.pull-down').each(function() {
+      var $this = $(this);
+      $this.css('margin-top', $this.parent().height() - $this.height())
+    });
+    //load from local
     var loadAcc = localStorage.getItem("storeAccount");
     if(localStorage.getItem("storeAccount") != null){
         gmcAccount = JSON.parse(loadAcc);
@@ -69,103 +78,153 @@ $(document).ready(function(){
 		);
 	});
     
-    function getTime(){
-        var d = new moment();
-        d.locale(locale);
-        $("#dateLocal").text(d.format('LTS') + " " + d.format('dddd'));
-        setTimeout(getTime,1000);
-    }
-    function compareTime(){
-        console.log(today.tz(zone).day());
-        console.log(today.tz('Europe/Berlin').hour());
-        console.log(today.tz('Europe/Berlin').minute());
-    }
-    function nextTime(){
-        var gmcToday=[];
-        var gmcNextThree=[];
-        var gmcNextThreeIndex = 0;
-        var gmcNext= new moment();
-        var gmcCheck =false;
-        var currentTime = new moment();
-        /*
-        for (var i=0; i<gmcTime[today.tz(zone).day()].length;i++){
-            var gmcTD = new moment();
-            var x = new moment()
-            gmcTD.date(today.date());
-            gmcTD.hour(gmcTime[today.tz(zone).day()][i]);
-            gmcTD.minute(0);
-            gmcTD.second(0);
-            gmcTD.millisecond(0);
-            x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
-            x.tz(moment.tz.guess());
-            x.locale(locale);
-            gmcToday.push(" "+x.calendar());
-            if (moment().hour()<x.hour() && gmcCheck == false){
-                gmcNext = x;
-                gmcCheck =true;
-            }
-        }*/
-        function getGMC(){
-            
-        }
-        for (var i=0; i<gmcTime[today.tz(zone).day()].length;i++){
-            var gmcTD = new moment();
-            gmcTD.date(today.tz(zone).date());
-            gmcTD.hour(gmcTime[today.tz(zone).day()][i]);
-            gmcTD.minute(0);
-            gmcTD.second(0);
-            gmcTD.millisecond(0);
-            var x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
-            x.tz(moment.tz.guess());
-            x.locale(locale);
-            var y = moment(x);
-            y.add(2,'h')
-            gmcToday.push(" "+x.calendar());
-            if(moment()>x && moment()<y){
-                $('#finishGMC').text(moment().countdown(y,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2))
-                $('#currentStatus').removeClass('alert-info').addClass('alert-success');
-                $('#statusOngoing').show();
-            }
-            else if(moment()>y) {
-                $('#statusOngoing').hide();
-                $('#currentStatus').removeClass('alert-success').addClass('alert-info');
-            }
-            if (moment()<x && gmcNextThreeIndex<3){
-                if (gmcCheck == false){
-                    gmcNext = x;
-                    gmcCheck = true;
+    
+    function gmcSchedule(){
+        var nextGMCL=[];
+        var nextGMCCount=0;
+        var previousGMCL;
+        var a = 0;
+        var tempWeek = moment();
+        tempWeek.startOf('isoweek');
+        var weekStart = moment.tz(zone);
+        moment.tz(weekStart,zone);
+        weekStart.startOf('isoweek');
+        for (var i=0; i< gmcTime.length;i++){
+            var dayPlus=moment(weekStart).add(i,'days');
+            for (var j=0; j< gmcTime[i].length;j++){
+                var dayGMC = moment(dayPlus);
+                dayGMC.hour(gmcTime[i][j]);
+                var tempGMC = moment(dayGMC);
+                if(moment(tempGMC).local().startOf('isoweek').isBefore(moment(dayGMC).startOf('isoweek'))){
+                    dayGMC.add(7,'days')
                 }
-                gmcNextThree.push(" "+x.calendar());
-                gmcNextThreeIndex++;
-            }
-        }
-        for (var i=0; i<gmcTime[tomorrow.tz(zone).day()].length;i++){
-
-            var gmcTD = new moment();
-            var x = new moment();
-            gmcTD.date(tomorrow.tz(zone).date());
-            gmcTD.hour(gmcTime[tomorrow.tz(zone).day()][i]);                
-            gmcTD.minute(0);
-            gmcTD.second(0);
-            gmcTD.millisecond(0);
-            x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
-            x.tz(moment.tz.guess());
-            x.locale(locale);
-            if (gmcNextThreeIndex<3){
-                if (gmcCheck == false){
-                    gmcNext = x;
-                    gmcCheck = true;
+                fullGMC[a] = dayGMC.format();
+                a++;
+                var x = moment().tz(zone)
+                moment.tz(x,zone)
+                if(x.isAfter(dayGMC)){previousGMCL = moment(dayGMC)}
+                if(x.isBefore(dayGMC) && nextGMCCount<3){
+                    nextGMCL[nextGMCCount] = moment(dayGMC).format();
+                    nextGMCCount += 1
                 }
-                gmcNextThree.push(" "+x.calendar());
-                gmcNextThreeIndex++;
             }
         }
-
-        $("#nextThreeGMC").text(gmcNextThree);
-        $("#todayGMC").text(gmcToday);
-        $('#upcomingGMC').text(moment().countdown(gmcNext,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+" ("+gmcNext.format('LT')+")");
-        setTimeout(nextTime,1000);
+        //check next week or last week
+        if(nextGMCL[0]==null){
+            nextGMCL[0]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMCL[1]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+            nextGMCL[2]=moment(moment.tz(fullGMC[2],zone)).add(7,'days').format();
+        }
+        if (nextGMCL[1]==null){
+            nextGMCL[1]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMCL[2]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+        }
+        if (nextGMCL[2]==null){;
+            nextGMCL[2]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+        }
+        nextGMC=nextGMCL;
+        if(previousGMCL==0){
+            previousGMCL=moment(moment.tz(fullGMC[fullGMC.length],zone)).subtract(7,'days').format();
+        }
+        previousGMC=previousGMCL;
+        fullGMC.sort();
     }
+    gmcSchedule();
+    
+    function updateNextGMCs(){
+        var y = document.createElement('span')
+        y = moment(nextGMC[0]).calendar()+', '+moment(nextGMC[1]).calendar()+', '+moment(nextGMC[2]).calendar();
+        $('#nextThreeGMC').text(y);
+        
+        
+        
+        //make schedule table
+        var t = document.getElementById('scheduleTable');
+        var colorCode=[];
+        var colorHex=['#fff4f4','#fffaf4','#fffef4','#f3fdf3','#f3fbfc','#f4f3fc','#f9f3fc']
+        var gmcGroup=[[],[],[],[],[],[],[]];
+        var colorGroup=[[],[],[],[],[],[],[]];
+        
+        
+        
+        $(t).empty();
+        var r,c;
+        r = t.insertRow(0);
+        for (var i =1; i<8;i++){
+            /*
+            c = r.insertCell(i-1);
+            c.appendChild(document.createTextNode(moment().isoWeekday(i).startOf('day').format('dddd')))*/
+            var q = document.createElement('td');
+            q.setAttribute('width', '14%');
+            q.setAttribute('class', 'text-center');
+            var p = document.createElement('span');
+            p.setAttribute('style','font-weight:bold;');
+            p.innerHTML = moment().isoWeekday(i).startOf('day').format('dddd');
+            q.appendChild(p);
+            r.appendChild(q);
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).tz(zone).isoWeekday()==j){
+                    colorCode[i]=j;
+                }
+            }
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).isoWeekday()==j){
+                    gmcGroup[j-1].push(moment(fullGMC[i]).format());
+                    colorGroup[j-1].push(colorCode[i]);
+                    
+                }
+            }
+        }
+        
+        
+        var tempHTML='';
+        for (var i = 0; i<5; i++){
+            tempHTML += '<tr>'
+            for (var j = 0; j < 7; j++){
+                if (gmcGroup[j][i] != undefined){
+                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                }
+                else{
+                    tempHTML += '<td></td>'
+                }
+            }
+            tempHTML += '</tr>'
+        }
+        $(tempHTML).appendTo(t)
+        console.log(gmcGroup)
+    }
+    updateNextGMCs();
+    
+    function countdown(){
+        var currentTime= new moment();
+        $('#dateLocal').text(currentTime.format('LTS dddd'));
+        
+        var x = new moment();
+        var nextOne = moment(nextGMC[0]);
+        var previousOne = moment(previousGMC);
+        var previousOnePlusTwo = moment(previousGMC).add(2, 'hours');
+        $('#upcomingGMC').text(moment().countdown(nextOne,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(nextOne).format('LT')+')');
+        if (x.isBetween(previousOne, previousOnePlusTwo)){
+            $('#finishGMC').text(moment().countdown(previousOnePlusTwo,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(previousOnePlusTwo).format('LT')+')');
+            $('#currentStatus').removeClass('alert-info').addClass('alert-success');
+            $('#statusOngoing').show();
+        }
+        else{
+            $('#statusOngoing').hide();
+            $('#currentStatus').removeClass('alert-success').addClass('alert-info');
+        }
+        if (x.isAfter(nextOne)){
+            updateNextGMCs();
+            gmcSchedule();
+        }
+        setInterval(countdown,1000);
+    }
+    countdown();
+    
     
     /*list account temp*/
     function updateEditAcc(){
@@ -235,7 +294,13 @@ $(document).ready(function(){
             var cutOff = moment(gmcAccount[i].cooldown);
             var now = new moment();
             if(gmcAccount[i].cooldown != null) {
-                ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));}
+                if (moment(cutOff).isAfter(now)){
+                    ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));
+                }
+                else {gmcAccount[i].cooldown != null;
+                     ttC.appendChild(document.createTextNode("No CD"));
+                }
+            }
             else{
                 ttC.appendChild(document.createTextNode("No CD"));
             }
@@ -439,8 +504,12 @@ $(document).ready(function(){
     $('#timePicker').on('shown.bs.modal', function () {
         var picker = $('#completePicker').datetimepicker({locale:locale});
         var cd = moment(gmcAccount[gAccIndex].cooldown).format();
+        picker.data("DateTimePicker").minDate(moment());
         if (gmcAccount[gAccIndex].cooldown != null) {picker.data("DateTimePicker").date(moment(cd));}
         else {picker.data("DateTimePicker").date(moment());}
+    })
+    $('#cancelCD').on('click',function(){
+        
     })
     $('#saveCD').on('click',function(){
         var picker = document.getElementById('completePicker')
@@ -484,9 +553,11 @@ $(document).ready(function(){
         
     })
     
+    //preview sound
+    $('#previewSoundButt').on('click',function(){
+        $.playSound('../sound/'+$('#soundSel').val());
+    })
+    
     updateTable();
-    nextTime();
-    compareTime();    
-    getTime();
     
 });

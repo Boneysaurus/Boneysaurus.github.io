@@ -21,6 +21,7 @@
         <script src="../script/moment-timezone-with-data.js"></script>
         <script src="../script/moment-duration-format.js"></script>
         <script src="../script/bootstrap-datetimepicker.min.js"></script>
+        <script src="../script/jquery.playSound.js"></script>
         <script src="../script/gmc.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
         
@@ -47,7 +48,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-save"></span> Save</a></li>
-                            <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                            <li><a data-toggle="modal" data-target="#siteSettings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         </ul>
                     </div>
 				</div>
@@ -237,13 +238,14 @@
                 </div>
             </div>
             <div id="timePicker" class="modal fade" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-sm">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">GMC Completion Time</h4>
+                            <h4 class="modal-title">Set Cooldown Manually</h4>
                         </div>
                         <div class="modal-body" id="timePickModal">
+                            <h4>Pick a cooldown:</h4>
                             <div class="form-group">
                                 <div class='input-group date' id='completePicker'>
                                     <input type='text' class="form-control" />
@@ -254,20 +256,95 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-dismiss="modal">Save & Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" id="saveCD">Save & Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelCD">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="boxClaim" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Claim Box</h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="siteSettings" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Settings</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12 checkbox">
+                                    <label><input type="checkbox" value="">Enable Notification</label>
+                                </div>
+                                <div class="col-sm-12"><b>Play</b></div>
+                                <div class="form-group col-sm-12 col-md-12 col-lg-12">  
+                                        <div class="input-group input-group-sm" id="soundGrp">
+                                            <select class="form-control" id="soundSel">
+                                                <optgroup label="Short <4s">
+                                                    <option value="filling-your-inbox">Inbox</option>
+                                                    <option value="soft-bells">Soft Bells</option>
+                                                    <option value="who-are-you">Who</option>
+                                                </optgroup>
+                                                <optgroup label="Long <10s">
+                                                    <option value="discreet">Discreet</option>
+                                                    <option value="good-morning">Good Morning</option>
+                                                </optgroup>
+                                            </select>                                            
+                                            <span class="input-group-btn"><button class="btn btn-default" id="previewSoundButt"><i class="fa fa-play"></i> Preview</button></span>
+                                        </div>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                        <select class="form-control input-sm">
+                                            <option value="1">1</option>                                        
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                </div>
+                                <div class="col-sm-7" style="padding-top:5px; padding-right:0px;"><span style="font-size:0.9em">minutes before next GMC</span></div>
+                            </div>                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
 
                 </div>
             </div>
             
-            <div class="well">
-                <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
-                <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Schedule</div>
+                        <div class="panel-body">
+                            <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
+                            <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
+                            </div>
+                            <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
+                            <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div><br>
+                            <button class="btn btn-purple" data-toggle="collapse" data-target="#scheduleCollapse"><i class='fa fa-calendar'></i> Full Schedule</button>
+                            <div class="collapse" id="scheduleCollapse">
+                                <table class="table table-default" id="scheduleTable">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
-                <!--- Locale version <div>Next GMCv2: <span id="nextGMCv2"></span></div> --->
-                <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div>
             </div>
             
             <!-- table thing -->
@@ -279,9 +356,9 @@
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-sm btn-default" id="autoCoolButton"><b>Auto Cooldown: <span style="color:green">On</span></b></button>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
-                                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> Info</button>
-                                    <button type="button" class="btn btn-sm btn-warning pull-right"><i class="fa fa-undo"></i> Undo Last</button>
+                                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
+                                    <button type="button" class="btn btn-sm btn-warning pull-right" disabled><i class="fa fa-undo"></i> Undo Last</button>
                                     
                                     
                                 </div>
