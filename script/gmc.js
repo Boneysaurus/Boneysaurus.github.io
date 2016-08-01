@@ -39,448 +39,7 @@ var gmcAccount = [];
 
 var gmcTime=[[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18],[0,11,15]];
 
-function gmcSchedule(){
-    var nextGMCL=[];
-    var nextGMCCount=0;
-    var previousGMCL;
-    var a = 0;
-    var tempWeek = moment();
-    tempWeek.startOf('isoweek');
-    var weekStart = moment.tz(zone);
-    moment.tz(weekStart,zone);
-    weekStart.startOf('isoweek');
-    for (var i=0; i< gmcTime.length;i++){
-        var dayPlus=moment(weekStart).add(i,'days');
-        for (var j=0; j< gmcTime[i].length;j++){
-            var dayGMC = moment(dayPlus);
-            dayGMC.hour(gmcTime[i][j]);
-            var tempGMC = moment(dayGMC);
-            if(moment(tempGMC).local().startOf('isoweek').isBefore(moment(dayGMC).startOf('isoweek'))){
-                dayGMC.add(7,'days')
-            }
-            fullGMC[a] = dayGMC.format();
-            a++;
-            var x = moment().tz(zone)
-            moment.tz(x,zone)
-            if(x.isAfter(dayGMC)){previousGMCL = moment(dayGMC)}
-            if(x.isBefore(dayGMC) && nextGMCCount<3){
-                nextGMCL[nextGMCCount] = moment(dayGMC).format();
-                nextGMCCount += 1
-            }
-        }
-    }
-    //check next week or last week
-    if(nextGMCL[0]==null){
-        nextGMCL[0]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
-        nextGMCL[1]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
-        nextGMCL[2]=moment(moment.tz(fullGMC[2],zone)).add(7,'days').format();
-    }
-    if (nextGMCL[1]==null){
-        nextGMCL[1]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
-        nextGMCL[2]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
-    }
-    if (nextGMCL[2]==null){;
-        nextGMCL[2]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
-    }
-    nextGMC=nextGMCL;
-    if(previousGMCL==0){
-        previousGMCL=moment(moment.tz(fullGMC[fullGMC.length],zone)).subtract(7,'days').format();
-    }
-    previousGMC=previousGMCL;
-    fullGMC.sort();
-}
-
-function updateNextGMCs(){
-    var y = document.createElement('span')
-    y = moment(nextGMC[0]).calendar()+', '+moment(nextGMC[1]).calendar()+', '+moment(nextGMC[2]).calendar();
-    $('#nextThreeGMC').text(y);
-
-
-
-    //make schedule table
-    var t = document.getElementById('scheduleTable');
-    var colorCode=[];
-    var colorHex=['#fff4f4','#fffaf4','#fffef4','#f3fdf3','#f3fbfc','#f4f3fc','#f9f3fc']
-    var gmcGroup=[[],[],[],[],[],[],[]];
-    var colorGroup=[[],[],[],[],[],[],[]];
-
-
-
-    $(t).empty();
-    var r,c;
-    r = t.insertRow(0);
-    for (var i =1; i<8;i++){
-        var q = document.createElement('td');
-        q.setAttribute('width', '14%');
-        q.setAttribute('class', 'text-center');
-        var p = document.createElement('span');
-        p.setAttribute('style','font-weight:bold;');
-        p.innerHTML = moment().isoWeekday(i).startOf('day').format('dddd');
-        q.appendChild(p);
-        r.appendChild(q);
-    }
-    for(var i = 0; i<fullGMC.length;i++){
-        for (var j = 1; j < 8; j++ ){
-            if(moment(fullGMC[i]).tz(zone).isoWeekday()==j){
-                colorCode[i]=j;
-            }
-        }
-    }
-    for(var i = 0; i<fullGMC.length;i++){
-        for (var j = 1; j < 8; j++ ){
-            if(moment(fullGMC[i]).isoWeekday()==j){
-                gmcGroup[j-1].push(moment(fullGMC[i]).format());
-                colorGroup[j-1].push(colorCode[i]);
-
-            }
-        }
-    }
-
-
-    var tempHTML='';
-    for (var i = 0; i<5; i++){
-        tempHTML += '<tr>'
-        for (var j = 0; j < 7; j++){
-            if (gmcGroup[j][i] != undefined){
-                tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
-            }
-            else{
-                tempHTML += '<td></td>'
-            }
-        }
-        tempHTML += '</tr>'
-    }
-    $(tempHTML).appendTo(t)
-    console.log(gmcGroup)
-}
-
-function storeAcc(){
-    localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
-}
-
-/*list account temp*/
-function updateEditAcc(){
-    var list = document.getElementById('listAccount')
-    $(list).empty();
-    for (var i = 0; i<gmcAccount.length; i++){
-        var account = document.createElement('li');
-        account.className = 'list-group-item';
-        account.appendChild(document.createTextNode(gmcAccount[i].name));
-        var button = document.createElement('button');
-        button.innerHTML ='<i class="fa fa-trash"></i> Delete';
-        button.onclick = deleteAccount;
-        button.setAttribute('class','btn btn-danger btn-xs pull-right btnDeleteAcc')
-        account.appendChild(button);
-        /*account.innerHTML = gmcAccount[i].name+
-            '<button type="button" class="btn btn-danger btn-xs pull-right btnDeleteAcc"><i class="fa fa-trash"></i> Delete</button>'*/
-        list.appendChild(account);
-    }
-    storeAcc();
-}
-function emptyEditAcc(){
-    var list = document.getElementById('listAccount')
-    $(list).empty();
-    alert('yes')
-}
-
-//button delete
-function deleteAccount(){
-    gmcAccount.splice($(this).parent().index(),1);
-    updateEditAcc();
-    updateTable();
-}
-
-
-
-function countdown(){
-    $('#dateLocal').html(moment().format('LTS dddd'));
-
-    var x = new moment();
-    var nextOne = moment(nextGMC[0]);
-    var previousOne = moment(previousGMC);
-    var previousOnePlusTwo = moment(previousGMC).add(2, 'hours');
-    $('#upcomingGMC').text(moment().countdown(nextOne,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(nextOne).format('LT')+')');
-    if (x.isBetween(previousOne, previousOnePlusTwo)){
-        $('#finishGMC').text(moment().countdown(previousOnePlusTwo,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(previousOnePlusTwo).format('LT')+')');
-        $('#currentStatus').removeClass('alert-info').addClass('alert-success');
-        $('#statusOngoing').show();
-    }
-    else{
-        $('#statusOngoing').hide();
-        $('#currentStatus').removeClass('alert-success').addClass('alert-info');
-    }
-    if (x.isAfter(nextOne)){
-        updateNextGMCs();
-        gmcSchedule();
-    }       
-}
-/*cooldown & token table*/
-function updateTable(){
-    var tokenTable = document.getElementById('tableCD');
-    $(tokenTable).empty();
-    var ttH, ttR, ttC;
-    ttR = tokenTable.insertRow(0);
-    ttC = ttR.insertCell(0);
-    ttC.style.width = '170px';
-    ttC.innerHTML = "<h4>GMC</h4>";
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-        ttC.style.width = '100px';
-        ttC.innerHTML = '<h5><b>'+gmcAccount[i].name+'</b></h5>';
-    }
-    ttC = ttR.insertCell(gmcAccount.length+1);
-
-    ttR = tokenTable.insertRow(1);
-    ttC = ttR.insertCell(0);
-    ttC.innerHTML = "<b>Cooldown</b>";
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-        var cutOff = moment(gmcAccount[i].cooldown);
-        var now = new moment();
-        if(gmcAccount[i].cooldown != null) {
-            if (moment(cutOff).isAfter(now)){
-                ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));
-            }
-            else {gmcAccount[i].cooldown != null;
-                 ttC.appendChild(document.createTextNode("No CD"));
-            }
-        }
-        else{
-            ttC.appendChild(document.createTextNode("No CD"));
-        }
-
-        var hr = document.createElement('hr');
-        hr.setAttribute('class','small')
-        ttC.appendChild(hr)
-
-        var buttonGroup = document.createElement('div');
-        buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
-        buttonGroup.setAttribute('role', 'group');
-        buttonGroup.setAttribute('aria-label', '...');
-        $(buttonGroup).data('col', i);
-        var buttonE = document.createElement('a');
-        buttonE.innerHTML='<i class="fa fa-edit"></i>'
-        buttonE.setAttribute('class', 'btn btn-primary testbutt');
-        buttonE.onclick = editCD;
-        buttonGroup.appendChild(buttonE);
-        var buttonR = document.createElement('a');
-        buttonR.innerHTML='<i class="fa fa-remove"></i>'
-        buttonR.setAttribute('class', 'btn btn-danger');
-        buttonR.onclick = removeCD;
-        buttonGroup.appendChild(buttonR);
-        ttC.appendChild(buttonGroup);
-
-
-        var buttonGroup2 = document.createElement('div');
-        buttonGroup2.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
-        buttonGroup2.setAttribute('role', 'group');
-        buttonGroup2.setAttribute('aria-label', '...');
-        $(buttonGroup2).data('col', i);
-        var buttonD = document.createElement('a');
-        buttonD.innerHTML='Dual'
-        buttonD.setAttribute('class', 'btn btn-info');
-        buttonD.onclick = dualCD;
-        buttonGroup2.appendChild(buttonD);
-        var buttonF = document.createElement('a');
-        buttonF.innerHTML='Fail'
-        buttonF.setAttribute('class', 'btn btn-warning');
-        buttonF.onclick = failCD;
-        buttonGroup2.appendChild(buttonF);
-        ttC.appendChild(buttonGroup2);
-    }
-    ttC = ttR.insertCell(gmcAccount.length+1);
-
-    for (var h=0; h<gmcList.length;h++){
-        ttR = tokenTable.insertRow(h+2);
-        ttC = ttR.insertCell(0);
-        ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1);
-        for (var i = 0; i<gmcAccount.length; i++){
-            ttC = ttR.insertCell(i+1);            
-            ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
-            var buttonGroup = document.createElement('div');
-            $(buttonGroup).data('gmc', gmcList[h]);
-            $(buttonGroup).data('col', i);
-            buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
-            buttonGroup.setAttribute('role', 'group');
-            buttonGroup.setAttribute('aria-label', '...');
-            var buttonP = document.createElement('button');
-            buttonP.innerHTML = '<i class="fa fa-plus"></i>';
-            buttonP.setAttribute('class', 'btn btn-success');
-            buttonP.onclick = addToken;
-            buttonGroup.appendChild(buttonP);
-            var buttonM = document.createElement('button')
-            buttonM.innerHTML = '<i class="fa fa-minus"></i>';
-            buttonM.setAttribute('class', 'btn btn-danger');
-            if (gmcAccount[i][gmcList[h]]==0){$(buttonM).prop('disabled',true)}
-            buttonM.onclick = delToken;
-            buttonGroup.appendChild(buttonM);
-            ttC.appendChild(buttonGroup);
-        }
-        ttC = ttR.insertCell(gmcAccount.length+1);
-    }
-
-
-    //other actions
-    ttR = tokenTable.insertRow(gmcList.length+2);
-    ttC = ttR.insertCell(0);
-    ttC.innerHTML = "<b>Claim Box</b>";
-    for (var i = 0; i<gmcAccount.length; i++){
-        ttC = ttR.insertCell(i+1);
-
-        var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
-        var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
-        var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
-        var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
-        //box things
-
-        if (!(normBox || crimBox || ceruBox || saffBox)){
-            ttC.appendChild(document.createTextNode("None"));}
-
-        var buttonGroupV = document.createElement('div');
-        buttonGroupV.setAttribute('class', 'btn-group-vertical btn-group-xs btn-block');
-        buttonGroupV.setAttribute('role', 'group');
-        buttonGroupV.setAttribute('aria-label', '...');
-        $(buttonGroupV).data('col', i);
-        var buttonG = document.createElement('button');
-        buttonG.innerHTML='Normal'
-        buttonG.setAttribute('class', 'btn btn-default');
-        buttonG.onclick = claimNormal;
-        $(buttonG).prop('disabled',true);
-        if (normBox){$(buttonG).prop('disabled',false)
-        buttonGroupV.appendChild(buttonG)};
-        var buttonCrimson = document.createElement('button');
-        buttonCrimson.innerHTML='Crimson'
-        buttonCrimson.setAttribute('class', 'btn btn-danger');
-        buttonCrimson.onclick = claimCrimson;
-        $(buttonCrimson).prop('disabled',true);
-        if (crimBox){$(buttonCrimson).prop('disabled',false)
-        buttonGroupV.appendChild(buttonCrimson)};
-        var buttonCerulean = document.createElement('button');
-        buttonCerulean.innerHTML='Cerulean'
-        buttonCerulean.setAttribute('class', 'btn btn-info');
-        buttonCerulean.onclick = claimCerulean;
-        $(buttonCerulean).prop('disabled',true);
-        if (ceruBox){$(buttonCerulean).prop('disabled',false)
-        buttonGroupV.appendChild(buttonCerulean)};
-        var buttonSaffron = document.createElement('button');
-        buttonSaffron.innerHTML='Saffron'
-        buttonSaffron.setAttribute('class', 'btn btn-warning');
-        buttonSaffron.onclick = claimSaffron;
-        $(buttonSaffron).prop('disabled',true);
-        if (saffBox){$(buttonSaffron).prop('disabled',false)
-        buttonGroupV.appendChild(buttonSaffron)};
-        ttC.appendChild(buttonGroupV);
-    }
-    ttC = ttR.insertCell(gmcAccount.length+1);
-    setTimeout(updateTable,60000);
-
-}
-
-function addToken(){
-    var gmc = $(this).parent().data('gmc');
-    var accIndex = $(this).parent().data('col');
-    console.log(gmcAccount[accIndex][gmc])
-    gmcAccount[accIndex][gmc] += 1;
-    if (autoCoolState) {gmcAccount[accIndex].cooldown = new moment().add(48, 'hours')};
-    updateTable();
-    storeAcc();
-}
-
-function delToken(){
-    var gmc = $(this).parent().data('gmc');
-    var accIndex = $(this).parent().data('col');
-    console.log(gmcAccount[accIndex][gmc]);
-    gmcAccount[accIndex][gmc] -= 1;
-    updateTable();
-    storeAcc();
-
-}
-
-//box functions
-function claimNormal(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].blacktalon -= 1;
-    gmcAccount[accIndex].boreas -= 1;
-    gmcAccount[accIndex].seiren -= 1;
-    gmcAccount[accIndex].howl -= 1;
-    gmcAccount[accIndex].shiris -= 1;
-    gmcAccount[accIndex].muui -= 1;
-    gmcAccount[accIndex].sushi -= 1;
-    updateTable();
-    storeAcc();
-}
-function claimCrimson(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].muui -= 3;
-    gmcAccount[accIndex].shiris -= 3;
-    gmcAccount[accIndex].howl -= 3;
-    gmcAccount[accIndex].gemini -= 1;
-    updateTable();
-    storeAcc();
-}
-function claimCerulean(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].howl -= 3;
-    gmcAccount[accIndex].seiren -= 3;
-    gmcAccount[accIndex].blacktalon -= 3;
-    gmcAccount[accIndex].gemini -= 1;
-    updateTable();
-    storeAcc();
-}
-function claimSaffron(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].sushi -= 3;
-    gmcAccount[accIndex].boreas -= 3;
-    gmcAccount[accIndex].shiris -= 3;
-    gmcAccount[accIndex].gemini -= 1;
-    updateTable();
-    storeAcc();
-}
-
-//cooldown functions 
-function editCD(){
-    gAccIndex = $(this).parent().data('col');
-
-    $('#timePicker').modal({backdrop: 'static', keyboard: false});
-    updateTable();
-    storeAcc();
-}     
-function removeCD(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].cooldown = null;
-    updateTable();
-    storeAcc();
-}
-function dualCD(){
-    var accIndex = $(this).parent().data('col');
-    gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
-    updateTable();
-    storeAcc();
-}
-function failCD(){
-    var accIndex = $(this).parent().data('col');
-    var gmcTD = new moment();
-    var x = new moment();
-    gmcTD.date(tomorrow.tz(zone).date());
-    gmcTD.hour(0);                
-    gmcTD.minute(0);
-    gmcTD.second(0);
-    gmcTD.millisecond(0);
-    x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
-    x.tz(moment.tz.guess());
-    gmcAccount[accIndex].cooldown = x;
-    updateTable();
-    storeAcc();
-}
 $(document).ready(function(){
-    gmcSchedule();
-    updateNextGMCs();
-    countdown();   
-    setInterval(countdown,1000);
-    
-    updateEditAcc();
-    updateTable();
-    
     $('.pull-down').each(function() {
       var $this = $(this);
       $this.css('margin-top', $this.parent().height() - $this.height())
@@ -489,6 +48,9 @@ $(document).ready(function(){
     var loadAcc = localStorage.getItem("storeAccount");
     if(localStorage.getItem("storeAccount") != null){
         gmcAccount = JSON.parse(loadAcc);
+    }
+    function storeAcc(){
+        localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
     }
     /* Back to top*/
     var offset = 250,
@@ -516,6 +78,189 @@ $(document).ready(function(){
 		);
 	});
     
+    
+    function gmcSchedule(){
+        var nextGMCL=[];
+        var nextGMCCount=0;
+        var previousGMCL;
+        var a = 0;
+        var tempWeek = moment();
+        tempWeek.startOf('isoweek');
+        var weekStart = moment.tz(zone);
+        moment.tz(weekStart,zone);
+        weekStart.startOf('isoweek');
+        for (var i=0; i< gmcTime.length;i++){
+            var dayPlus=moment(weekStart).add(i,'days');
+            for (var j=0; j< gmcTime[i].length;j++){
+                var dayGMC = moment(dayPlus);
+                dayGMC.hour(gmcTime[i][j]);
+                var tempGMC = moment(dayGMC);
+                if(moment(tempGMC).local().startOf('isoweek').isBefore(moment(dayGMC).startOf('isoweek'))){
+                    dayGMC.add(7,'days')
+                }
+                fullGMC[a] = dayGMC.format();
+                a++;
+                var x = moment().tz(zone)
+                moment.tz(x,zone)
+                if(x.isAfter(dayGMC)){previousGMCL = moment(dayGMC)}
+                if(x.isBefore(dayGMC) && nextGMCCount<3){
+                    nextGMCL[nextGMCCount] = moment(dayGMC).format();
+                    nextGMCCount += 1
+                }
+            }
+        }
+        //check next week or last week
+        if(nextGMCL[0]==null){
+            nextGMCL[0]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMCL[1]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+            nextGMCL[2]=moment(moment.tz(fullGMC[2],zone)).add(7,'days').format();
+        }
+        if (nextGMCL[1]==null){
+            nextGMCL[1]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMCL[2]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+        }
+        if (nextGMCL[2]==null){;
+            nextGMCL[2]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+        }
+        nextGMC=nextGMCL;
+        if(previousGMCL==0){
+            previousGMCL=moment(moment.tz(fullGMC[fullGMC.length],zone)).subtract(7,'days').format();
+        }
+        previousGMC=previousGMCL;
+        fullGMC.sort();
+    }
+    gmcSchedule();
+    
+    function updateNextGMCs(){
+        var y = document.createElement('span')
+        y = moment(nextGMC[0]).calendar()+', '+moment(nextGMC[1]).calendar()+', '+moment(nextGMC[2]).calendar();
+        $('#nextThreeGMC').text(y);
+        
+        
+        
+        //make schedule table
+        var t = document.getElementById('scheduleTable');
+        var colorCode=[];
+        var colorHex=['#fff4f4','#fffaf4','#fffef4','#f3fdf3','#f3fbfc','#f4f3fc','#f9f3fc']
+        var gmcGroup=[[],[],[],[],[],[],[]];
+        var colorGroup=[[],[],[],[],[],[],[]];
+        
+        
+        
+        $(t).empty();
+        var r,c;
+        r = t.insertRow(0);
+        for (var i =1; i<8;i++){
+            /*
+            c = r.insertCell(i-1);
+            c.appendChild(document.createTextNode(moment().isoWeekday(i).startOf('day').format('dddd')))*/
+            var q = document.createElement('td');
+            q.setAttribute('width', '14%');
+            q.setAttribute('class', 'text-center');
+            var p = document.createElement('span');
+            p.setAttribute('style','font-weight:bold;');
+            p.innerHTML = moment().isoWeekday(i).startOf('day').format('dddd');
+            q.appendChild(p);
+            r.appendChild(q);
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).tz(zone).isoWeekday()==j){
+                    colorCode[i]=j;
+                }
+            }
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).isoWeekday()==j){
+                    gmcGroup[j-1].push(moment(fullGMC[i]).format());
+                    colorGroup[j-1].push(colorCode[i]);
+                    
+                }
+            }
+        }
+        
+        
+        var tempHTML='';
+        for (var i = 0; i<5; i++){
+            tempHTML += '<tr>'
+            for (var j = 0; j < 7; j++){
+                if (gmcGroup[j][i] != undefined){
+                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                }
+                else{
+                    tempHTML += '<td></td>'
+                }
+            }
+            tempHTML += '</tr>'
+        }
+        $(tempHTML).appendTo(t)
+        console.log(gmcGroup)
+    }
+    updateNextGMCs();
+    
+    function countdown(){
+        var currentTime= new moment();
+        $('#dateLocal').text(currentTime.format('LTS dddd'));
+        
+        var x = new moment();
+        var nextOne = moment(nextGMC[0]);
+        var previousOne = moment(previousGMC);
+        var previousOnePlusTwo = moment(previousGMC).add(2, 'hours');
+        $('#upcomingGMC').text(moment().countdown(nextOne,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(nextOne).format('LT')+')');
+        if (x.isBetween(previousOne, previousOnePlusTwo)){
+            $('#finishGMC').text(moment().countdown(previousOnePlusTwo,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(previousOnePlusTwo).format('LT')+')');
+            $('#currentStatus').removeClass('alert-info').addClass('alert-success');
+            $('#statusOngoing').show();
+        }
+        else{
+            $('#statusOngoing').hide();
+            $('#currentStatus').removeClass('alert-success').addClass('alert-info');
+        }
+        if (x.isAfter(nextOne)){
+            updateNextGMCs();
+            gmcSchedule();
+        }
+        setInterval(countdown,1000);
+    }
+    countdown();
+    
+    
+    /*list account temp*/
+    function updateEditAcc(){
+        var list = document.getElementById('listAccount')
+        $(list).empty();
+        for (var i = 0; i<gmcAccount.length; i++){
+            var account = document.createElement('li');
+            account.className = 'list-group-item';
+            account.appendChild(document.createTextNode(gmcAccount[i].name));
+            var button = document.createElement('button');
+            button.innerHTML ='<i class="fa fa-trash"></i> Delete';
+            button.onclick = deleteAccount;
+            button.setAttribute('class','btn btn-danger btn-xs pull-right btnDeleteAcc')
+            account.appendChild(button);
+            /*account.innerHTML = gmcAccount[i].name+
+                '<button type="button" class="btn btn-danger btn-xs pull-right btnDeleteAcc"><i class="fa fa-trash"></i> Delete</button>'*/
+            list.appendChild(account);
+        }
+        storeAcc();
+    }
+    function emptyEditAcc(){
+        var list = document.getElementById('listAccount')
+        $(list).empty();
+        alert('yes')
+    }
+    
+    //put this in button edit later!!!!!!
+    updateEditAcc();
+    
+    //button delete
+    function deleteAccount(){
+        gmcAccount.splice($(this).parent().index(),1);
+        updateEditAcc();
+        updateTable();
+    }
+    
     $('#buttonAddAcc').on('click',function(){
         var name = $('#formAddAcc').val();
         var newAcc = new account(name,null,0,0,0,0,0,0,0,0)
@@ -525,7 +270,237 @@ $(document).ready(function(){
         $('#formAddAcc').val('');
     })
     
+    /*cooldown & token table*/
+    function updateTable(){
+        var tokenTable = document.getElementById('tableCD');
+        $(tokenTable).empty();
+        var ttH, ttR, ttC;
+        ttR = tokenTable.insertRow(0);
+        ttC = ttR.insertCell(0);
+        ttC.style.width = '170px';
+        ttC.innerHTML = "<h4>GMC</h4>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            ttC.style.width = '100px';
+            ttC.innerHTML = '<h5><b>'+gmcAccount[i].name+'</b></h5>';
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
+        
+        ttR = tokenTable.insertRow(1);
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = "<b>Cooldown</b>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            var cutOff = moment(gmcAccount[i].cooldown);
+            var now = new moment();
+            if(gmcAccount[i].cooldown != null) {
+                if (moment(cutOff).isAfter(now)){
+                    ttC.appendChild(document.createTextNode(moment.duration(cutOff.diff(now)).format('h [h] m [m]')));
+                }
+                else {gmcAccount[i].cooldown != null;
+                     ttC.appendChild(document.createTextNode("No CD"));
+                }
+            }
+            else{
+                ttC.appendChild(document.createTextNode("No CD"));
+            }
+            
+            var hr = document.createElement('hr');
+            hr.setAttribute('class','small')
+            ttC.appendChild(hr)
+            
+            var buttonGroup = document.createElement('div');
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
+            buttonGroup.setAttribute('role', 'group');
+            buttonGroup.setAttribute('aria-label', '...');
+            $(buttonGroup).data('col', i);
+            var buttonE = document.createElement('a');
+            buttonE.innerHTML='<i class="fa fa-edit"></i>'
+            buttonE.setAttribute('class', 'btn btn-primary testbutt');
+            buttonE.onclick = editCD;
+            buttonGroup.appendChild(buttonE);
+            var buttonR = document.createElement('a');
+            buttonR.innerHTML='<i class="fa fa-remove"></i>'
+            buttonR.setAttribute('class', 'btn btn-danger');
+            buttonR.onclick = removeCD;
+            buttonGroup.appendChild(buttonR);
+            ttC.appendChild(buttonGroup);
+            
+            
+            var buttonGroup2 = document.createElement('div');
+            buttonGroup2.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
+            buttonGroup2.setAttribute('role', 'group');
+            buttonGroup2.setAttribute('aria-label', '...');
+            $(buttonGroup2).data('col', i);
+            var buttonD = document.createElement('a');
+            buttonD.innerHTML='Dual'
+            buttonD.setAttribute('class', 'btn btn-info');
+            buttonD.onclick = dualCD;
+            buttonGroup2.appendChild(buttonD);
+            var buttonF = document.createElement('a');
+            buttonF.innerHTML='Fail'
+            buttonF.setAttribute('class', 'btn btn-warning');
+            buttonF.onclick = failCD;
+            buttonGroup2.appendChild(buttonF);
+            ttC.appendChild(buttonGroup2);
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
+        
+        for (var h=0; h<gmcList.length;h++){
+            ttR = tokenTable.insertRow(h+2);
+            ttC = ttR.insertCell(0);
+            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1);
+            for (var i = 0; i<gmcAccount.length; i++){
+                ttC = ttR.insertCell(i+1);            
+                ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
+                var buttonGroup = document.createElement('div');
+                $(buttonGroup).data('gmc', gmcList[h]);
+                $(buttonGroup).data('col', i);
+                buttonGroup.setAttribute('class', 'btn-group btn-group-xs pull-right');
+                buttonGroup.setAttribute('role', 'group');
+                buttonGroup.setAttribute('aria-label', '...');
+                var buttonP = document.createElement('button');
+                buttonP.innerHTML = '<i class="fa fa-plus"></i>';
+                buttonP.setAttribute('class', 'btn btn-success');
+                buttonP.onclick = addToken;
+                buttonGroup.appendChild(buttonP);
+                var buttonM = document.createElement('button')
+                buttonM.innerHTML = '<i class="fa fa-minus"></i>';
+                buttonM.setAttribute('class', 'btn btn-danger');
+                if (gmcAccount[i][gmcList[h]]==0){$(buttonM).prop('disabled',true)}
+                buttonM.onclick = delToken;
+                buttonGroup.appendChild(buttonM);
+                ttC.appendChild(buttonGroup);
+            }
+            ttC = ttR.insertCell(gmcAccount.length+1);
+        }
+        
+        
+        //other actions
+        ttR = tokenTable.insertRow(gmcList.length+2);
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = "<b>Claim Box</b>";
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            
+            var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
+            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
+            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
+            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
+            //box things
+            
+            if (!(normBox || crimBox || ceruBox || saffBox)){
+                ttC.appendChild(document.createTextNode("None"));}
+            
+            var buttonGroupV = document.createElement('div');
+            buttonGroupV.setAttribute('class', 'btn-group-vertical btn-group-xs btn-block');
+            buttonGroupV.setAttribute('role', 'group');
+            buttonGroupV.setAttribute('aria-label', '...');
+            $(buttonGroupV).data('col', i);
+            var buttonG = document.createElement('button');
+            buttonG.innerHTML='Normal'
+            buttonG.setAttribute('class', 'btn btn-default');
+            buttonG.onclick = claimNormal;
+            $(buttonG).prop('disabled',true);
+            if (normBox){$(buttonG).prop('disabled',false)
+            buttonGroupV.appendChild(buttonG)};
+            var buttonCrimson = document.createElement('button');
+            buttonCrimson.innerHTML='Crimson'
+            buttonCrimson.setAttribute('class', 'btn btn-danger');
+            buttonCrimson.onclick = claimCrimson;
+            $(buttonCrimson).prop('disabled',true);
+            if (crimBox){$(buttonCrimson).prop('disabled',false)
+            buttonGroupV.appendChild(buttonCrimson)};
+            var buttonCerulean = document.createElement('button');
+            buttonCerulean.innerHTML='Cerulean'
+            buttonCerulean.setAttribute('class', 'btn btn-info');
+            buttonCerulean.onclick = claimCerulean;
+            $(buttonCerulean).prop('disabled',true);
+            if (ceruBox){$(buttonCerulean).prop('disabled',false)
+            buttonGroupV.appendChild(buttonCerulean)};
+            var buttonSaffron = document.createElement('button');
+            buttonSaffron.innerHTML='Saffron'
+            buttonSaffron.setAttribute('class', 'btn btn-warning');
+            buttonSaffron.onclick = claimSaffron;
+            $(buttonSaffron).prop('disabled',true);
+            if (saffBox){$(buttonSaffron).prop('disabled',false)
+            buttonGroupV.appendChild(buttonSaffron)};
+            ttC.appendChild(buttonGroupV);
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
+        setTimeout(updateTable,60000);
+        
+    }
     
+   function addToken(){
+        var gmc = $(this).parent().data('gmc');
+        var accIndex = $(this).parent().data('col');
+        console.log(gmcAccount[accIndex][gmc])
+        gmcAccount[accIndex][gmc] += 1;
+        if (autoCoolState) {gmcAccount[accIndex].cooldown = new moment().add(48, 'hours')};
+        updateTable();
+        storeAcc();
+    }
+    
+    function delToken(){
+        var gmc = $(this).parent().data('gmc');
+        var accIndex = $(this).parent().data('col');
+        console.log(gmcAccount[accIndex][gmc]);
+        gmcAccount[accIndex][gmc] -= 1;
+        updateTable();
+        storeAcc();
+    
+    }
+    
+    //box functions
+    function claimNormal(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].blacktalon -= 1;
+        gmcAccount[accIndex].boreas -= 1;
+        gmcAccount[accIndex].seiren -= 1;
+        gmcAccount[accIndex].howl -= 1;
+        gmcAccount[accIndex].shiris -= 1;
+        gmcAccount[accIndex].muui -= 1;
+        gmcAccount[accIndex].sushi -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimCrimson(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].muui -= 3;
+        gmcAccount[accIndex].shiris -= 3;
+        gmcAccount[accIndex].howl -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimCerulean(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].howl -= 3;
+        gmcAccount[accIndex].seiren -= 3;
+        gmcAccount[accIndex].blacktalon -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    function claimSaffron(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].sushi -= 3;
+        gmcAccount[accIndex].boreas -= 3;
+        gmcAccount[accIndex].shiris -= 3;
+        gmcAccount[accIndex].gemini -= 1;
+        updateTable();
+        storeAcc();
+    }
+    
+    //cooldown functions 
+    function editCD(){
+        gAccIndex = $(this).parent().data('col');
+        
+        $('#timePicker').modal({backdrop: 'static', keyboard: false});
+        updateTable();
+        storeAcc();
+    }
     $('#timePicker').on('shown.bs.modal', function () {
         var picker = $('#completePicker').datetimepicker({locale:locale});
         var cd = moment(gmcAccount[gAccIndex].cooldown).format();
@@ -542,7 +517,33 @@ $(document).ready(function(){
         updateTable();
         storeAcc();
     })
-    
+    function removeCD(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].cooldown = null;
+        updateTable();
+        storeAcc();
+    }
+    function dualCD(){
+        var accIndex = $(this).parent().data('col');
+        gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
+        updateTable();
+        storeAcc();
+    }
+    function failCD(){
+        var accIndex = $(this).parent().data('col');
+        var gmcTD = new moment();
+        var x = new moment();
+        gmcTD.date(tomorrow.tz(zone).date());
+        gmcTD.hour(0);                
+        gmcTD.minute(0);
+        gmcTD.second(0);
+        gmcTD.millisecond(0);
+        x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
+        x.tz(moment.tz.guess());
+        gmcAccount[accIndex].cooldown = x;
+        updateTable();
+        storeAcc();
+    }
     
     //edit mode button
     $('#autoCoolButton').on('click', function(){
@@ -557,6 +558,6 @@ $(document).ready(function(){
         $.playSound('../sound/'+$('#soundSel').val());
     })
     
-    
+    updateTable();
     
 });
