@@ -180,6 +180,14 @@ function countdown(){
     
 }
 $(document).ready(function(){
+    
+    //init
+    gmcSchedule();
+    updateNextGMCs();
+    countdown();
+    setInterval(countdown,1000);
+    
+    
     $('.pull-down').each(function() {
       var $this = $(this);
       $this.css('margin-top', $this.parent().height() - $this.height())
@@ -218,11 +226,6 @@ $(document).ready(function(){
 		);
 	});
     
-    //init
-    gmcSchedule();
-    updateNextGMCs();
-    countdown();
-    setInterval(countdown,1000);
     
     /*list account temp*/
     function updateEditAcc(){
