@@ -22,6 +22,7 @@
         <script src="../script/moment-duration-format.js"></script>
         <script src="../script/bootstrap-datetimepicker.min.js"></script>
         <script src="../script/jquery.playSound.js"></script>
+        <script src="../script/bootstrap-notify.min.js"></script>
         <script src="../script/gmc.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
         
@@ -48,12 +49,13 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="disabled"><a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!&#8482;"><span class="glyphicon glyphicon-save"></span> Save</a></li>
-                            <li><a data-toggle="modal" data-target="#siteSettings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                            <li><a data-toggle="modal" data-target="#siteSettings" id="settingsLink"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         </ul>
                     </div>
 				</div>
 			</nav>
             <!-- Body -->
+            
             <!-- Modal -->
             <div id="editAccount" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -97,6 +99,7 @@
                         <div class="modal-body">
                             <h4>Timezone</h4>
                             <p>All time listed here is in your local time! You don't have to add, subtract hours for your own timezone and stuffs anymore \o/.</p>
+                            <p>In the full schedule, each different cell background color marks a different server day</p>
                             <p>Countdown, Timezone, Offset, DST are all taken care off.</p>
                             <hr class="small">
                             <h4>Notification</h4>
@@ -112,6 +115,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><button class="btn btn-gray"><i class='fa fa-calendar'></i> Full Schedule</button></td>
+                                        <td><strong>Display the full GMC schedule</strong> for the whole week in your local time.</td>
+                                    </tr>
                                     <tr>
                                         <td><div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>
                                             <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:red">Off</span></b></div></td>
@@ -190,11 +197,11 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>GiftBox</th>
-                                        <th><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
-                                        <th><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
-                                        <th><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
-                                        <th><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
+                                        <th style="width:20%">GiftBox</th>
+                                        <th style="width:20%"><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
+                                        <th style="width:20%"><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
+                                        <th style="width:20%"><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
+                                        <th style="width:20%"><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
                                     </tr>
                                 </thead>
                                 
@@ -290,7 +297,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-sm-12 checkbox">
-                                    <label><input type="checkbox" value="">Enable Notification</label>
+                                    <label><input type="checkbox" value="" id="notifCheck">Enable Notification</label>
                                 </div>
                                 <div class="col-sm-12"><b>Play</b></div>
                                 <div class="form-group col-sm-12 col-md-12 col-lg-12">  
@@ -310,7 +317,7 @@
                                         </div>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                        <select class="form-control input-sm">
+                                        <select class="form-control input-sm" id="timeSel">
                                             <option value="1">1</option>                                        
                                             <option value="5">5</option>
                                             <option value="10">10</option>
@@ -320,7 +327,8 @@
                             </div>                            
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" id="saveSettings">Save & Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
 
@@ -337,7 +345,7 @@
                             </div>
                             <div style="font-size:0.8em">Current Local Time: <span id="dateLocal"></span></div>
                             <div style="font-size:0.9em">Next three GMCs: <span id="nextThreeGMC"></span></div><br>
-                            <button class="btn btn-purple" data-toggle="collapse" data-target="#scheduleCollapse"><i class='fa fa-calendar'></i> Full Schedule</button>
+                            <button class="btn btn-gray" data-toggle="collapse" data-target="#scheduleCollapse"><i class='fa fa-calendar'></i> Full Schedule</button>
                             <div class="collapse" id="scheduleCollapse">
                                 <br>
                                 <table class="table table-default" id="scheduleTable">
@@ -358,6 +366,7 @@
                                     <button type="button" class="btn btn-sm btn-default" id="autoCoolButton"><b>Auto Cooldown: <span style="color:green">On</span></b></button>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> Info</button>
+                                    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#siteLog"><i class="fa fa-list-alt"></i> Log</button>
                                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                     <button type="button" class="btn btn-sm btn-warning pull-right" disabled><i class="fa fa-undo"></i> Undo Last</button>
                                     

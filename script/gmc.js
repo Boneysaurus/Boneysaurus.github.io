@@ -19,6 +19,15 @@ var autoCoolState = true;
 var gAccIndex;
 moment.locale(locale);
 
+//notification states;
+function notif(state,time,sound,played){
+    this.state = state;
+    this.time = time;
+    this.sound = sound;
+    this.played = played;
+}
+var notifSet = new notif();
+
 /*account object*/
 function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
     this.name = name;
@@ -144,7 +153,12 @@ function updateNextGMCs(){
         tempHTML += '<tr>'
         for (var j = 0; j < 7; j++){
             if (gmcGroup[j][i] != undefined){
-                tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                if (moment(gmcGroup[j][i]).isSame(moment(nextGMC[0]))){
+                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'<span class="label label-warning pull-right">Next</span></td>'
+                }
+                else{
+                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                }
             }
             else{
                 tempHTML += '<td></td>'
@@ -152,6 +166,7 @@ function updateNextGMCs(){
         }
         tempHTML += '</tr>'
     }
+    notifSet.played = false;
     $(tempHTML).appendTo(t)
     console.log(gmcGroup)
 }
@@ -177,6 +192,21 @@ function countdown(){
         updateNextGMCs();
         gmcSchedule();
     }
+    if (x.isAfter(moment(nextOne).subtract(notifSet.time,'minutes')) && notifSet.played == false && notifSet.sound !=undefined){
+        $.playSound('../sound/'+notifSet.sound);
+        $.notify({
+            icon: 'glyphicon glyphicon-warning-sign',
+            message: 'Next GMC is in less than '+notifSet.time+ ' minutes',
+        },{
+            type: 'danger',
+            delay:'10000',
+            placement: {
+                from: "bottom",
+                align: "right"
+            }
+        });
+        notifSet.played = true;
+    }
     
 }
 $(document).ready(function(){
@@ -192,7 +222,8 @@ $(document).ready(function(){
       var $this = $(this);
       $this.css('margin-top', $this.parent().height() - $this.height())
     });
-    //load from local
+    
+    //load accounts from local
     var loadAcc = localStorage.getItem("storeAccount");
     if(localStorage.getItem("storeAccount") != null){
         gmcAccount = JSON.parse(loadAcc);
@@ -200,6 +231,35 @@ $(document).ready(function(){
     function storeAcc(){
         localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
     }
+    //load notification settings from local
+    var loadNot = localStorage.getItem("storeNotif");
+    if(localStorage.getItem("storeNotif") != null){
+        notifSet = JSON.parse(loadNot);
+    }
+    function storeNotification(){
+        localStorage.setItem("storeNotif",JSON.stringify(notifSet));
+    }
+    
+    
+    //notifications stuffs
+    $('#soundSel').prop('disabled', !$('#notifCheck').is(':checked'));
+    $('#timeSel').prop('disabled', !$('#notifCheck').is(':checked'));
+    $('#soundSel').val(notifSet.sound);
+    $('#timeSel').val(notifSet.time);
+    $('#notifCheck').prop('checked', notifSet.state);
+    updateNotif();
+    function updateNotif(){
+        $('#soundSel').prop('disabled', !$('#notifCheck').is(':checked'));
+        $('#timeSel').prop('disabled', !$('#notifCheck').is(':checked'));
+    }
+    $('#notifCheck').change(updateNotif)
+    $('#saveSettings').on('click',function(){
+        notifSet = new notif($('#notifCheck').is(':checked'),$('#timeSel').val(),$('#soundSel').val(),false);
+        storeNotification();
+    })
+    
+    
+    
     /* Back to top*/
     var offset = 250,
     //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -502,6 +562,7 @@ $(document).ready(function(){
         updateTable();
         storeAcc();
     }
+    
     $('#timePicker').on('shown.bs.modal', function () {
         var picker = $('#completePicker').datetimepicker({locale:locale});
         var cd = moment(gmcAccount[gAccIndex].cooldown).format();
