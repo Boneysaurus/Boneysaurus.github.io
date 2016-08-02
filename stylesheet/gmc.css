@@ -1,4 +1,3 @@
-
 .table-curved > tbody > tr:nth-of-type(odd) {
   background-color: #fcfcfc;
 }
@@ -56,4 +55,10 @@ h5{
 
 hr.small{
     margin:4px 0px;
+}
+.align-center{
+    float:none;
+    vertical-align: middle !important;
+    text-align: center;
+    font-weight: bold;
 }

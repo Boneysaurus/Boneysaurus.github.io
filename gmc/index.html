@@ -24,6 +24,7 @@
         <script src="../script/jquery.playSound.js"></script>
         <script src="../script/bootstrap-notify.min.js"></script>
         <script src="../script/gmc.js"></script>
+        <script src="../script/gmc-guide.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
         
         <title>Ragnarok Stuffs</title>
@@ -137,7 +138,7 @@
                                         <td>You know what, that's a good question. I wonder what the Help! button actually does.</td>
                                     </tr>
                                     <tr>
-                                        <td><div class="btn btn-info btn-sm"><i class="fa fa-info"></i> Info</div></td>
+                                        <td><div class="btn btn-info btn-sm"><i class="fa fa-info"></i> GMC Info</div></td>
                                         <td>Open a popup with <b>information on GMC Giftboxes.</b></td>
                                     </tr>
                                     <tr>
@@ -194,48 +195,157 @@
                             <h4 class="modal-title">Info</h4>
                         </div>
                         <div class="modal-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width:20%">GiftBox</th>
-                                        <th style="width:20%"><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
-                                        <th style="width:20%"><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
-                                        <th style="width:20%"><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
-                                        <th style="width:20%"><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    <tr>
-                                        <th rowspan="7">Token <br>Requirement</th>
-                                        <td>1x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
-                                        <td>3x <img src="../img/gmc/muui.gif"> Muui</td>
-                                        <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
-                                        <td>3x <img src="../img/gmc/sushi.gif"> Sushi</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1x <img src="../img/gmc/boreas.gif"> Boreas</td>
-                                        <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
-                                        <td>3x <img src="../img/gmc/seiren.gif"> Seiren</td>
-                                        <td>3x <img src="../img/gmc/boreas.gif"> Boreas</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1x <img src="../img/gmc/seiren.gif"> Seiren</td>
-                                        <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
-                                        <td>3x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
-                                        <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1x <img src="../img/gmc/howl.gif"> Howl</td>
-                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                        <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                    </tr>
-                                    <tr><td>1x <img src="../img/gmc/shiris.gif"> Shiris</td></tr>
-                                    <tr><td>1x <img src="../img/gmc/muui.gif"> Muui</td></tr>
-                                    <tr><td>1x <img src="../img/gmc/sushi.gif"> Sushi</td></tr>
-                                </tbody>
-                            </table>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tabGiftbox" data-toggle="tab">GiftBox</a></li>
+                                <li><a href="#tabCostume" data-toggle="tab">Costume List</a></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">GMC Guides
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Blacktalon</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Boreas</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Seiren</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Howl</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Shiris</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Muui</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Sushi</a></li>
+                                        <li><a href="#tabGuide" class="linkGuide" data-toggle="tab">Gemini</a></li> 
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tabGiftbox">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20%">GiftBox</th>
+                                                <th style="width:20%"><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
+                                                <th style="width:20%"><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
+                                                <th style="width:20%"><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
+                                                <th style="width:20%"><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <th rowspan="7">Token <br>Requirement</th>
+                                                <td>1x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
+                                                <td>3x <img src="../img/gmc/muui.gif"> Muui</td>
+                                                <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
+                                                <td>3x <img src="../img/gmc/sushi.gif"> Sushi</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1x <img src="../img/gmc/boreas.gif"> Boreas</td>
+                                                <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
+                                                <td>3x <img src="../img/gmc/seiren.gif"> Seiren</td>
+                                                <td>3x <img src="../img/gmc/boreas.gif"> Boreas</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1x <img src="../img/gmc/seiren.gif"> Seiren</td>
+                                                <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
+                                                <td>3x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
+                                                <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1x <img src="../img/gmc/howl.gif"> Howl</td>
+                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
+                                            </tr>
+                                            <tr><td>1x <img src="../img/gmc/shiris.gif"> Shiris</td></tr>
+                                            <tr><td>1x <img src="../img/gmc/muui.gif"> Muui</td></tr>
+                                            <tr><td>1x <img src="../img/gmc/sushi.gif"> Sushi</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="tabCostume">
+                                    Later~
+                                </div>
+                                <div class="tab-pane" id="tabGuide">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" id="guideHead"></div>
+                                                <div class="panel-body" id="guideBody">
+                                                </div>
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-center"><i class="fa fa-map"></i></td>
+                                                            <td id="guideMap"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center"><i class="fa fa-signal"></i>1</td>
+                                                            <td id="guidef1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center"><i class="fa fa-signal"></i>2</td>
+                                                            <td id="guidef2"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center"><i class="fa fa-signal"></i>3</td>
+                                                            <td id="guidef3"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center"><i class="fa fa-trophy"></i></td>
+                                                            <td id="guideMvp"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-center">&#10168;</td>
+                                                            <td id="guideArrow"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">&#128085;</td>
+                                                            <td id="guideGear"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Strategy</div>
+                                                <div class="panel-body" id="guideStrategy"></div>
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-center">Champion</td>
+                                                            <td id="guideChampion"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">Paladin</td>
+                                                            <td id="guidePaladin"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">Sniper</td>
+                                                            <td id="guideSniper"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">High Priest</td>
+                                                            <td id="guideHpriest"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">High Wizard</td>
+                                                            <td id="guideHwizard"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-center">Creator</td>
+                                                            <td id="guideCreator"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -365,7 +475,7 @@
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-sm btn-default" id="autoCoolButton"><b>Auto Cooldown: <span style="color:green">On</span></b></button>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> Info</button>
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> GMC Info</button>
                                     <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#siteLog"><i class="fa fa-list-alt"></i> Log</button>
                                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                     <button type="button" class="btn btn-sm btn-warning pull-right" disabled><i class="fa fa-undo"></i> Undo Last</button>
