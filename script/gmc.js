@@ -56,22 +56,22 @@ $(document).ready(function(){
     }
 
     /*account object*/
-    function account(name,cooldown,Blacktalon,Boreas,Seiren,Howl,Shiris,Muui,Sushi,Gemini){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,Gemini){
         this.name = name;
         this.cooldown = cooldown;
-        this.Blacktalon = Blacktalon;
-        this.Boreas = Boreas;
-        this.Seiren = Seiren;
-        this.Howl = Howl;
-        this.Shiris = Shiris;
-        this.Muui = Muui;
-        this.Sushi = Sushi;
+        this.blacktalon = blacktalon;
+        this.boreas = boreas;
+        this.seiren = seiren;
+        this.howl = howl;
+        this.shiris = shiris;
+        this.muui = muui;
+        this.sushi = sushi;
         this.Gemini = Gemini;
     }
 
 
 
-    var gmcList = ["Blacktalon","Boreas","Seiren","Howl","Shiris","Muui","Sushi","Gemini"]
+    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","Gemini"]
 
     var gmcAccount = [];
 
@@ -293,6 +293,9 @@ $(document).ready(function(){
     
     
     //general functions
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     /* Back to top*/
     var offset = 250,
     //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -449,7 +452,7 @@ $(document).ready(function(){
         for (var h=0; h<gmcList.length;h++){
             ttR = tokenTable.insertRow(h+2);
             ttC = ttR.insertCell(0);
-            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h];
+            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+capitalize(gmcList[h]);
             for (var i = 0; i<gmcAccount.length; i++){
                 ttC = ttR.insertCell(i+1);            
                 ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
@@ -483,10 +486,10 @@ $(document).ready(function(){
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
             
-            var normBox = gmcAccount[i].Blacktalon > 0 && gmcAccount[i].Boreas > 0 && gmcAccount[i].Seiren > 0 && gmcAccount[i].Howl > 0 && gmcAccount[i].Shiris > 0 && gmcAccount[i].Muui > 0 && gmcAccount[i].Sushi > 0;
-            var crimBox = gmcAccount[i].Muui > 2 && gmcAccount[i].Shiris > 2 && gmcAccount[i].Howl > 2 && gmcAccount[i].Gemini > 0;
-            var ceruBox = gmcAccount[i].Seiren > 2 && gmcAccount[i].Blacktalon > 2 && gmcAccount[i].Howl > 2 && gmcAccount[i].Gemini > 0 ;
-            var saffBox = gmcAccount[i].Sushi > 2 && gmcAccount[i].Shiris > 2 && gmcAccount[i].Boreas > 2 && gmcAccount[i].Gemini > 0;
+            var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
+            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].Gemini > 0;
+            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].Gemini > 0 ;
+            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].Gemini > 0;
             //box things
             
             if (!(normBox || crimBox || ceruBox || saffBox)){
@@ -561,30 +564,30 @@ $(document).ready(function(){
     //box functions
     $('#saveCostume').on('click', function(){
         if ($('#boxType').data('box')=='normal'){
-            gmcAccount[gAccIndex].Blacktalon -= 1;
-            gmcAccount[gAccIndex].Boreas -= 1;
-            gmcAccount[gAccIndex].Seiren -= 1;
-            gmcAccount[gAccIndex].Howl -= 1;
-            gmcAccount[gAccIndex].Shiris -= 1;
-            gmcAccount[gAccIndex].Muui -= 1;
-            gmcAccount[gAccIndex].Sushi -= 1;
+            gmcAccount[gAccIndex].blacktalon -= 1;
+            gmcAccount[gAccIndex].boreas -= 1;
+            gmcAccount[gAccIndex].seiren -= 1;
+            gmcAccount[gAccIndex].howl -= 1;
+            gmcAccount[gAccIndex].shiris -= 1;
+            gmcAccount[gAccIndex].muui -= 1;
+            gmcAccount[gAccIndex].sushi -= 1;
         }
         else if ($('#boxType').data('box')=='crimson'){
-            gmcAccount[gAccIndex].Muui -= 3;
-            gmcAccount[gAccIndex].Shiris -= 3;
-            gmcAccount[gAccIndex].Howl -= 3;
+            gmcAccount[gAccIndex].muui -= 3;
+            gmcAccount[gAccIndex].shiris -= 3;
+            gmcAccount[gAccIndex].howl -= 3;
             gmcAccount[gAccIndex].Gemini -= 1;
         }
         else if ($('#boxType').data('box')=='cerulean'){
-            gmcAccount[gAccIndex].Howl -= 3;
-            gmcAccount[gAccIndex].Seiren -= 3;
-            gmcAccount[gAccIndex].Blacktalon -= 3;
+            gmcAccount[gAccIndex].howl -= 3;
+            gmcAccount[gAccIndex].seiren -= 3;
+            gmcAccount[gAccIndex].blacktalon -= 3;
             gmcAccount[gAccIndex].Gemini -= 1;
         }
         else if ($('#boxType').data('box')=='saffron'){
-            gmcAccount[gAccIndex].Sushi -= 3;
-            gmcAccount[gAccIndex].Boreas -= 3;
-            gmcAccount[gAccIndex].Shiris -= 3;
+            gmcAccount[gAccIndex].sushi -= 3;
+            gmcAccount[gAccIndex].boreas -= 3;
+            gmcAccount[gAccIndex].shiris -= 3;
             gmcAccount[gAccIndex].Gemini -= 1;
         }
         logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
@@ -764,7 +767,7 @@ $(document).ready(function(){
             { 
                 render: function(data,type,row){
                 if (data=="Add"){
-                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-success"><i class="fa fa-plus" style="font-size:12px"></i> Added</span> a <strong>'+ row[2]+"</strong> token to <b>"+row[1]+"</b>";
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-success"><i class="fa fa-plus" style="font-size:12px"></i> Added</span> a <strong>'+ capitalize(row[2])+"</strong> token to <b>"+row[1]+"</b>";
                     return tempHTML
                 }
                 else if (data=="Claim"){
@@ -777,11 +780,11 @@ $(document).ready(function(){
                     return tempHTML;
                 }
                 else if (data=="Remove"){
-                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-danger"><i class="fa fa-minus" style="font-size:12px"></i> Removed</span> a <strong>'+ row[2]+"</strong> token from <b>"+row[1]+"</b>";
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-danger"><i class="fa fa-minus" style="font-size:12px"></i> Removed</span> a <strong>'+ capitalize(row[2])+"</strong> token from <b>"+row[1]+"</b>";
                     return tempHTML;
                 }
                 else if (data=="Finish"){
-                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-primary"><i class="fa fa-trophy" style="font-size:12px"></i> Finished</span> a <strong>'+ row[2]+"</strong> with <b>"+row[1]+"</b>";
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-primary"><i class="fa fa-trophy" style="font-size:12px"></i> Finished</span> a <strong>'+ capitalize(row[2])+"</strong> with <b>"+row[1]+"</b>";
                     return tempHTML;
                 }
                 else if (data=="Fail"){
