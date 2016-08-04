@@ -56,7 +56,7 @@ $(document).ready(function(){
     }
 
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,Gemini){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -66,12 +66,12 @@ $(document).ready(function(){
         this.shiris = shiris;
         this.muui = muui;
         this.sushi = sushi;
-        this.Gemini = Gemini;
+        this.gemini = gemini;
     }
 
 
 
-    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","Gemini"]
+    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini"]
 
     var gmcAccount = [];
 
@@ -487,9 +487,9 @@ $(document).ready(function(){
             ttC = ttR.insertCell(i+1);
             
             var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
-            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].Gemini > 0;
-            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].Gemini > 0 ;
-            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].Gemini > 0;
+            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
+            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
+            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
             //box things
             
             if (!(normBox || crimBox || ceruBox || saffBox)){
@@ -576,19 +576,19 @@ $(document).ready(function(){
             gmcAccount[gAccIndex].muui -= 3;
             gmcAccount[gAccIndex].shiris -= 3;
             gmcAccount[gAccIndex].howl -= 3;
-            gmcAccount[gAccIndex].Gemini -= 1;
+            gmcAccount[gAccIndex].gemini -= 1;
         }
         else if ($('#boxType').data('box')=='cerulean'){
             gmcAccount[gAccIndex].howl -= 3;
             gmcAccount[gAccIndex].seiren -= 3;
             gmcAccount[gAccIndex].blacktalon -= 3;
-            gmcAccount[gAccIndex].Gemini -= 1;
+            gmcAccount[gAccIndex].gemini -= 1;
         }
         else if ($('#boxType').data('box')=='saffron'){
             gmcAccount[gAccIndex].sushi -= 3;
             gmcAccount[gAccIndex].boreas -= 3;
             gmcAccount[gAccIndex].shiris -= 3;
-            gmcAccount[gAccIndex].Gemini -= 1;
+            gmcAccount[gAccIndex].gemini -= 1;
         }
         logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
         updateTable();
@@ -746,11 +746,11 @@ $(document).ready(function(){
     //things
     //log(action, account, gmc, box, costume, time)
     var dataSet = [
-    [ "Add","79","Gemini","","","Today"],
+    [ "Add","79","gemini","","","Today"],
     [ "Claim","92","","Crimson","Ancient Gold","Yesterday"],
-    [ "Finish","79","Gemini","","","Today"],
+    [ "Finish","79","gemini","","","Today"],
     [ "Fail","79","","","","Today"],
-    [ "Remove","79","Gemini","","","Today"]];
+    [ "Remove","79","gemini","","","Today"]];
     console.log(dataSet)
     $('#logButton').on('click', function(){
         updateLog();
