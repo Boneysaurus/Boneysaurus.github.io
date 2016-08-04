@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="../stylesheet/font-awesome.min.css">
         <link rel="stylesheet" href="../stylesheet/bootstrap.min.css">
         <link rel="stylesheet" href="../stylesheet/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="../stylesheet/select2.min.css">
+        <link rel="stylesheet" href="../stylesheet/bootstrap-toggle.min.css">
+        <link rel="stylesheet" href="../stylesheet/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="../stylesheet/gmc.css">
         <script src="../script/moment-with-locales.js"></script>
         <script src="../script/countdown.min.js"></script>
@@ -23,6 +26,10 @@
         <script src="../script/bootstrap-datetimepicker.min.js"></script>
         <script src="../script/jquery.playSound.js"></script>
         <script src="../script/bootstrap-notify.min.js"></script>
+        <script src="../script/select2.min.js"></script>
+        <script src="../script/bootstrap-toggle.min.js"></script>
+        <script src="../script/jquery.dataTables.min.js"></script>
+        <script src="../script/dataTables.bootstrap.min.js"></script>
         <script src="../script/gmc.js"></script>
         <script src="../script/gmc-guide.js"></script>
 		<link rel="icon" type="image/png" href="../img/favicon.png" />
@@ -100,7 +107,7 @@
                         <div class="modal-body">
                             <h4>Timezone</h4>
                             <p>All time listed here is in your local time! You don't have to add, subtract hours for your own timezone and stuffs anymore \o/.</p>
-                            <p>In the full schedule, each different cell background color marks a different server day</p>
+                            <div class="notice notice-warning">In the full schedule, each different cell background color marks <strong>a different server day</strong></div>
                             <p>Countdown, Timezone, Offset, DST are all taken care off.</p>
                             <hr class="small">
                             <h4>Notification</h4>
@@ -259,7 +266,35 @@
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="tabCostume">
-                                    Later~
+                                    <h4>Classic Giftbox</h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:30%">Costume</th>
+                                                <th style="width:30%">Pets</th>
+                                                <th style="width:30%">Misc</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Ancient Gold Adornment Costume</td>
+                                                <td>Little Poring Egg</td>
+                                                <td>Hand-Made Chocolate</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Magic Stone Hat Costume</td>
+                                                <td>Taini Egg</td>
+                                                <td>Life Insurance Box</td>
+                                            </tr>
+                                            <tr><td>Minstrel Song Hat Costume</td></tr>
+                                            <tr><td>Oliver Wolf Hood Costume</td></tr>
+                                            <tr><td>Reissue Schmitz Helm Costume</td></tr>
+                                            <tr><td>Rune Circlet Costume</td></tr>
+                                            <tr><td>Sniper Goggles Costume</td></tr>
+                                            <tr><td>Whispers of Wind Costume</td></tr>
+                                            <tr><td>Resting Swan Costume</td></tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="tab-pane" id="tabGuide">
                                     <br>
@@ -380,18 +415,128 @@
 
                 </div>
             </div>
+            <div id="siteLog" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Log</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tabSummary" data-toggle="tab">Summary</a></li>
+                                <li><a href="#tabLog" data-toggle="tab">History Log</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tabSummary">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Total GMC done</th>
+                                                                <td>1000</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total Box claimed</th>
+                                                                <td>10000</td>
+                                                            </tr>
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            <div class="panel panel-default">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>GMC</th>
+                                                                <th># of time done</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Blacktalon</th>
+                                                                <td>1000</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Boreas</th>
+                                                                <td>10000</td>
+                                                            </tr>
+                                                            <tr></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                         <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Costume</th>
+                                                                <th>Count</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Ancient Gold Adornment Costume</th>
+                                                                <td>1000</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Reissue Schmitz Helm Costume</th>
+                                                                <td>10000</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tabLog">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="notice notice-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> Deleting anything from the log is irrecoverable. Only delete if it's truly a mistake.</div>
+                                            <table class="table" id="logTable"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelCD">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div id="boxClaim" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Claim Box</h4>
                         </div>
                         <div class="modal-body">
-                            
+                            <div class ="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div id="boxType"><strong>Box Type:</strong> </div>
+                                </div>
+                                
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <label for="costumeSelect">Prize:</label>
+                                </div>
+                                
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <select class="form-control" id="costumeSelect" style="width:100%"><option></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" id="saveCostume">Save & Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
 
@@ -472,26 +617,39 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Ayyy caramba!</div>
                         <div class="panel-body">
+                            <div class="row bottom-buffer">
                                 <div class="col-sm-12">
-                                    <button type="button" class="btn btn-sm btn-default" id="autoCoolButton"><b>Auto Cooldown: <span style="color:green">On</span></b></button>
                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editAccount"><i class="fa fa-edit"></i> Edit Accounts</button>
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#siteInfo"><i class="fa fa-info"></i> GMC Info</button>
-                                    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#siteLog"><i class="fa fa-list-alt"></i> Log</button>
-                                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
-                                    <button type="button" class="btn btn-sm btn-warning pull-right" disabled><i class="fa fa-undo"></i> Undo Last</button>
-                                    
-                                    
+                                    <button type="button" class="btn btn-sm" id="logButton" data-toggle="modal" data-target="#siteLog"><i class="fa fa-list-alt"></i> Log</button>
+                                    <button type="button" class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#siteHelp"><i class="fa fa-question"></i> Help!</button>
                                 </div>
-                            <hr>
+                            </div>
+                            <div class="row bottom-buffer">
+                                <div class="col-sm-12">
+                                    <label for="autoCD">Auto add cooldown</label>
+                                    <input type="checkbox" id="autoCD" class="pull-right" checked data-toggle="toggle" data-size="small" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger">
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="collapse" data-target="#noteCollapse"><i class="fa fa-sticky-note-o"></i> Notes</button> 
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="collapse" id="noteCollapse">
+                                        <div class="form-group">
+                                      <label for="comment">Note:</label>
+                                      <textarea class="form-control" rows="5" id="noteArea"></textarea>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row bottom-buffer">
                                 <div class="col-sm-12">
                                     <table class="table table-curved" id="tableCD">
                                     </table>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        
         </div>
     </body>
-    </html>
+    </html> 

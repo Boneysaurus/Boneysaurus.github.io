@@ -1,220 +1,247 @@
-var locale = window.navigator.userLanguage || window.navigator.language;
-var weekday=new Array(7);
-weekday[0]="Sunday";
-weekday[1]="Monday";
-weekday[2]="Tuesday";
-weekday[3]="Wednesday";
-weekday[4]="Thursday";
-weekday[5]="Friday";
-weekday[6]="Saturday";
 
+$(document).ready(function(){
+    var locale = window.navigator.userLanguage || window.navigator.language;
+    var weekday=new Array(7);
+    weekday[0]="Sunday";
+    weekday[1]="Monday";
+    weekday[2]="Tuesday";
+    weekday[3]="Wednesday";
+    weekday[4]="Thursday";
+    weekday[5]="Friday";
+    weekday[6]="Saturday";
 
-var previousGMC;
-var nextGMC=[];
-var fullGMC=[];
-
-var zone = "Europe/Berlin";
-var today = new moment();
-var tomorrow = new moment().add(1,'day');
-var autoCoolState = true;
-var gAccIndex;
-moment.locale(locale);
-
-//notification states;
-function notif(state,time,sound,played){
-    this.state = state;
-    this.time = time;
-    this.sound = sound;
-    this.played = played;
-}
-var notifSet = new notif();
-
-/*account object*/
-function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
-    this.name = name;
-    this.cooldown = cooldown;
-    this.blacktalon = blacktalon;
-    this.boreas = boreas;
-    this.seiren = seiren;
-    this.howl = howl;
-    this.shiris = shiris;
-    this.muui = muui;
-    this.sushi = sushi;
-    this.gemini = gemini;
-}
-
-
-
-var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini"]
-
-var gmcAccount = [];
-
-var gmcTime=[[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18],[0,11,15]];
-
-function gmcSchedule(){
-    var nextGMCCount=0;
-    var a = 0;
-    var tempWeek = moment();
-    tempWeek.startOf('isoweek');
-    var weekStart = moment.tz(zone);
-    moment.tz(weekStart,zone);
-    weekStart.startOf('isoweek');
-    for (var i=0; i< gmcTime.length;i++){
-        var dayPlus=moment(weekStart).add(i,'days');
-        for (var j=0; j< gmcTime[i].length;j++){
-            var dayGMC = moment(dayPlus);
-            dayGMC.hour(gmcTime[i][j]);
-            var tempGMC = moment(dayGMC);
-            if(moment(tempGMC).local().startOf('isoweek').isBefore(moment(dayGMC).startOf('isoweek'))){
-                dayGMC.add(7,'days')
-            }
-            fullGMC[a] = dayGMC.format();
-            a++;
-        }
+    var costumes = {
+        normal: ["Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume","Little Poring Egg","Taini Egg","Hand-Made Chocolate","Life Insurance Box"],
+        crimson: [],
+        cerulean: [],
+        saffron: []
     }
-    fullGMC.sort();
-    
-    var x = moment().tz(zone)
-    moment.tz(x,zone)
-    for (var i = 0; i < fullGMC.length; i++){
-        if (x.isAfter(moment(fullGMC[i]))){
-            previousGMC = moment(fullGMC[i]);
-        }
-        if (x.isBefore(moment(fullGMC[i])) && nextGMCCount<3){
-            nextGMC[nextGMCCount] = moment(fullGMC[i]);
-            nextGMCCount++;
-        }
+
+    var previousGMC;
+    var nextGMC=[];
+    var fullGMC=[];
+
+    var zone = "Europe/Berlin";
+    var today = new moment();
+    var tomorrow = new moment().add(1,'day');
+    var gAccIndex;
+    moment.locale(locale);
+
+    //notification states;
+    function notif(state,time,sound,played){
+        this.state = state;
+        this.time = time;
+        this.sound = sound;
+        this.played = played;
     }
-    
-    //check next week or last week
-    if(nextGMC[0]==null){
-        nextGMC[0]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
-        nextGMC[1]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
-        nextGMC[2]=moment(moment.tz(fullGMC[2],zone)).add(7,'days').format();
+    var notifSet = new notif();
+
+
+    //log object
+    function hlog(action, account, gmc, box, costume, time){
+        this.action = action;
+        this.account = account;
+        this.gmc = gmc;
+        this.box = box;
+        this.costume = costume;
+        this.time = time;
     }
-    if (nextGMC[1]==null){
-        nextGMC[1]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
-        nextGMC[2]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+    var logArray=[];
+    var loadLog = localStorage.getItem('storeLog')
+    if (loadLog != null){
+        logArray = JSON.parse(loadLog)
     }
-    if (nextGMC[2]==null){;
-        nextGMC[2]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+    function storeLogA (){
+        localStorage.setItem('storeLog',JSON.stringify(logArray))
     }
-    if(previousGMC==0){
-        previousGMC=moment(moment.tz(fullGMC[fullGMC.length],zone)).subtract(7,'days').format();
+
+    /*account object*/
+    function account(name,cooldown,Blacktalon,Boreas,Seiren,Howl,Shiris,Muui,Sushi,Gemini){
+        this.name = name;
+        this.cooldown = cooldown;
+        this.Blacktalon = Blacktalon;
+        this.Boreas = Boreas;
+        this.Seiren = Seiren;
+        this.Howl = Howl;
+        this.Shiris = Shiris;
+        this.Muui = Muui;
+        this.Sushi = Sushi;
+        this.Gemini = Gemini;
     }
-}
-function updateNextGMCs(){
-    var y = document.createElement('span')
-    y = moment(nextGMC[0]).calendar()+', '+moment(nextGMC[1]).calendar()+', '+moment(nextGMC[2]).calendar();
-    $('#nextThreeGMC').text(y);
 
 
 
-    //make schedule table
-    var t = document.getElementById('scheduleTable');
-    var colorCode=[];
-    var colorHex=['#fff4f4','#fffaf4','#fffef4','#f3fdf3','#f3fbfc','#f4f3fc','#f9f3fc']
-    var gmcGroup=[[],[],[],[],[],[],[]];
-    var colorGroup=[[],[],[],[],[],[],[]];
+    var gmcList = ["Blacktalon","Boreas","Seiren","Howl","Shiris","Muui","Sushi","Gemini"]
 
+    var gmcAccount = [];
 
+    var gmcTime=[[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18],[0,11,15]];
 
-    $(t).empty();
-    var r,c;
-    r = t.insertRow(0);
-    for (var i =1; i<8;i++){
-        /*
-        c = r.insertCell(i-1);
-        c.appendChild(document.createTextNode(moment().isoWeekday(i).startOf('day').format('dddd')))*/
-        var q = document.createElement('td');
-        q.setAttribute('width', '14%');
-        q.setAttribute('class', 'text-center');
-        var p = document.createElement('span');
-        p.setAttribute('style','font-weight:bold;');
-        p.innerHTML = moment().isoWeekday(i).startOf('day').format('dddd');
-        q.appendChild(p);
-        r.appendChild(q);
-    }
-    for(var i = 0; i<fullGMC.length;i++){
-        for (var j = 1; j < 8; j++ ){
-            if(moment(fullGMC[i]).tz(zone).isoWeekday()==j){
-                colorCode[i]=j;
+    function gmcSchedule(){
+        var nextGMCCount=0;
+        var a = 0;
+        var tempWeek = moment();
+        tempWeek.startOf('isoweek');
+        var weekStart = moment.tz(zone);
+        moment.tz(weekStart,zone);
+        weekStart.startOf('isoweek');
+        for (var i=0; i< gmcTime.length;i++){
+            var dayPlus=moment(weekStart).add(i,'days');
+            for (var j=0; j< gmcTime[i].length;j++){
+                var dayGMC = moment(dayPlus);
+                dayGMC.hour(gmcTime[i][j]);
+                var tempGMC = moment(dayGMC);
+                if(moment(tempGMC).local().startOf('isoweek').isBefore(moment(dayGMC).startOf('isoweek'))){
+                    dayGMC.add(7,'days')
+                }
+                fullGMC[a] = dayGMC.format();
+                a++;
             }
         }
-    }
-    for(var i = 0; i<fullGMC.length;i++){
-        for (var j = 1; j < 8; j++ ){
-            if(moment(fullGMC[i]).isoWeekday()==j){
-                gmcGroup[j-1].push(moment(fullGMC[i]).format());
-                colorGroup[j-1].push(colorCode[i]);
+        fullGMC.sort();
 
+        var x = moment().tz(zone)
+        moment.tz(x,zone)
+        for (var i = 0; i < fullGMC.length; i++){
+            if (x.isAfter(moment(fullGMC[i]))){
+                previousGMC = moment(fullGMC[i]);
+            }
+            if (x.isBefore(moment(fullGMC[i])) && nextGMCCount<3){
+                nextGMC[nextGMCCount] = moment(fullGMC[i]);
+                nextGMCCount++;
             }
         }
+
+        //check next week or last week
+        if(nextGMC[0]==null){
+            nextGMC[0]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMC[1]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+            nextGMC[2]=moment(moment.tz(fullGMC[2],zone)).add(7,'days').format();
+        }
+        if (nextGMC[1]==null){
+            nextGMC[1]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+            nextGMC[2]=moment(moment.tz(fullGMC[1],zone)).add(7,'days').format();
+        }
+        if (nextGMC[2]==null){;
+            nextGMC[2]=moment(moment.tz(fullGMC[0],zone)).add(7,'days').format();
+        }
+        if(previousGMC==0){
+            previousGMC=moment(moment.tz(fullGMC[fullGMC.length],zone)).subtract(7,'days').format();
+        }
     }
+    function updateNextGMCs(){
+        var y = document.createElement('span')
+        y = moment(nextGMC[0]).calendar()+', '+moment(nextGMC[1]).calendar()+', '+moment(nextGMC[2]).calendar();
+        $('#nextThreeGMC').text(y);
 
 
-    var tempHTML='';
-    for (var i = 0; i<5; i++){
-        tempHTML += '<tr>'
-        for (var j = 0; j < 7; j++){
-            if (gmcGroup[j][i] != undefined){
-                if (moment(gmcGroup[j][i]).isSame(moment(nextGMC[0]))){
-                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'<span class="label label-default pull-right">Next</span></td>'
+
+        //make schedule table
+        var t = document.getElementById('scheduleTable');
+        var colorCode=[];
+        var colorHex=['#fff4f4','#fffaf4','#fffef4','#f3fdf3','#f3fbfc','#f4f3fc','#f9f3fc']
+        var gmcGroup=[[],[],[],[],[],[],[]];
+        var colorGroup=[[],[],[],[],[],[],[]];
+
+
+
+        $(t).empty();
+        var r,c;
+        r = t.insertRow(0);
+        for (var i =1; i<8;i++){
+            /*
+            c = r.insertCell(i-1);
+            c.appendChild(document.createTextNode(moment().isoWeekday(i).startOf('day').format('dddd')))*/
+            var q = document.createElement('td');
+            q.setAttribute('width', '14%');
+            q.setAttribute('class', 'text-center');
+            var p = document.createElement('span');
+            p.setAttribute('style','font-weight:bold;');
+            p.innerHTML = moment().isoWeekday(i).startOf('day').format('dddd');
+            q.appendChild(p);
+            r.appendChild(q);
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).tz(zone).isoWeekday()==j){
+                    colorCode[i]=j;
+                }
+            }
+        }
+        for(var i = 0; i<fullGMC.length;i++){
+            for (var j = 1; j < 8; j++ ){
+                if(moment(fullGMC[i]).isoWeekday()==j){
+                    gmcGroup[j-1].push(moment(fullGMC[i]).format());
+                    colorGroup[j-1].push(colorCode[i]);
+
+                }
+            }
+        }
+
+
+        var tempHTML='';
+        for (var i = 0; i<5; i++){
+            tempHTML += '<tr>'
+            for (var j = 0; j < 7; j++){
+                if (gmcGroup[j][i] != undefined){
+                    if (moment(gmcGroup[j][i]).isSame(moment(nextGMC[0]))){
+                        tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'<span class="label label-default pull-right">Next</span></td>'
+                    }
+                    else{
+                        tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                    }
                 }
                 else{
-                    tempHTML += '<td style="background-color:'+colorHex[colorGroup[j][i]-1]+'";>'+moment(gmcGroup[j][i]).format('LT')+'</td>'
+                    tempHTML += '<td></td>'
                 }
             }
-            else{
-                tempHTML += '<td></td>'
-            }
+            tempHTML += '</tr>'
         }
-        tempHTML += '</tr>'
+        notifSet.played = false;
+        $(tempHTML).appendTo(t)
     }
-    notifSet.played = false;
-    $(tempHTML).appendTo(t)
-    console.log(gmcGroup)
-}
-function countdown(){
-    var currentTime= new moment();
-    $('#dateLocal').text(currentTime.format('LTS dddd'));
+    function countdown(){
+        var currentTime= new moment();
+        $('#dateLocal').text(currentTime.format('LTS dddd'));
 
-    var x = new moment();
-    var nextOne = moment(nextGMC[0]);
-    var previousOne = moment(previousGMC);
-    var previousOnePlusTwo = moment(previousGMC).add(2, 'hours');
-    $('#upcomingGMC').text(moment().countdown(nextOne,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(nextOne).format('LT')+')');
-    if (x.isBetween(previousOne, previousOnePlusTwo)){
-        $('#finishGMC').text(moment().countdown(previousOnePlusTwo,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(previousOnePlusTwo).format('LT')+')');
-        $('#currentStatus').removeClass('alert-info').addClass('alert-success');
-        $('#statusOngoing').show();
-    }
-    else{
-        $('#statusOngoing').hide();
-        $('#currentStatus').removeClass('alert-success').addClass('alert-info');
-    }
-    if (x.isAfter(nextOne)){
-        gmcSchedule();
-        updateNextGMCs();
-    }
-    if (x.isAfter(moment(nextOne).subtract(notifSet.time,'minutes')) && notifSet.played == false && notifSet.sound !=undefined){
-        $.playSound('../sound/'+notifSet.sound);
-        $.notify({
-            icon: 'glyphicon glyphicon-warning-sign',
-            message: 'Next GMC is in less than '+notifSet.time+ ' minutes',
-        },{
-            type: 'danger',
-            delay:'10000',
-            placement: {
-                from: "bottom",
-                align: "right"
-            }
-        });
-        notifSet.played = true;
+        var x = new moment();
+        var nextOne = moment(nextGMC[0]);
+        var previousOne = moment(previousGMC);
+        var previousOnePlusTwo = moment(previousGMC).add(2, 'hours');
+        $('#upcomingGMC').text(moment().countdown(nextOne,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(nextOne).format('LT')+')');
+        if (x.isBetween(previousOne, previousOnePlusTwo)){
+            $('#finishGMC').text(moment().countdown(previousOnePlusTwo,countdown.HOURS|countdown.MINUTES|countdown.SECONDS,2)+' ('+moment(previousOnePlusTwo).format('LT')+')');
+            $('#currentStatus').removeClass('alert-info').addClass('alert-success');
+            $('#statusOngoing').show();
+        }
+        else{
+            $('#statusOngoing').hide();
+            $('#currentStatus').removeClass('alert-success').addClass('alert-info');
+        }
+        if (x.isAfter(nextOne)){
+            gmcSchedule();
+            updateNextGMCs();
+        }
+        if (x.isAfter(moment(nextOne).subtract(notifSet.time,'minutes')) && notifSet.played == false && notifSet.sound !=undefined){
+            $.playSound('../sound/'+notifSet.sound);
+            $.notify({
+                icon: 'glyphicon glyphicon-warning-sign',
+                message: 'Next GMC is in less than '+notifSet.time+ ' minutes',
+            },{
+                type: 'danger',
+                delay:'10000',
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            notifSet.played = true;
+        }
+
     }
     
-}
-$(document).ready(function(){
+    
+    
     
     //init
     gmcSchedule();
@@ -230,7 +257,7 @@ $(document).ready(function(){
     
     //load accounts from local
     var loadAcc = localStorage.getItem("storeAccount");
-    if(localStorage.getItem("storeAccount") != null){
+    if(loadAcc != null){
         gmcAccount = JSON.parse(loadAcc);
     }
     function storeAcc(){
@@ -238,7 +265,7 @@ $(document).ready(function(){
     }
     //load notification settings from local
     var loadNot = localStorage.getItem("storeNotif");
-    if(localStorage.getItem("storeNotif") != null){
+    if(loadNot != null){
         notifSet = JSON.parse(loadNot);
     }
     function storeNotification(){
@@ -265,6 +292,7 @@ $(document).ready(function(){
     
     
     
+    //general functions
     /* Back to top*/
     var offset = 250,
     //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -374,7 +402,6 @@ $(document).ready(function(){
                 tempSpan.textContent='No CD';
                 tempSpan.setAttribute('class', 'label label-default');
             }
-            console.log(tempSpan)
             ttC.appendChild(tempSpan)
             
             
@@ -422,7 +449,7 @@ $(document).ready(function(){
         for (var h=0; h<gmcList.length;h++){
             ttR = tokenTable.insertRow(h+2);
             ttC = ttR.insertCell(0);
-            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h].charAt(0).toUpperCase()+gmcList[h].slice(1);
+            ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+gmcList[h];
             for (var i = 0; i<gmcAccount.length; i++){
                 ttC = ttR.insertCell(i+1);            
                 ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
@@ -456,10 +483,10 @@ $(document).ready(function(){
         for (var i = 0; i<gmcAccount.length; i++){
             ttC = ttR.insertCell(i+1);
             
-            var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
-            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
-            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
-            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
+            var normBox = gmcAccount[i].Blacktalon > 0 && gmcAccount[i].Boreas > 0 && gmcAccount[i].Seiren > 0 && gmcAccount[i].Howl > 0 && gmcAccount[i].Shiris > 0 && gmcAccount[i].Muui > 0 && gmcAccount[i].Sushi > 0;
+            var crimBox = gmcAccount[i].Muui > 2 && gmcAccount[i].Shiris > 2 && gmcAccount[i].Howl > 2 && gmcAccount[i].Gemini > 0;
+            var ceruBox = gmcAccount[i].Seiren > 2 && gmcAccount[i].Blacktalon > 2 && gmcAccount[i].Howl > 2 && gmcAccount[i].Gemini > 0 ;
+            var saffBox = gmcAccount[i].Sushi > 2 && gmcAccount[i].Shiris > 2 && gmcAccount[i].Boreas > 2 && gmcAccount[i].Gemini > 0;
             //box things
             
             if (!(normBox || crimBox || ceruBox || saffBox)){
@@ -508,62 +535,101 @@ $(document).ready(function(){
    function addToken(){
         var gmc = $(this).parent().data('gmc');
         var accIndex = $(this).parent().data('col');
-        console.log(gmcAccount[accIndex][gmc])
         gmcAccount[accIndex][gmc] += 1;
-        if (autoCoolState) {gmcAccount[accIndex].cooldown = new moment().add(48, 'hours')};
+        if ($('#autoCD').prop('checked')) {
+            gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
+            logArray.push(["Finish",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+        }
+        else{
+           logArray.push(["Add",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+        }
+        storeLogA();
         updateTable();
         storeAcc();
     }
-    
     function delToken(){
         var gmc = $(this).parent().data('gmc');
         var accIndex = $(this).parent().data('col');
-        console.log(gmcAccount[accIndex][gmc]);
         gmcAccount[accIndex][gmc] -= 1;
+        logArray.push(["Remove",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+        storeLogA();
         updateTable();
         storeAcc();
     
     }
     
     //box functions
-    function claimNormal(){
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex].blacktalon -= 1;
-        gmcAccount[accIndex].boreas -= 1;
-        gmcAccount[accIndex].seiren -= 1;
-        gmcAccount[accIndex].howl -= 1;
-        gmcAccount[accIndex].shiris -= 1;
-        gmcAccount[accIndex].muui -= 1;
-        gmcAccount[accIndex].sushi -= 1;
+    $('#saveCostume').on('click', function(){
+        if ($('#boxType').data('box')=='normal'){
+            gmcAccount[gAccIndex].Blacktalon -= 1;
+            gmcAccount[gAccIndex].Boreas -= 1;
+            gmcAccount[gAccIndex].Seiren -= 1;
+            gmcAccount[gAccIndex].Howl -= 1;
+            gmcAccount[gAccIndex].Shiris -= 1;
+            gmcAccount[gAccIndex].Muui -= 1;
+            gmcAccount[gAccIndex].Sushi -= 1;
+        }
+        else if ($('#boxType').data('box')=='crimson'){
+            gmcAccount[gAccIndex].Muui -= 3;
+            gmcAccount[gAccIndex].Shiris -= 3;
+            gmcAccount[gAccIndex].Howl -= 3;
+            gmcAccount[gAccIndex].Gemini -= 1;
+        }
+        else if ($('#boxType').data('box')=='cerulean'){
+            gmcAccount[gAccIndex].Howl -= 3;
+            gmcAccount[gAccIndex].Seiren -= 3;
+            gmcAccount[gAccIndex].Blacktalon -= 3;
+            gmcAccount[gAccIndex].Gemini -= 1;
+        }
+        else if ($('#boxType').data('box')=='saffron'){
+            gmcAccount[gAccIndex].Sushi -= 3;
+            gmcAccount[gAccIndex].Boreas -= 3;
+            gmcAccount[gAccIndex].Shiris -= 3;
+            gmcAccount[gAccIndex].Gemini -= 1;
+        }
+        logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
         updateTable();
         storeAcc();
+    })
+    function claimNormal(){
+        $('#costumeSelect').empty();
+        $('#costumeSelect').append($("<option></option>"));
+        $('#boxClaim').modal();
+        createSelect("normal");
+        $('#boxType').html('<strong>Box Type:</strong> <img src="../img/gmc/normal.gif"><span class="label label-default">Normal</span>');
+        $('#boxType').data('box','normal')
+        
+        gAccIndex = $(this).parent().data('col');
     }
     function claimCrimson(){
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex].muui -= 3;
-        gmcAccount[accIndex].shiris -= 3;
-        gmcAccount[accIndex].howl -= 3;
-        gmcAccount[accIndex].gemini -= 1;
-        updateTable();
-        storeAcc();
+        
+        $('#costumeSelect').empty();
+        $('#costumeSelect').append($("<option></option>"));
+        $('#boxClaim').modal();
+        createSelect("crimson");
+        $('#boxType').html('<strong>Box Type:</strong> <img src="../img/gmc/crimson.gif"><span class="label label-danger">Crimson</span>');
+        $('#boxType').data('box','crimson')
+        
+        gAccIndex = $(this).parent().data('col');
     }
     function claimCerulean(){
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex].howl -= 3;
-        gmcAccount[accIndex].seiren -= 3;
-        gmcAccount[accIndex].blacktalon -= 3;
-        gmcAccount[accIndex].gemini -= 1;
-        updateTable();
-        storeAcc();
+        $('#costumeSelect').empty();
+        $('#costumeSelect').append($("<option></option>"));
+        createSelect("cerulean");
+        $('#boxClaim').modal();
+        $('#boxType').html('<strong>Box Type:</strong> <img src="../img/gmc/cerulean.gif"><span class="label label-info">Cerulean</span>');
+        $('#boxType').data('box','cerulean')
+        
+        gAccIndex = $(this).parent().data('col');
     }
     function claimSaffron(){
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex].sushi -= 3;
-        gmcAccount[accIndex].boreas -= 3;
-        gmcAccount[accIndex].shiris -= 3;
-        gmcAccount[accIndex].gemini -= 1;
-        updateTable();
-        storeAcc();
+        $('#costumeSelect').empty();
+        $('#costumeSelect').append($("<option></option>"));
+        createSelect("saffron");
+        $('#boxClaim').modal();
+        $('#boxType').html('<strong>Box Type:</strong> <img src="../img/gmc/saffron.gif"><span class="label label-warning">Saffron</span>');
+        $('#boxType').data('box','saffron')
+        gAccIndex = $(this).parent().data('col');
     }
     
     //cooldown functions 
@@ -615,17 +681,11 @@ $(document).ready(function(){
         x = moment.tz(gmcTD.format("YYYY-MM-DD HH:mm:ss"),zone)
         x.tz(moment.tz.guess());
         gmcAccount[accIndex].cooldown = x;
+        logArray.push(["Fail",gmcAccount[accIndex].name,"","","",moment().valueOf()]);
+        storeLogA();
         updateTable();
         storeAcc();
     }
-    
-    //edit mode button
-    $('#autoCoolButton').on('click', function(){
-        autoCoolState = !autoCoolState;
-        if (autoCoolState){$(this).html('<b>Auto Cooldown: <span style="color:green">On</span></b>')}
-        else{ $(this).html('<b>Auto Cooldown: <span style="color:red">Off</span></b>')}
-        
-    })
     
     //preview sound
     $('#previewSoundButt').on('click',function(){
@@ -654,5 +714,104 @@ $(document).ready(function(){
         $('#guideHpriest').html(guide[gmc].hpriest);
         $('#guideHwizard').html(guide[gmc].hwizard);
         $('#guideCreator').html(guide[gmc].creator);
+    })
+    
+    
+    
+    //costume select
+    function createSelect(boxName){
+        $('#costumeSelect').select2({
+            placeholder:"Select a prize",
+            tags:true,
+            data: costumes[boxName]
+        });
+    }
+    createSelect();
+    
+    
+    
+    //note taking function
+    var newNote = localStorage.getItem('storeNote');
+    var newNoteText = JSON.parse(newNote);
+    $('#noteArea').val(newNoteText);
+    $('#noteArea').on('change', function(){
+        var getNote = $('#noteArea').val();
+        localStorage.setItem('storeNote', JSON.stringify(getNote))
+    })
+    
+    
+    //things
+    //log(action, account, gmc, box, costume, time)
+    var dataSet = [
+    [ "Add","79","Gemini","","","Today"],
+    [ "Claim","92","","Crimson","Ancient Gold","Yesterday"],
+    [ "Finish","79","Gemini","","","Today"],
+    [ "Fail","79","","","","Today"],
+    [ "Remove","79","Gemini","","","Today"]];
+    console.log(dataSet)
+    $('#logButton').on('click', function(){
+        updateLog();
+    })
+    
+    function updateLog(){
+        dataTable.clear();
+        dataTable.rows.add(logArray);
+        dataTable.order(1,'desc').draw();
+    }
+    var dataTable = $('#logTable').DataTable( {
+        data: logArray,
+        columns: [
+            { 
+                render: function(data,type,row){
+                if (data=="Add"){
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-success"><i class="fa fa-plus" style="font-size:12px"></i> Added</span> a <strong>'+ row[2]+"</strong> token to <b>"+row[1]+"</b>";
+                    return tempHTML
+                }
+                else if (data=="Claim"){
+                    var boxName;
+                    if (row[3]=="normal"){boxName = 'Normal'}
+                    else if (row[3]=="crimson"){boxName = '<span class="text-danger">Crimson</span>'}
+                    else if (row[3]=="cerulean"){boxName = '<span class="text-info">Cerulean</span>'}
+                    else if (row[3]=="saffron"){boxName = '<span class="text-warning">Saffron</span>'}
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-info"><i class="fa fa-gift" style="font-size:12px"></i> Claimed</span> a <strong>'+ boxName+'</strong> giftbox and got a <b>'+row[4]+'</b> for <b>'+row[1]+'</b>';
+                    return tempHTML;
+                }
+                else if (data=="Remove"){
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-danger"><i class="fa fa-minus" style="font-size:12px"></i> Removed</span> a <strong>'+ row[2]+"</strong> token from <b>"+row[1]+"</b>";
+                    return tempHTML;
+                }
+                else if (data=="Finish"){
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-primary"><i class="fa fa-trophy" style="font-size:12px"></i> Finished</span> a <strong>'+ row[2]+"</strong> with <b>"+row[1]+"</b>";
+                    return tempHTML;
+                }
+                else if (data=="Fail"){
+                    var tempHTML = moment(row[5]).calendar()+ ': <span class="label label-warning"><i class="fa fa-bomb" style="font-size:12px"></i> Failed</span> a GMC with <b>'+row[1]+"</b>";
+                    return tempHTML;
+                }
+                else return data
+            } 
+            },
+            {
+                render: function(data,type,row){return moment(row[5]).unix()},
+                visible:false
+            },
+            {
+                render: function(data,type,row){return '<a class="btn btn-xs"><i class="fa fa-remove text-danger" style="font-size:16px"></i></a>'}
+            }
+        ]
+    } );
+    
+    $('#logTable tbody').on('click','tr', function(e){ 
+        if($(e.target).parent().hasClass('btn')){
+            var rowIndex = logArray.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
+            
+            console.log(rowIndex)
+            console.log(logArray[rowIndex])
+            logArray.splice(rowIndex,1);
+            storeLogA();
+            
+            
+            updateLog();
+        }
     })
 });
