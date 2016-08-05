@@ -745,13 +745,6 @@ $(document).ready(function(){
     
     //things
     //log(action, account, gmc, box, costume, time)
-    var dataSet = [
-    [ "Add","79","gemini","","","Today"],
-    [ "Claim","92","","Crimson","Ancient Gold","Yesterday"],
-    [ "Finish","79","gemini","","","Today"],
-    [ "Fail","79","","","","Today"],
-    [ "Remove","79","gemini","","","Today"]];
-    console.log(dataSet)
     $('#logButton').on('click', function(){
         updateLog();
     })
@@ -760,6 +753,55 @@ $(document).ready(function(){
         dataTable.clear();
         dataTable.rows.add(logArray);
         dataTable.order(1,'desc').draw();
+        
+        var t = document.getElementById('perGMCTable');
+        $(t).empty();
+        var thHTML = '<thead><tr><th>GMC</th><th>Count</th></thead>'
+        $(thHTML).appendTo(t);
+        
+        var gmcFinish = 0;
+        var normalClaim = 0;
+        var crimsonClaim = 0;
+        var ceruleanClaim = 0;
+        var saffronClaim = 0;
+        
+        var gmcCount = [0,0,0,0,0,0,0,0];
+        for (var i = 0; i < logArray.length; i++){
+            if (logArray[i][0]== "Finish"){
+                gmcFinish +=1;
+                for (j = 0; j < gmcList.length; j++){
+                    if (gmcList[j]==logArray[i][2]){
+                        gmcCount[j]++;
+                    }
+                }
+            }
+            else if (logArray[i][0]=="Claim"){
+                if (logArray[i][3]=="normal"){
+                    normalClaim +=1;
+                }
+                else if (logArray[i][3]=="crimson"){
+                    crimsonClaim+=1;
+                }
+                else if (logArray[i][3]=="cerulean"){
+                    ceruleanClaim+=1;
+                }
+                else if (logArray[i][3]=="saffron"){
+                    saffronClaim+=1;
+                }
+            }
+        }
+        $('#gmcCount').text(gmcFinish);
+        $('#normalCount').text(normalClaim);
+        $('#crimsonCount').text(crimsonClaim);
+        $('#ceruleanCount').text(ceruleanClaim);
+        $('#saffronCount').text(saffronClaim);
+        
+        var tbHTML = '<tbody>';
+        for (var i = 0; i < gmcList.length; i++){
+            tbHTML += '<tr><td>'+capitalize(gmcList[i])+'</td><td>'+gmcCount[i]+'</td></tr>'
+        }
+        tbHTML += '</tbody>'
+        $(tbHTML).appendTo(t);
     }
     var dataTable = $('#logTable').DataTable( {
         data: logArray,

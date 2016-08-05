@@ -127,30 +127,38 @@
                                         <td><button class="btn btn-gray"><i class='fa fa-calendar'></i> Full Schedule</button></td>
                                         <td><strong>Display the full GMC schedule</strong> for the whole week in your local time.</td>
                                     </tr>
-                                    <tr>
-                                        <td><div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>
-                                            <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:red">Off</span></b></div></td>
-                                        <td>When <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:green">On</span></b></div>, the <div class="btn btn-success btn-xs"><i class="fa fa-plus"></i></div> button automatically add a 48h cooldown.
-                                            <br>
-                                            Switch to 
-                                            <div class="btn btn-default btn-sm"><b>Auto Cooldown: <span style="color:red">Off</span></b></div> mode to populate an account with tokens without disturbing the cooldown associated.
-                                        </td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td><div class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Account</div></td>
                                         <td>Prompts a popup for <b>adding / deleting your game accounts.</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="btn btn-success btn-sm"><i class="fa fa-question"></i> Help!</div></td>
-                                        <td>You know what, that's a good question. I wonder what the Help! button actually does.</td>
                                     </tr>
                                     <tr>
                                         <td><div class="btn btn-info btn-sm"><i class="fa fa-info"></i> GMC Info</div></td>
                                         <td>Open a popup with <b>information on GMC Giftboxes.</b></td>
                                     </tr>
                                     <tr>
-                                        <td><div class="btn btn-warning btn-sm"><i class="fa fa-undo"></i> Undo Last</div></td>
-                                        <td><b>Undo your last action</b>, whatever it was. Only one action is stored and undoable at any time.</td>
+                                        <td><button class="btn btn-sm"><i class="fa fa-list-alt"></i> Log</button></td>
+                                        <td>Open a popup <b>displaying your activity log.</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-success btn-sm"><i class="fa fa-question"></i> Help!</div></td>
+                                        <td>You know what, that's a good question. I wonder what the Help! button actually does.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                    <label for="autoCD">Auto add cooldown</label>
+                                    <input type="checkbox" class="pull-right" checked data-toggle="toggle" data-size="small" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger"></td>
+                                        <td>When <input type="checkbox" checked disabled data-toggle="toggle" data-size=
+"mini" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger"> the <div class="btn btn-success btn-xs"><i class="fa fa-plus"></i></div> button automatically add a 48h cooldown.
+                                            <br>
+                                            Switch to 
+                                            <input type="checkbox" disabled data-toggle="toggle" data-size=
+"mini" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger"> mode to populate an account with tokens without disturbing the cooldown associated.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="btn btn-warning btn-sm"><i class="fa fa-sticky-note-o"></i> Notes</div></td>
+                                        <td><b>Open up a textarea for your personal note.</b> Note whatever you want, contents are automatically saved locally after each keystroke..</td>
                                     </tr>
                                     <tr>
                                         <td><div class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></div></td>
@@ -183,9 +191,6 @@
                                     
                                 </tbody>
                             </table>
-                            <hr class="small">
-                            <h4>tRO Wiki Link</h4>
-                            <a href="http://wiki.talonro.com/GMC" target="_blank">http://wiki.talonro.com/GMC</a>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -266,7 +271,7 @@
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="tabCostume">
-                                    <h4>Classic Giftbox</h4>
+                                    <h4><img src="../img/gmc/normal.gif"> <span class="label label-default">Classic Giftbox</span></h4>
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -437,35 +442,30 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th>Total GMC done</th>
-                                                                <td>1000</td>
+                                                                <td><span id='gmcCount'></span></td>
                                                             </tr>
                                                             <tr>
-                                                                <th>Total Box claimed</th>
-                                                                <td>10000</td>
+                                                                <th>Normal claimed</th>
+                                                                <td><span id='normalCount'></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><span class="text-danger">Crimson</span> claimed</th>
+                                                                <td><span id='crimsonCount'></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><span class="text-info">Cerulean</span> claimed</th>
+                                                                <td><span id='ceruleanCount'></span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><span class="text-warning">Saffron</span> claimed</th>
+                                                                <td><span id='saffronCount'></span></td>
                                                             </tr>
                                                             <tr></tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             <div class="panel panel-default">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>GMC</th>
-                                                                <th># of time done</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <th>Blacktalon</th>
-                                                                <td>1000</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Boreas</th>
-                                                                <td>10000</td>
-                                                            </tr>
-                                                            <tr></tr>
-                                                        </tbody>
+                                                    <table class="table" id="perGMCTable">
                                                     </table>
                                                 </div>
                                         </div>
@@ -480,12 +480,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <th>Ancient Gold Adornment Costume</th>
-                                                                <td>1000</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Reissue Schmitz Helm Costume</th>
-                                                                <td>10000</td>
+                                                                <th>Will be added a few months later~!!</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -497,6 +492,7 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            <p>Deleting any log entry won't change cooldowns or tokens. They're just used to provide a few statistics. If you want to modify cooldown and token counts, directly edit the table. </p>
                                             <div class="notice notice-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> Deleting anything from the log is irrecoverable. Only delete if it's truly a mistake.</div>
                                             <table class="table" id="logTable"></table>
                                         </div>
@@ -615,7 +611,7 @@
             <div class="row">   
                 <div class="col-sm-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Ayyy caramba!</div>
+                        <div class="panel-heading">Cooldown</div>
                         <div class="panel-body">
                             <div class="row bottom-buffer">
                                 <div class="col-sm-12">
