@@ -239,7 +239,7 @@ $(document).ready(function(){
         }
 
     }
-    
+    //preload
     
     
     
@@ -267,9 +267,15 @@ $(document).ready(function(){
     var loadNot = localStorage.getItem("storeNotif");
     if(loadNot != null){
         notifSet = JSON.parse(loadNot);
+        $.ajax({
+            url: '../sound/'+notifSet.sound+'.ogg',
+        });
     }
     function storeNotification(){
         localStorage.setItem("storeNotif",JSON.stringify(notifSet));
+        $.ajax({
+            url: '../sound/'+notifSet.sound+'.ogg',
+        });
     }
     
     
