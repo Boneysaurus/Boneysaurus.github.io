@@ -483,7 +483,29 @@ $(document).ready(function(){
             }
             ttC = ttR.insertCell(gmcAccount.length+1);
         }
+        /*
+        ttR = tokenTable.insertRow(gmcList.length+2)
+        ttC = ttR.insertCell(0);
+        ttC.innerHTML = "<b>Target Box</b>"
         
+        for (var i = 0; i<gmcAccount.length; i++){
+            ttC = ttR.insertCell(i+1);
+            var buttonGroup = document.createElement('div');
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-block');
+            buttonGroup.setAttribute('role', 'group');
+            buttonGroup.setAttribute('aria-label', '...');
+            var buttonCrimson = document.createElement('button');
+            buttonCrimson.innerHtml = '<img src="../img/gmc/crimson.gif"> Poop'
+            buttonCrimson.setAttribute('class','btn btn-danger');
+            buttonGroup.appendChild(buttonCrimson);
+            var buttonCrimson = document.createElement('button');
+            buttonCrimson.innerHtml = '<img src="../img/gmc/crimson.gif"> Poop'
+            buttonCrimson.setAttribute('class','btn btn-danger');
+            buttonGroup.appendChild(buttonCrimson);
+            ttC.appendChild(buttonGroup)
+        }
+        ttC = ttR.insertCell(gmcAccount.length+1);
+        */
         
         //other actions
         ttR = tokenTable.insertRow(gmcList.length+2);
