@@ -619,6 +619,7 @@ $(document).ready(function(){
             gmcAccount[gAccIndex].gemini -= 1;
         }
         logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
+        storeLogA();
         updateTable();
         storeAcc();
     })
