@@ -106,3 +106,9 @@ hr.small{
 .notice-danger>strong {
     color: #d73814;
 }
+.list-small{
+    font-size: 0.85em;
+}
+.list-group-item-small{
+    padding: 10px 6px;
+}

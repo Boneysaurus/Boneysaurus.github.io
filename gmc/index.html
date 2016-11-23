@@ -193,6 +193,8 @@
                                     
                                 </tbody>
                             </table>
+                            
+                            <p><button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#changeLog"><i class="fa fa-asterisk"></i> Change Log</button></p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -453,6 +455,30 @@
 
                 </div>
             </div>
+            <div id="changeLog" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Change Log</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>23th November 2016</h4>
+                                    <p><span class="label label-success">Added</span> <strong>GMC Target Box:</strong> </p><p>Helps you decide which GMC to go on which account with a glance</p>
+                                    <p><span class="label label-success">Added</span> <strong>ET and Wave Cooldown:</strong> </p><p>For those of you have 1 billion chars, and do 1 billion ETs/week</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" id="cancelPopup">Don't show this again</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div id="siteLog" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -540,6 +566,52 @@
 
                 </div>
             </div>
+            <div id="waveLog" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Wave Challenge Log</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>Deleting any log entry won't change cooldowns. They're just used to provide a few statistics. If you want to modify cooldown, directly edit the table. </p>
+                                    <div class="notice notice-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> Deleting anything from the log is irrecoverable. Only delete if it's truly a mistake.</div>
+                                    <table class="table" id="waveTable"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelCD">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="ETLog" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Endless Tower Log</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>Deleting any log entry won't change cooldowns. They're just used to provide a few statistics. If you want to modify cooldown, directly edit the table. </p>
+                                    <div class="notice notice-danger"><strong><i class="fa fa-exclamation-triangle"></i></strong> Deleting anything from the log is irrecoverable. Only delete if it's truly a mistake.</div>
+                                    <table class="table" id="ETTable"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelCD">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div id="boxClaim" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -563,7 +635,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                    <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal" id="saveCostume">Save & Close</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         </div>
@@ -623,7 +695,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Schedule</div>
+                        <div class="panel-heading">GMC Schedule</div>
                         <div class="panel-body">
                             <div class="alert" id="currentStatus"><h4>Current Status:</h4><div id="statusOngoing"><span class="label label-success" >Ongoing</span> finishes in <span id="finishGMC" style="font-weight:bold"></span></div>
                             <span class="label label-primary">Upcoming</span> next in <span id="upcomingGMC" style="font-weight:bold"></span>
@@ -643,9 +715,9 @@
             
             <!-- table thing -->
             <div class="row">   
-                <div class="col-sm-12">
+                <div class="col-sm-9">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Tokens and Cooldowns</div>
+                        <div class="panel-heading">GMC Tokens and Cooldowns</div>
                         <div class="panel-body">
                             <div class="row bottom-buffer">
                                 <div class="col-sm-12">
@@ -676,6 +748,30 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">ET and Wave Cooldown</div>
+                        <div class="panel-body">
+                            Wave<button type="button" class="btn btn-xs pull-right" data-toggle="modal" data-target="#waveLog"><i class="fa fa-list-alt"></i></button>
+                            <p><div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="formAddWave" placeholder="Char or account name" maxlength="18">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success btn-sm" type="button" id="buttonAddWave"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div><p>
+                            <ul class="list-group list-small" id="listWave"></ul>
+                            <hr>
+                            ET<button type="button" class="btn btn-xs pull-right" data-toggle="modal" data-target="#ETLog"><i class="fa fa-list-alt"></i></button>
+                            <p><div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="formAddET" placeholder="Char name" maxlength="18">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success btn-sm" type="button" id="buttonAddET"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div><p>
+                            <ul class="list-group list-small" id="listET"></ul>
                         </div>
                     </div>
                 </div>

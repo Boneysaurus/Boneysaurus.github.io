@@ -9,7 +9,20 @@ $(document).ready(function(){
     weekday[4]="Thursday";
     weekday[5]="Friday";
     weekday[6]="Saturday";
-
+    
+    //changelog popup
+    var changeLog=0;
+    var loadChangeLog = localStorage.getItem('changeLogShow')
+    if (loadChangeLog != null){
+        changeLog = JSON.parse(loadChangeLog)
+    }
+    $(window).load(function(){
+        if (changeLog != '1'){$('#changeLog').modal('show');}
+    });
+    $('#cancelPopup').on('click',function(){
+        localStorage.setItem('changeLogShow',JSON.stringify('1'))
+    })
+    
     var costumes = {
         normal: ["Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume","Little Poring Egg","Taini Egg","Hand-Made Chocolate","Life Insurance Box"],
         crimson: ["Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
@@ -46,6 +59,10 @@ $(document).ready(function(){
         this.costume = costume;
         this.time = time;
     }
+    function instance(name,cooldown){
+        this.name = name;
+        this.cooldown = cooldown;
+    }
     var logArray=[];
     var loadLog = localStorage.getItem('storeLog')
     if (loadLog != null){
@@ -54,9 +71,10 @@ $(document).ready(function(){
     function storeLogA (){
         localStorage.setItem('storeLog',JSON.stringify(logArray))
     }
-
+    
+    
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,targetbox){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -67,6 +85,15 @@ $(document).ready(function(){
         this.muui = muui;
         this.sushi = sushi;
         this.gemini = gemini;
+        this.blacktalon_t = blacktalon_t;
+        this.boreas_t = boreas_t;
+        this.seiren_t = seiren_t;
+        this.howl_t = howl_t;
+        this.shiris_t = shiris_t;
+        this.muui_t = muui_t;
+        this.sushi_t = sushi_t;
+        this.gemini_t = gemini_t;
+        this.targetbox = targetbox;
     }
 
 
@@ -460,8 +487,15 @@ $(document).ready(function(){
             ttC = ttR.insertCell(0);
             ttC.innerHTML = '<img src="../img/gmc/'+gmcList[h]+'.gif" align="bottom"></img> '+capitalize(gmcList[h]);
             for (var i = 0; i<gmcAccount.length; i++){
+                if (gmcAccount[i].targetbox == 'crimson') {targetColor = 'crimson'}
+                if (gmcAccount[i].targetbox == 'saffron') {targetColor = 'sandybrown'}
+                if (gmcAccount[i].targetbox == 'cerulean') {targetColor = 'deepskyblue'}
                 ttC = ttR.insertCell(i+1);            
-                ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]));
+                var textThing = document.createElement('span')
+                if (gmcAccount[i][gmcList[h]+'_t'] == 0 || gmcAccount[i][gmcList[h]+'_t']==null){textThing.innerHTML = gmcAccount[i][gmcList[h]]}
+                else{textThing.innerHTML = gmcAccount[i][gmcList[h]]+'<span style="color:'+targetColor+'"> + '+gmcAccount[i][gmcList[h]+'_t']+'</span>'}
+                ttC.appendChild(textThing)
+                //ttC.appendChild(document.createTextNode(gmcAccount[i][gmcList[h]]+'+'+gmcAccount[i][gmcList[h]+'_t']));
                 var buttonGroup = document.createElement('div');
                 $(buttonGroup).data('gmc', gmcList[h]);
                 $(buttonGroup).data('col', i);
@@ -476,39 +510,60 @@ $(document).ready(function(){
                 var buttonM = document.createElement('button')
                 buttonM.innerHTML = '<i class="fa fa-minus"></i>';
                 buttonM.setAttribute('class', 'btn btn-danger');
-                if (gmcAccount[i][gmcList[h]]==0){$(buttonM).prop('disabled',true)}
+                $(buttonM).prop('disabled',(gmcAccount[i][gmcList[h]]==0))
                 buttonM.onclick = delToken;
                 buttonGroup.appendChild(buttonM);
                 ttC.appendChild(buttonGroup);
             }
             ttC = ttR.insertCell(gmcAccount.length+1);
         }
-        /*
+        
         ttR = tokenTable.insertRow(gmcList.length+2)
         ttC = ttR.insertCell(0);
         ttC.innerHTML = "<b>Target Box</b>"
         
         for (var i = 0; i<gmcAccount.length; i++){
+            var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
+            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
+            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
+            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
             ttC = ttR.insertCell(i+1);
             var buttonGroup = document.createElement('div');
-            buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-block');
+            $(buttonGroup).data('col', i);
+            buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
             buttonGroup.setAttribute('role', 'group');
             buttonGroup.setAttribute('aria-label', '...');
-            var buttonCrimson = document.createElement('button');
-            buttonCrimson.innerHtml = '<img src="../img/gmc/crimson.gif"> Poop'
-            buttonCrimson.setAttribute('class','btn btn-danger');
+            var buttonCrimson = document.createElement('a')
+            buttonCrimson.innerHTML = '<img src="../img/gmc/crimson.gif" style="height: 75%;"/>';
+            buttonCrimson.setAttribute('class', 'btn btn-default btn-xs');
+            $(buttonCrimson).data('type','crimson');
+            if (gmcAccount[i].targetbox=='crimson'){$(buttonCrimson).addClass('active');}
+            if (crimBox){$(buttonCrimson).addClass('disabled')}
+            buttonCrimson.onclick = target_button_click;
             buttonGroup.appendChild(buttonCrimson);
-            var buttonCrimson = document.createElement('button');
-            buttonCrimson.innerHtml = '<img src="../img/gmc/crimson.gif"> Poop'
-            buttonCrimson.setAttribute('class','btn btn-danger');
-            buttonGroup.appendChild(buttonCrimson);
+            var buttonCerulean = document.createElement('a')
+            buttonCerulean.innerHTML = '<img src="../img/gmc/cerulean.gif" style="height: 75%;"/>';
+            buttonCerulean.setAttribute('class', 'btn btn-default');
+            $(buttonCerulean).data('type','cerulean');
+            if (gmcAccount[i].targetbox=='cerulean'){$(buttonCerulean).addClass('active');}
+            if (ceruBox){$(buttonCerulean).addClass('disabled')}
+            buttonCerulean.onclick = target_button_click;
+            buttonGroup.appendChild(buttonCerulean);
+            var buttonSaffron = document.createElement('a')
+            buttonSaffron.innerHTML = '<img src="../img/gmc/saffron.gif" style="height: 75%;"/>';
+            buttonSaffron.setAttribute('class', 'btn btn-default');
+            $(buttonSaffron).data('type','saffron');
+            if (gmcAccount[i].targetbox=='saffron'){$(buttonSaffron).addClass('active');}
+            if (saffBox){$(buttonSaffron).addClass('disabled')}
+            buttonSaffron.onclick = target_button_click;
+            buttonGroup.appendChild(buttonSaffron);
             ttC.appendChild(buttonGroup)
         }
         ttC = ttR.insertCell(gmcAccount.length+1);
-        */
+        
         
         //other actions
-        ttR = tokenTable.insertRow(gmcList.length+2);
+        ttR = tokenTable.insertRow(gmcList.length+3);
         ttC = ttR.insertCell(0);
         ttC.innerHTML = "<b>Claim Box</b>";
         for (var i = 0; i<gmcAccount.length; i++){
@@ -563,26 +618,67 @@ $(document).ready(function(){
         
     }
     
-   function addToken(){
+    function target_button_click(){
+        gAccIndex = $(this).parent().data('col');
+        if (gmcAccount[gAccIndex].targetbox != $(this).data('type')){gmcAccount[gAccIndex].targetbox = $(this).data('type');}
+        else(delete gmcAccount[gAccIndex].targetbox)
+        set_target();
+    }
+    function set_target(){
+        
+        gmcAccount[gAccIndex].blacktalon_t = 0;
+        gmcAccount[gAccIndex].boreas_t = 0;
+        gmcAccount[gAccIndex].seiren_t = 0;
+        gmcAccount[gAccIndex].howl_t = 0;
+        gmcAccount[gAccIndex].shiris_t = 0;
+        gmcAccount[gAccIndex].muui_t = 0;
+        gmcAccount[gAccIndex].sushi_t = 0;
+        gmcAccount[gAccIndex].gemini_t = 0;
+        if (gmcAccount[gAccIndex].targetbox=='crimson'){
+            if (gmcAccount[gAccIndex].muui <3){  gmcAccount[gAccIndex].muui_t = 3 - gmcAccount[gAccIndex].muui;}
+            if (gmcAccount[gAccIndex].shiris <3){  gmcAccount[gAccIndex].shiris_t = 3 - gmcAccount[gAccIndex].shiris;}
+            if (gmcAccount[gAccIndex].howl <3){  gmcAccount[gAccIndex].howl_t = 3 - gmcAccount[gAccIndex].howl;}
+            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
+        }
+        else if (gmcAccount[gAccIndex].targetbox=='cerulean'){
+            if (gmcAccount[gAccIndex].seiren <3){  gmcAccount[gAccIndex].seiren_t = 3 - gmcAccount[gAccIndex].seiren;}
+            if (gmcAccount[gAccIndex].blacktalon <3){  gmcAccount[gAccIndex].blacktalon_t = 3 - gmcAccount[gAccIndex].blacktalon;}
+            if (gmcAccount[gAccIndex].howl <3){  gmcAccount[gAccIndex].howl_t = 3 - gmcAccount[gAccIndex].howl;}
+            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
+        }
+        else if (gmcAccount[gAccIndex].targetbox=='saffron'){
+            if (gmcAccount[gAccIndex].boreas <3){  gmcAccount[gAccIndex].boreas_t = 3 - gmcAccount[gAccIndex].boreas;}
+            if (gmcAccount[gAccIndex].shiris <3){  gmcAccount[gAccIndex].shiris_t = 3 - gmcAccount[gAccIndex].shiris;}
+            if (gmcAccount[gAccIndex].sushi <3){  gmcAccount[gAccIndex].sushi_t = 3 - gmcAccount[gAccIndex].sushi;}
+            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
+
+        }
+        storeAcc();
+        updateTable();
+    }
+   
+    function addToken(){
         var gmc = $(this).parent().data('gmc');
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex][gmc] += 1;
+        gAccIndex = $(this).parent().data('col');
+        gmcAccount[gAccIndex][gmc] += 1;
         if ($('#autoCD').prop('checked')) {
-            gmcAccount[accIndex].cooldown = new moment().add(48, 'hours');
-            logArray.push(["Finish",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+            gmcAccount[gAccIndex].cooldown = new moment().add(48, 'hours');
+            logArray.push(["Finish",gmcAccount[gAccIndex].name,gmc,"","",moment().valueOf()]);
         }
         else{
-           logArray.push(["Add",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+           logArray.push(["Add",gmcAccount[gAccIndex].name,gmc,"","",moment().valueOf()]);
         }
+        set_target();
         storeLogA();
         updateTable();
         storeAcc();
     }
     function delToken(){
         var gmc = $(this).parent().data('gmc');
-        var accIndex = $(this).parent().data('col');
-        gmcAccount[accIndex][gmc] -= 1;
-        logArray.push(["Remove",gmcAccount[accIndex].name,gmc,"","",moment().valueOf()]);
+        gAccIndex = $(this).parent().data('col');
+        gmcAccount[gAccIndex][gmc] -= 1;
+        logArray.push(["Remove",gmcAccount[gAccIndex].name,gmc,"","",moment().valueOf()]);
+        set_target();
         storeLogA();
         updateTable();
         storeAcc();
@@ -619,6 +715,7 @@ $(document).ready(function(){
             gmcAccount[gAccIndex].gemini -= 1;
         }
         logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
+        set_target();
         storeLogA();
         updateTable();
         storeAcc();
@@ -888,4 +985,214 @@ $(document).ready(function(){
             updateLog();
         }
     })
+    //wave
+    var waveLog=[];
+    var loadWaveLog = localStorage.getItem('waveLog')
+    if (loadWaveLog != null){
+        waveLog = JSON.parse(loadWaveLog)
+    }
+    function store_wave_log (){
+        localStorage.setItem('waveLog',JSON.stringify(waveLog))
+    }
+    var currentWave =[];
+    var loadCWaveLog = localStorage.getItem('currentWave')
+    if (loadCWaveLog != null){
+        currentWave = JSON.parse(loadCWaveLog)
+    }
+    function store_current_wave(){
+        localStorage.setItem('currentWave',JSON.stringify(currentWave))
+    }
+    $('#buttonAddWave').on('click',function(){
+        var name = $('#formAddWave').val();
+        var waveInstance = new instance(name,new moment().add(1,'days'));
+        currentWave.push(waveInstance);
+        var now = new moment();
+        waveLog.push([name, moment().valueOf()]);
+        store_current_wave();
+        store_wave_log();
+        updateWave();
+        updateWaveLog();
+        $('#formAddWave').val('');
+    })
+    function updateWave(){
+        var list = document.getElementById('listWave')
+        $(list).empty();
+        for (var i = 0; i<currentWave.length; i++){
+            var cutOff = moment(currentWave[i].cooldown);
+            var now = new moment();
+            var cdEle = document.createElement('span');
+            if (moment(cutOff).isAfter(now)){
+                cdEle.textContent=moment.duration(cutOff.diff(now)).format('d [d] h [h] m [m]');
+                cdEle.setAttribute('class', 'label label-default');
+                var account = document.createElement('li');
+                account.className = 'list-group-item list-group-item-small';
+                account.appendChild(document.createTextNode(currentWave[i].name));
+                var pullr = document.createElement('div');
+                pullr.appendChild(cdEle);
+                pullr.appendChild(document.createTextNode(' '));
+                var button = document.createElement('button');
+                button.innerHTML ='<i class="fa fa-minus"></i>';
+                button.onclick = deleteWave;
+                button.setAttribute('class','btn btn-danger btn-xs')
+                pullr.setAttribute('class', 'pull-right');
+                pullr.appendChild(button)
+                account.appendChild(pullr);
+                list.appendChild(account);
+            }
+            else{
+                currentWave.splice(i,1);
+                store_current_wave();
+            }
+            
+        }
+        setTimeout(updateWave,60000);
+        console.log(currentWave)
+    }
+    function deleteWave(){
+        currentWave.splice($(this).parent().index(),1);
+        updateWave();
+        store_current_wave();
+    }
+    updateWave();
+    
+    var dataTable = $('#waveTable').DataTable( {
+        data: waveLog,
+        columns: [
+            { 
+                render: function(data,type,row){
+                var tempHTML = moment(row[1]).calendar()+': '+data;
+                return tempHTML
+                }
+            },
+            {
+                render: function(data,type,row){return moment(row[1]).unix()},
+                visible:false
+            },
+            {
+                render: function(data,type,row){return '<a class="btn btn-xs"><i class="fa fa-remove text-danger" style="font-size:16px"></i></a>'}
+            }
+        ]
+    } );
+    $('#waveTable tbody').on('click','tr', function(e){ 
+        if($(e.target).parent().hasClass('btn')){
+            var rowIndex = waveLog.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
+            
+            console.log(rowIndex)
+            console.log(waveLog[rowIndex])
+            waveLog.splice(rowIndex,1);
+            store_wave_log();
+            updateWaveLog();
+        }
+    })
+    function updateWaveLog(){
+        dataTable.clear();
+        dataTable.rows.add(waveLog);
+        dataTable.order(1,'desc').draw();
+        
+    }
+    //ET
+    var ETLog=[];
+    var loadETLog = localStorage.getItem('ETLog')
+    if (loadETLog != null){
+        ETLog = JSON.parse(loadETLog)
+    }
+    function store_ET_log (){
+        localStorage.setItem('ETLog',JSON.stringify(ETLog))
+    }
+    var currentET =[];
+    var loadCETLog = localStorage.getItem('currentET')
+    if (loadCETLog != null){
+        currentET = JSON.parse(loadCETLog)
+    }
+    function store_current_ET(){
+        localStorage.setItem('currentET',JSON.stringify(currentET))
+    }
+    $('#buttonAddET').on('click',function(){
+        var name = $('#formAddET').val();
+        var ETInstance = new instance(name,new moment().add(167,'hours'));
+        currentET.push(ETInstance);
+        var now = new moment();
+        ETLog.push([name, moment().valueOf()]);
+        store_current_ET();
+        store_ET_log();
+        updateET();
+        updateETLog();
+        $('#formAddET').val('');
+    })
+    function updateET(){
+        var list = document.getElementById('listET')
+        $(list).empty();
+        for (var i = 0; i<currentET.length; i++){
+            var cutOff = moment(currentET[i].cooldown);
+            var now = new moment();
+            var cdEle = document.createElement('span');
+            if (moment(cutOff).isAfter(now)){
+                cdEle.textContent=moment.duration(cutOff.diff(now)).format('d [d] h [h] m [m]');
+                cdEle.setAttribute('class', 'label label-default');
+                var account = document.createElement('li');
+                account.className = 'list-group-item list-group-item-small';
+                account.appendChild(document.createTextNode(currentET[i].name));
+                var pullr = document.createElement('div');
+                pullr.appendChild(cdEle);
+                pullr.appendChild(document.createTextNode(' '));
+                var button = document.createElement('button');
+                button.innerHTML ='<i class="fa fa-minus"></i>';
+                button.onclick = deleteET;
+                button.setAttribute('class','btn btn-danger btn-xs')
+                pullr.setAttribute('class', 'pull-right');
+                pullr.appendChild(button)
+                account.appendChild(pullr);
+                list.appendChild(account);
+            }
+            else{
+                currentET.splice(i,1);
+                store_current_ET();
+            }
+            
+        }
+        setTimeout(updateET,60000);
+        console.log(currentET)
+    }
+    function deleteET(){
+        currentET.splice($(this).parent().index(),1);
+        updateET();
+        store_current_ET();
+    }
+    updateET();
+    
+    var dataTable = $('#ETTable').DataTable( {
+        data: ETLog,
+        columns: [
+            { 
+                render: function(data,type,row){
+                var tempHTML = moment(row[1]).calendar()+': '+data;
+                return tempHTML
+                }
+            },
+            {
+                render: function(data,type,row){return moment(row[1]).unix()},
+                visible:false
+            },
+            {
+                render: function(data,type,row){return '<a class="btn btn-xs"><i class="fa fa-remove text-danger" style="font-size:16px"></i></a>'}
+            }
+        ]
+    } );
+    $('#ETTable tbody').on('click','tr', function(e){ 
+        if($(e.target).parent().hasClass('btn')){
+            var rowIndex = ETLog.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
+            
+            console.log(rowIndex)
+            console.log(ETLog[rowIndex])
+            ETLog.splice(rowIndex,1);
+            store_ET_log();
+            updateETLog();
+        }
+    })
+    function updateETLog(){
+        dataTable.clear();
+        dataTable.rows.add(ETLog);
+        dataTable.order(1,'desc').draw();
+        
+    }
 });
