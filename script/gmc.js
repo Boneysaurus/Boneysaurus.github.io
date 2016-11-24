@@ -1055,7 +1055,7 @@ $(document).ready(function(){
     }
     updateWave();
     
-    var dataTable = $('#waveTable').DataTable( {
+    var dataTableWave = $('#waveTable').DataTable( {
         data: waveLog,
         columns: [
             { 
@@ -1084,10 +1084,13 @@ $(document).ready(function(){
             updateWaveLog();
         }
     })
+    $('#buttonWaveLog').on('click', function(){
+        updateWaveLog();
+    })
     function updateWaveLog(){
-        dataTable.clear();
-        dataTable.rows.add(waveLog);
-        dataTable.order(1,'desc').draw();
+        dataTableWave.clear();
+        dataTableWave.rows.add(waveLog);
+        dataTableWave.order(1,'desc').draw();
         
     }
     //ET
@@ -1160,7 +1163,7 @@ $(document).ready(function(){
     }
     updateET();
     
-    var dataTable = $('#ETTable').DataTable( {
+    var dataTableET = $('#ETTable').DataTable( {
         data: ETLog,
         columns: [
             { 
@@ -1189,10 +1192,13 @@ $(document).ready(function(){
             updateETLog();
         }
     })
+    $('#buttonETLog').on('click', function(){
+        updateETLog();
+    })
     function updateETLog(){
-        dataTable.clear();
-        dataTable.rows.add(ETLog);
-        dataTable.order(1,'desc').draw();
+        dataTableET.clear();
+        dataTableET.rows.add(ETLog);
+        dataTableET.order(1,'desc').draw();
         
     }
 });
