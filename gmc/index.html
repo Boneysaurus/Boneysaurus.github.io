@@ -212,7 +212,6 @@
                         </div>
                         <div class="modal-body">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tabGiftbox" data-toggle="tab">GiftBox</a></li>
                                 <li><a href="#tabCostume" data-toggle="tab">Costume List</a></li>
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">GMC Guides
@@ -230,50 +229,6 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane fade in active" id="tabGiftbox">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th style="width:20%">GiftBox</th>
-                                                <th style="width:20%"><img src="../img/gmc/normal.gif"> <div class="label label-default label-lg">Normal</div></th>
-                                                <th style="width:20%"><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
-                                                <th style="width:20%"><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
-                                                <th style="width:20%"><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr>
-                                                <th rowspan="7">Token <br>Requirement</th>
-                                                <td>1x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
-                                                <td>3x <img src="../img/gmc/muui.gif"> Muui</td>
-                                                <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
-                                                <td>3x <img src="../img/gmc/sushi.gif"> Sushi</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1x <img src="../img/gmc/boreas.gif"> Boreas</td>
-                                                <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
-                                                <td>3x <img src="../img/gmc/seiren.gif"> Seiren</td>
-                                                <td>3x <img src="../img/gmc/boreas.gif"> Boreas</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1x <img src="../img/gmc/seiren.gif"> Seiren</td>
-                                                <td>3x <img src="../img/gmc/howl.gif"> Howl</td>
-                                                <td>3x <img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
-                                                <td>3x <img src="../img/gmc/shiris.gif"> Shiris</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1x <img src="../img/gmc/howl.gif"> Howl</td>
-                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                                <td>1x <img src="../img/gmc/gemini.gif"> Gemini</td>
-                                            </tr>
-                                            <tr><td>1x <img src="../img/gmc/shiris.gif"> Shiris</td></tr>
-                                            <tr><td>1x <img src="../img/gmc/muui.gif"> Muui</td></tr>
-                                            <tr><td>1x <img src="../img/gmc/sushi.gif"> Sushi</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
                                 <div class="tab-pane" id="tabCostume">
                                     <h4><img src="../img/gmc/normal.gif"> <span class="label label-default">Classic Giftbox</span></h4>
                                     <table class="table">
@@ -314,8 +269,8 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><img src="../img/costumes/small/20470.gif"> Magical Head Dress Costume</td>
-                                                <td><img src="../img/costumes/small/20454.gif"> Clergy Nursing Hat Costume</td>
+                                                <td><img src="../img/costumes/small/20475.gif"> Red Vicious Aura Costume</td>
+                                                <td><img src="../img/costumes/small/20459.gif"> Charleston Antenna Costume</td>
                                                 <td><img src="../img/costumes/small/20474.gif"> Vicious Aura Costume</td>
                                             </tr>
                                             <tr>
@@ -327,6 +282,11 @@
                                                 <td><img src="../img/costumes/small/20453.gif"> Survival Circlet costume</td>
                                                 <td><img src="../img/costumes/small/20477.gif"> Rosary Necklace Costume</td>
                                                 <td><img src="../img/costumes/small/20439.gif"> Wild Poring Rider Costume</td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="../img/costumes/small/20470.gif"> Magical Head Dress Costume</td>
+                                                <td><img src="../img/costumes/small/20454.gif"> Clergy Nursing Hat Costume</td>
+                                                <td><img src="../img/costumes/small/20443.gif"> Khalitzburg Helm Costume</td>
                                             </tr>
                                             <tr>
                                                 <td>+ Costumes from Classic</td>
@@ -455,6 +415,83 @@
 
                 </div>
             </div>
+            <div id="tokenModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Set Tokens</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Token</th>
+                                            <th><img src="../img/gmc/crimson.gif"> <div class="label label-danger label-lg">Crimson</div></th>
+                                            <th><img src="../img/gmc/cerulean.gif"> <div class="label label-info label-lg">Cerulean</div></th>
+                                            <th><img src="../img/gmc/saffron.gif"> <div class="label label-warning label-lg">Saffron</div></th>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/blacktalon.gif"> Blacktalon</td>
+                                            <td><input type="checkbox" name="crimCheck" id="blacktalonCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="blacktalonCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="blacktalonSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/boreas.gif"> Boreas</td>
+                                            <td><input type="checkbox" name="crimCheck" id="boreasCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="boreasCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="boreasSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/seiren.gif">Seiren</td>
+                                            <td><input type="checkbox" name="crimCheck" id="seirenCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="seirenCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="seirenSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/howl.gif"> Howl</td>
+                                            <td><input type="checkbox" name="crimCheck" id="howlCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="howlCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="howlSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/shiris.gif"> Shiris</td>
+                                            <td><input type="checkbox" name="crimCheck" id="shirisCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="shirisCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="shirisSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/muui.gif"> Muui</td>
+                                            <td><input type="checkbox" name="crimCheck" id="muuiCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="muuiCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="muuiSaff"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="../img/gmc/sushi.gif"> Sushi</td>
+                                            <td><input type="checkbox" name="crimCheck" id="sushiCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="sushiCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="sushiSaff"> </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td><img src="../img/gmc/gemini.gif"> Gemini</td>
+                                            <td><input type="checkbox" name="crimCheck" id="geminiCrim"> </td>
+                                            <td><input type="checkbox" name="ceruCheck" id="geminiCeru"> </td>
+                                            <td><input type="checkbox" name="saffCheck" id="geminiSaff"> </td>
+                                        </tr>
+                                        <td>
+                                        </td>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="saveTokens" class="btn btn-default btn-success">Save & Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="changeLog" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -465,6 +502,11 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-sm-12">
+
+                                    <h4>12th June 2017</h4>
+                                    <p><span class="label label-success">Added</span> <strong>GMC Token Update:</strong> </p><p>Manually set your tokens with the new in game update</p>
+                                    <p><span class="label label-success">Updated</span> <strong>Costume list</strong> to include previously missing costumes</p>
+                                    <hr>
                                     <h4>23th November 2016</h4>
                                     <p><span class="label label-success">Added</span> <strong>GMC Target Box:</strong> </p><p>Helps you decide which GMC to go on which account with a glance</p>
                                     <p><span class="label label-success">Added</span> <strong>ET and Wave Cooldown:</strong> </p><p>For those of you have 1 billion chars, and do 1 billion ETs/week</p>

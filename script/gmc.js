@@ -17,23 +17,23 @@ $(document).ready(function(){
         changeLog = JSON.parse(loadChangeLog)
     }
     $(window).load(function(){
-        if (changeLog != '1'){$('#changeLog').modal('show');}
+        if (changeLog != '2'){$('#changeLog').modal('show');}
     });
     $('#cancelPopup').on('click',function(){
-        localStorage.setItem('changeLogShow',JSON.stringify('1'))
+        localStorage.setItem('changeLogShow',JSON.stringify('2'))
     })
     
     var costumes = {
         normal: ["Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume","Little Poring Egg","Taini Egg","Hand-Made Chocolate","Life Insurance Box"],
-        crimson: ["Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
-        cerulean: ["Clergy Nursing Hat Costume","Magic Stone Grace Costume","Rosary Necklace Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
-        saffron: ["Night Sky Memory Costume","Vicious Aura Costume","Wild Poring Rider Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"]
+        crimson: ["Red Vicious Aura Costume","Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
+        cerulean: ["Charleston Antenna Costume","Clergy Nursing Hat Costume","Magic Stone Grace Costume","Rosary Necklace Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
+        saffron: ["Khalitzburg Helm Costume","Night Sky Memory Costume","Vicious Aura Costume","Wild Poring Rider Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"]
     }
 
     var previousGMC;
     var nextGMC=[];
     var fullGMC=[];
-
+    var tokenLimit = 5;
     var zone = "Europe/Berlin";
     var today = new moment();
     var tomorrow = new moment().add(1,'day');
@@ -72,9 +72,8 @@ $(document).ready(function(){
         localStorage.setItem('storeLog',JSON.stringify(logArray))
     }
     
-    
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,targetbox){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,targetbox){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -93,10 +92,34 @@ $(document).ready(function(){
         this.muui_t = muui_t;
         this.sushi_t = sushi_t;
         this.gemini_t = gemini_t;
+        this.blacktalon_crim = blacktalon_crim;
+        this.boreas_crim = boreas_crim;
+        this.seiren_crim = seiren_crim;
+        this.howl_crim = howl_crim;
+        this.shiris_crim = shiris_crim;
+        this.muui_crim = muui_crim;
+        this.sushi_crim = sushi_crim;
+        this.gemini_crim = gemini_crim;
+        this.blacktalon_ceru = blacktalon_ceru;
+        this.boreas_ceru = boreas_ceru;
+        this.seiren_ceru = seiren_ceru;
+        this.howl_ceru = howl_ceru;
+        this.shiris_ceru = shiris_ceru;
+        this.muui_ceru = muui_ceru;
+        this.sushi_ceru = sushi_ceru;
+        this.gemini_ceru = gemini_ceru;
+        this.blacktalon_saff = blacktalon_saff;
+        this.boreas_saff = boreas_saff;
+        this.seiren_saff = seiren_saff;
+        this.howl_saff = howl_saff;
+        this.shiris_saff = shiris_saff;
+        this.muui_saff = muui_saff;
+        this.sushi_saff = sushi_saff;
+        this.gemini_saff = gemini_saff;
         this.targetbox = targetbox;
     }
 
-
+    
 
     var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini"]
 
@@ -281,7 +304,6 @@ $(document).ready(function(){
       var $this = $(this);
       $this.css('margin-top', $this.parent().height() - $this.height())
     });
-    
     //load accounts from local
     var loadAcc = localStorage.getItem("storeAccount");
     if(loadAcc != null){
@@ -524,10 +546,18 @@ $(document).ready(function(){
         
         for (var i = 0; i<gmcAccount.length; i++){
             var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
-            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
-            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
-            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
+           
+            var crimBox = check_box('crim',i)
+            var ceruBox = check_box('ceru',i)
+            var saffBox = check_box('saff',i)
+
             ttC = ttR.insertCell(i+1);
+            var buttonSet = document.createElement('button');
+            $(buttonSet).data('col', i);
+            buttonSet.innerHTML = 'Set Tokens';
+            buttonSet.onclick = set_token_modal;
+            buttonSet.setAttribute('class','btn btn-default btn-xs btn-block')
+            ttC.appendChild(buttonSet)
             var buttonGroup = document.createElement('div');
             $(buttonGroup).data('col', i);
             buttonGroup.setAttribute('class', 'btn-group btn-group-xs btn-group-justified');
@@ -570,9 +600,9 @@ $(document).ready(function(){
             ttC = ttR.insertCell(i+1);
             
             var normBox = gmcAccount[i].blacktalon > 0 && gmcAccount[i].boreas > 0 && gmcAccount[i].seiren > 0 && gmcAccount[i].howl > 0 && gmcAccount[i].shiris > 0 && gmcAccount[i].muui > 0 && gmcAccount[i].sushi > 0;
-            var crimBox = gmcAccount[i].muui > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0;
-            var ceruBox = gmcAccount[i].seiren > 2 && gmcAccount[i].blacktalon > 2 && gmcAccount[i].howl > 2 && gmcAccount[i].gemini > 0 ;
-            var saffBox = gmcAccount[i].sushi > 2 && gmcAccount[i].shiris > 2 && gmcAccount[i].boreas > 2 && gmcAccount[i].gemini > 0;
+            var crimBox = check_box('crim',i)
+            var ceruBox = check_box('ceru',i)
+            var saffBox = check_box('saff',i)
             //box things
             
             if (!(normBox || crimBox || ceruBox || saffBox)){
@@ -625,38 +655,35 @@ $(document).ready(function(){
         set_target();
     }
     function set_target(){
-        
-        gmcAccount[gAccIndex].blacktalon_t = 0;
-        gmcAccount[gAccIndex].boreas_t = 0;
-        gmcAccount[gAccIndex].seiren_t = 0;
-        gmcAccount[gAccIndex].howl_t = 0;
-        gmcAccount[gAccIndex].shiris_t = 0;
-        gmcAccount[gAccIndex].muui_t = 0;
-        gmcAccount[gAccIndex].sushi_t = 0;
-        gmcAccount[gAccIndex].gemini_t = 0;
+        for(var i=0;i<gmcList.length;i++){
+            gmcAccount[gAccIndex][gmcList[i]+'_t'] = 0;
+        }
         if (gmcAccount[gAccIndex].targetbox=='crimson'){
-            if (gmcAccount[gAccIndex].muui <3){  gmcAccount[gAccIndex].muui_t = 3 - gmcAccount[gAccIndex].muui;}
-            if (gmcAccount[gAccIndex].shiris <3){  gmcAccount[gAccIndex].shiris_t = 3 - gmcAccount[gAccIndex].shiris;}
-            if (gmcAccount[gAccIndex].howl <3){  gmcAccount[gAccIndex].howl_t = 3 - gmcAccount[gAccIndex].howl;}
-            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_crim'] && gmcAccount[gAccIndex][gmcList[i]] < 2) { gmcAccount[gAccIndex][gmcList[i]+'_t'] = 2 - gmcAccount[gAccIndex][gmcList[i]];}
+            }
+
         }
         else if (gmcAccount[gAccIndex].targetbox=='cerulean'){
-            if (gmcAccount[gAccIndex].seiren <3){  gmcAccount[gAccIndex].seiren_t = 3 - gmcAccount[gAccIndex].seiren;}
-            if (gmcAccount[gAccIndex].blacktalon <3){  gmcAccount[gAccIndex].blacktalon_t = 3 - gmcAccount[gAccIndex].blacktalon;}
-            if (gmcAccount[gAccIndex].howl <3){  gmcAccount[gAccIndex].howl_t = 3 - gmcAccount[gAccIndex].howl;}
-            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
+
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_ceru'] && gmcAccount[gAccIndex][gmcList[i]] < 2) { gmcAccount[gAccIndex][gmcList[i]+'_t'] = 2 - gmcAccount[gAccIndex][gmcList[i]];}
+            }
         }
         else if (gmcAccount[gAccIndex].targetbox=='saffron'){
-            if (gmcAccount[gAccIndex].boreas <3){  gmcAccount[gAccIndex].boreas_t = 3 - gmcAccount[gAccIndex].boreas;}
-            if (gmcAccount[gAccIndex].shiris <3){  gmcAccount[gAccIndex].shiris_t = 3 - gmcAccount[gAccIndex].shiris;}
-            if (gmcAccount[gAccIndex].sushi <3){  gmcAccount[gAccIndex].sushi_t = 3 - gmcAccount[gAccIndex].sushi;}
-            if (gmcAccount[gAccIndex].gemini <1){  gmcAccount[gAccIndex].gemini_t = 1 - gmcAccount[gAccIndex].gemini;}
 
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_saff'] && gmcAccount[gAccIndex][gmcList[i]] < 2) { gmcAccount[gAccIndex][gmcList[i]+'_t'] = 2 - gmcAccount[gAccIndex][gmcList[i]];}
+            }
         }
         storeAcc();
         updateTable();
     }
-   
+    function set_token_modal(){
+        gAccIndex = $(this).data('col');
+        update_tokens(gAccIndex);
+        $("#tokenModal").modal('show');
+    }
     function addToken(){
         var gmc = $(this).parent().data('gmc');
         gAccIndex = $(this).parent().data('col');
@@ -697,22 +724,23 @@ $(document).ready(function(){
             gmcAccount[gAccIndex].sushi -= 1;
         }
         else if ($('#boxType').data('box')=='crimson'){
-            gmcAccount[gAccIndex].muui -= 3;
-            gmcAccount[gAccIndex].shiris -= 3;
-            gmcAccount[gAccIndex].howl -= 3;
-            gmcAccount[gAccIndex].gemini -= 1;
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_crim']) { gmcAccount[gAccIndex][gmcList[i]] -= 2;}
+                gmcAccount[gAccIndex][gmcList[i]+'_crim']=false
+            }
         }
         else if ($('#boxType').data('box')=='cerulean'){
-            gmcAccount[gAccIndex].howl -= 3;
-            gmcAccount[gAccIndex].seiren -= 3;
-            gmcAccount[gAccIndex].blacktalon -= 3;
-            gmcAccount[gAccIndex].gemini -= 1;
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_ceru']) { gmcAccount[gAccIndex][gmcList[i]] -= 2;}
+                gmcAccount[gAccIndex][gmcList[i]+'_ceru']=false
+            }
         }
         else if ($('#boxType').data('box')=='saffron'){
-            gmcAccount[gAccIndex].sushi -= 3;
-            gmcAccount[gAccIndex].boreas -= 3;
-            gmcAccount[gAccIndex].shiris -= 3;
-            gmcAccount[gAccIndex].gemini -= 1;
+
+            for(var i=0;i<gmcList.length;i++){
+                if (gmcAccount[gAccIndex][gmcList[i]+'_saff']) { gmcAccount[gAccIndex][gmcList[i]] -= 2;}
+                gmcAccount[gAccIndex][gmcList[i]+'_saff']=false
+            }
         }
         logArray.push(["Claim",gmcAccount[gAccIndex].name,"",$('#boxType').data('box'),$('#costumeSelect :selected').text(),moment().valueOf()]);
         set_target();
@@ -844,8 +872,19 @@ $(document).ready(function(){
         $('#guideHwizard').html(guide[gmc].hwizard);
         $('#guideCreator').html(guide[gmc].creator);
     })
-    
-    
+    //acc select
+    function createSelectAcc(){
+        var accNames = [];
+        for (var i = 0; i< gmcAccount.length;i++){
+            accNames.push(gmcAccount[i].name);
+        }
+        $('#accSel').select2({
+            placeholder:"Select an account",
+            tags:true,
+            data: accNames
+        });
+    }
+    createSelectAcc();
     
     //costume select
     function createSelect(boxName){
@@ -976,8 +1015,6 @@ $(document).ready(function(){
         if($(e.target).parent().hasClass('btn')){
             var rowIndex = logArray.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
             
-            console.log(rowIndex)
-            console.log(logArray[rowIndex])
             logArray.splice(rowIndex,1);
             storeLogA();
             
@@ -1046,7 +1083,6 @@ $(document).ready(function(){
             
         }
         setTimeout(updateWave,60000);
-        console.log(currentWave)
     }
     function deleteWave(){
         currentWave.splice($(this).parent().index(),1);
@@ -1077,8 +1113,6 @@ $(document).ready(function(){
         if($(e.target).parent().hasClass('btn')){
             var rowIndex = waveLog.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
             
-            console.log(rowIndex)
-            console.log(waveLog[rowIndex])
             waveLog.splice(rowIndex,1);
             store_wave_log();
             updateWaveLog();
@@ -1154,7 +1188,6 @@ $(document).ready(function(){
             
         }
         setTimeout(updateET,60000);
-        console.log(currentET)
     }
     function deleteET(){
         currentET.splice($(this).parent().index(),1);
@@ -1185,8 +1218,6 @@ $(document).ready(function(){
         if($(e.target).parent().hasClass('btn')){
             var rowIndex = ETLog.length-dataTable.rows( { order: 'applied' } ).nodes().indexOf( this )-1;
             
-            console.log(rowIndex)
-            console.log(ETLog[rowIndex])
             ETLog.splice(rowIndex,1);
             store_ET_log();
             updateETLog();
@@ -1200,5 +1231,84 @@ $(document).ready(function(){
         dataTableET.rows.add(ETLog);
         dataTableET.order(1,'desc').draw();
         
+    }
+    
+    $('input[name="crimCheck"]').on('change', function (e) {
+        if ($('input[name="crimCheck"]:checked').length > tokenLimit) {
+            $(this).prop('checked', false);
+            alert("Only 5 tokens per box can be set");
+        }
+    });
+    $('input[name="ceruCheck"]').on('change', function (e) {
+        if ($('input[name="ceruCheck"]:checked').length > tokenLimit) {
+            $(this).prop('checked', false);
+            alert("Only 5 tokens per box can be set");
+        }
+    });
+    $('input[name="saffCheck"]').on('change', function (e) {
+        if ($('input[name="saffCheck"]:checked').length > tokenLimit) {
+            $(this).prop('checked', false);
+            alert("Only 5 tokens per box can be set");
+        }
+    });
+    function init_tokens(){
+        for (var i = 0 ; i < gmcAccount.length ; i++) {
+            if ( typeof gmcAccount[i].blacktalon_crim === 'undefined'){
+
+                for (var j = 0; j < gmcList.length; j++){
+                    gmcAccount[i][gmcList[j]+'_crim'] = 0
+                    gmcAccount[i][gmcList[j]+'_ceru'] = 0
+                    gmcAccount[i][gmcList[j]+'_saff'] = 0
+                }
+
+                updateTable();
+                storeAcc();
+                
+            }
+        }
+    }
+    init_tokens();
+
+    function update_tokens(accIndex){
+        console.log(accIndex)
+        var accT = gmcAccount[accIndex];
+        for (var j = 0; j < gmcList.length; j++){
+            $('#'+gmcList[j]+'Crim').prop('checked',accT[gmcList[j]+'_crim'])
+            $('#'+gmcList[j]+'Ceru').prop('checked',accT[gmcList[j]+'_ceru'])
+            $('#'+gmcList[j]+'Saff').prop('checked',accT[gmcList[j]+'_saff'])
+		}
+    }
+    $('#saveTokens').on('click',function(){
+        for (var j = 0; j < gmcList.length; j++){
+
+            gmcAccount[gAccIndex][gmcList[j]+'_crim'] = $('#'+gmcList[j]+'Crim').prop('checked')
+            gmcAccount[gAccIndex][gmcList[j]+'_ceru'] = $('#'+gmcList[j]+'Ceru').prop('checked')
+            gmcAccount[gAccIndex][gmcList[j]+'_saff'] = $('#'+gmcList[j]+'Saff').prop('checked')
+        }
+        if (($('input[name="saffCheck"]:checked').length == tokenLimit) && ($('input[name="ceruCheck"]:checked').length == tokenLimit) && ($('input[name="crimCheck"]:checked').length == tokenLimit)){
+            set_target();
+            updateTable();
+            storeAcc();
+            console.log(gmcAccount[gAccIndex]);
+            $('#tokenModal').modal('hide');
+        }
+        else{
+            alert('You\'re missing some token stuffs. Make sure to have 5 checked checkboxes for each box.')
+        }
+
+    })
+    function check_box(boxtype,accIndex){
+        count=0
+        for (var i = 0; i < gmcList.length; i++){
+            if(gmcAccount[accIndex][gmcList[i]+'_'+boxtype] && gmcAccount[accIndex][gmcList[i]]> 1){
+                count+=1
+            }
+        }
+        if (count == 5){
+            return true
+        }
+        else {
+            return false
+        }
     }
 });
