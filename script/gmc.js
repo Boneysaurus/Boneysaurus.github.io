@@ -1263,6 +1263,13 @@ $(document).ready(function(){
                 storeAcc();
             } 
             if ( typeof gmcAccount[i].lance_crim === 'undefined'){
+                gmcAccount[i].lance_crim = 0;
+                gmcAccount[i].lance_ceru = 0;
+                gmcAccount[i].lance_saff = 0;
+                updateTable();
+                storeAcc();
+            } 
+            if ( typeof gmcAccount[i].blacktalon_crim === 'undefined'){
 
                 for (var j = 0; j < gmcList.length; j++){
                     gmcAccount[i][gmcList[j]+'_crim'] = 0
