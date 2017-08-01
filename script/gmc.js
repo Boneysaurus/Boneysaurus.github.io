@@ -17,17 +17,17 @@ $(document).ready(function(){
         changeLog = JSON.parse(loadChangeLog)
     }
     $(window).load(function(){
-        if (changeLog != '2'){$('#changeLog').modal('show');}
+        if (changeLog != '3'){$('#changeLog').modal('show');}
     });
     $('#cancelPopup').on('click',function(){
-        localStorage.setItem('changeLogShow',JSON.stringify('2'))
+        localStorage.setItem('changeLogShow',JSON.stringify('3'))
     })
     
     var costumes = {
         normal: ["Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume","Little Poring Egg","Taini Egg","Hand-Made Chocolate","Life Insurance Box"],
-        crimson: ["Red Vicious Aura Costume","Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
-        cerulean: ["Charleston Antenna Costume","Clergy Nursing Hat Costume","Magic Stone Grace Costume","Rosary Necklace Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
-        saffron: ["Khalitzburg Helm Costume","Night Sky Memory Costume","Vicious Aura Costume","Wild Poring Rider Costume","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"]
+        crimson: ["Red Vicious Aura Costume","Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Tiny Agni Egg", "Agni Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
+        cerulean: ["Charleston Antenna Costume","Clergy Nursing Hat Costume","Magic Stone Grace Costume","Rosary Necklace Costume","Tiny Aqua Egg", "Aqua Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
+        saffron: ["Khalitzburg Helm Costume","Night Sky Memory Costume","Vicious Aura Costume","Wild Poring Rider Costume","Tiny Ventus Egg", "Ventus Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"]
     }
 
     var previousGMC;
@@ -73,7 +73,7 @@ $(document).ready(function(){
     }
     
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,targetbox){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,lance,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,lance_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,lance_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,lance_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,lance_saff,targetbox){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -116,12 +116,16 @@ $(document).ready(function(){
         this.muui_saff = muui_saff;
         this.sushi_saff = sushi_saff;
         this.gemini_saff = gemini_saff;
+        this.lance = lance;
+        this.lance_crim = lance_crim;
+        this.lance_ceru = lance_ceru;
+        this.lance_saff = lance_saff;
         this.targetbox = targetbox;
     }
 
     
 
-    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini"]
+    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini","lance"]
 
     var gmcAccount = [];
 
@@ -415,7 +419,7 @@ $(document).ready(function(){
     
     $('#buttonAddAcc').on('click',function(){
         var name = $('#formAddAcc').val();
-        var newAcc = new account(name,null,0,0,0,0,0,0,0,0)
+        var newAcc = new account(name,null,0,0,0,0,0,0,0,0,0)
         gmcAccount.push(newAcc)
         updateEditAcc();
         updateTable();
@@ -1253,7 +1257,12 @@ $(document).ready(function(){
     });
     function init_tokens(){
         for (var i = 0 ; i < gmcAccount.length ; i++) {
-            if ( typeof gmcAccount[i].blacktalon_crim === 'undefined'){
+            if ( typeof gmcAccount[i].lance === 'undefined'){
+                gmcAccount[i].lance = 0;
+                updateTable();
+                storeAcc();
+            } 
+            if ( typeof gmcAccount[i].lance_crim === 'undefined'){
 
                 for (var j = 0; j < gmcList.length; j++){
                     gmcAccount[i][gmcList[j]+'_crim'] = 0
@@ -1270,7 +1279,6 @@ $(document).ready(function(){
     init_tokens();
 
     function update_tokens(accIndex){
-        console.log(accIndex)
         var accT = gmcAccount[accIndex];
         for (var j = 0; j < gmcList.length; j++){
             $('#'+gmcList[j]+'Crim').prop('checked',accT[gmcList[j]+'_crim'])
@@ -1289,7 +1297,6 @@ $(document).ready(function(){
             set_target();
             updateTable();
             storeAcc();
-            console.log(gmcAccount[gAccIndex]);
             $('#tokenModal').modal('hide');
         }
         else{
