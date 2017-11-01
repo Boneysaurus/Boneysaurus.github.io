@@ -423,7 +423,7 @@ $(document).ready(function(){
     
     $('#buttonAddAcc').on('click',function(){
         var name = $('#formAddAcc').val();
-        var newAcc = new account(name,null,0,0,0,0,0,0,0,0,0)
+        var newAcc = new account(name,null,0,0,0,0,0,0,0,0,0,0)
         gmcAccount.push(newAcc)
         updateEditAcc();
         updateTable();
