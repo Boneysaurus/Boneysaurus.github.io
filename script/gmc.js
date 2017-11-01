@@ -73,7 +73,7 @@ $(document).ready(function(){
     }
     
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,lance,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,lance_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,lance_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,lance_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,lance_saff,targetbox){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,lance,saen,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,lance_t,saen_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,lance_crim,saen_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,lance_ceru,saen_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,lance_saff,saen_saff,targetbox){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -120,12 +120,16 @@ $(document).ready(function(){
         this.lance_crim = lance_crim;
         this.lance_ceru = lance_ceru;
         this.lance_saff = lance_saff;
+        this.saen = saen;
+        this.saen_crim = saen_crim;
+        this.saen_ceru = saen_ceru;
+        this.saen_saff = saen_saff;
         this.targetbox = targetbox;
     }
 
     
 
-    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini","lance"]
+    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini","lance","saen"]
 
     var gmcAccount = [];
 
@@ -1266,6 +1270,18 @@ $(document).ready(function(){
                 gmcAccount[i].lance_crim = 0;
                 gmcAccount[i].lance_ceru = 0;
                 gmcAccount[i].lance_saff = 0;
+                updateTable();
+                storeAcc();
+            } 
+            if ( typeof gmcAccount[i].saen === 'undefined'){
+                gmcAccount[i].saen = 0;
+                updateTable();
+                storeAcc();
+            } 
+            if ( typeof gmcAccount[i].saen_crim === 'undefined'){
+                gmcAccount[i].saen_crim = 0;
+                gmcAccount[i].saen_ceru = 0;
+                gmcAccount[i].saen_saff = 0;
                 updateTable();
                 storeAcc();
             } 
