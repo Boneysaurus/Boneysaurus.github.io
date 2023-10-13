@@ -139,7 +139,7 @@ $(document).ready(function(){
 
     var gmcAccount = [];
 
-    var gmcTime=[[2,12,16],[4,14,18],[6,14,20],[8,18],[0,11,15,20],[2,12,18],[0,11,15]];
+    var gmcTime=[[2,6,17],[3,7,19],[5,9,21],[5,11,23],[9,15],[2,6,11,17],[3,9,15]];
 
     function gmcSchedule(){
         var nextGMCCount=0;
