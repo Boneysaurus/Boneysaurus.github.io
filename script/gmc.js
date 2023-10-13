@@ -11,6 +11,7 @@ $(document).ready(function(){
     weekday[6]="Saturday";
     
     //changelog popup
+
     var changeLog=0;
     var loadChangeLog = localStorage.getItem('changeLogShow')
     if (loadChangeLog != null){
@@ -22,7 +23,8 @@ $(document).ready(function(){
     $('#cancelPopup').on('click',function(){
         localStorage.setItem('changeLogShow',JSON.stringify('3'))
     })
-    
+
+
     var costumes = {
         normal: ["Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume","Little Poring Egg","Taini Egg","Hand-Made Chocolate","Life Insurance Box"],
         crimson: ["Red Vicious Aura Costume","Magical Head Dress Costume","Peony Hat Costume","Survival Circlet Costume","Tiny Agni Egg", "Agni Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
@@ -73,7 +75,7 @@ $(document).ready(function(){
     }
     
     /*account object*/
-    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,lance,saen,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,lance_t,saen_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,lance_crim,saen_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,lance_ceru,saen_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,lance_saff,saen_saff,targetbox){
+    function account(name,cooldown,blacktalon,boreas,seiren,howl,shiris,muui,sushi,gemini,lance,saen,spica,blacktalon_t,boreas_t,seiren_t,howl_t,shiris_t,muui_t,sushi_t,gemini_t,lance_t,saen_t,spica_t,blacktalon_crim,boreas_crim,seiren_crim,howl_crim,shiris_crim,muui_crim,sushi_crim,gemini_crim,lance_crim,saen_crim,spica_crim,blacktalon_ceru,boreas_ceru,seiren_ceru,howl_ceru,shiris_ceru,muui_ceru,sushi_ceru,gemini_ceru,lance_ceru,saen_ceru,spica_ceru,blacktalon_saff,boreas_saff,seiren_saff,howl_saff,shiris_saff,muui_saff,sushi_saff,gemini_saff,lance_saff,saen_saff,spica_saff,targetbox){
         this.name = name;
         this.cooldown = cooldown;
         this.blacktalon = blacktalon;
@@ -124,12 +126,16 @@ $(document).ready(function(){
         this.saen_crim = saen_crim;
         this.saen_ceru = saen_ceru;
         this.saen_saff = saen_saff;
+        this.spica = spica;
+        this.spica_crim = spica_crim;
+        this.spica_ceru = spica_ceru;
+        this.spica_saff = spica_saff;
         this.targetbox = targetbox;
     }
 
     
 
-    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini","lance","saen"]
+    var gmcList = ["blacktalon","boreas","seiren","howl","shiris","muui","sushi","gemini","lance","saen","spica"]
 
     var gmcAccount = [];
 
@@ -427,6 +433,7 @@ $(document).ready(function(){
         gmcAccount.push(newAcc)
         updateEditAcc();
         updateTable();
+        init_tokens();
         $('#formAddAcc').val('');
     })
     
@@ -1284,7 +1291,19 @@ $(document).ready(function(){
                 gmcAccount[i].saen_saff = 0;
                 updateTable();
                 storeAcc();
+            }
+            if ( typeof gmcAccount[i].spica === 'undefined'){
+                gmcAccount[i].spica = 0;
+                updateTable();
+                storeAcc();
             } 
+            if ( typeof gmcAccount[i].spica_crim === 'undefined'){
+                gmcAccount[i].spica_crim = 0;
+                gmcAccount[i].spica_ceru = 0;
+                gmcAccount[i].spica_saff = 0;
+                updateTable();
+                storeAcc();
+            }  
             if ( typeof gmcAccount[i].blacktalon_crim === 'undefined'){
 
                 for (var j = 0; j < gmcList.length; j++){
