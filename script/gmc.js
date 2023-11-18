@@ -1,14 +1,6 @@
 
 $(document).ready(function(){
     var locale = window.navigator.userLanguage || window.navigator.language;
-    var weekday=new Array(7);
-    weekday[0]="Sunday";
-    weekday[1]="Monday";
-    weekday[2]="Tuesday";
-    weekday[3]="Wednesday";
-    weekday[4]="Thursday";
-    weekday[5]="Friday";
-    weekday[6]="Saturday";
     
     //changelog popup
 
@@ -35,8 +27,7 @@ $(document).ready(function(){
     var previousGMC;
     var nextGMC=[];
     var fullGMC=[];
-    var tokenLimit = 5;
-    var zone = "Europe/Berlin";
+    var tokenLimit = 5; // Distinct types of tokens required for a single gmc box
     var today = new moment();
     var tomorrow = new moment().add(1,'day');
     var gAccIndex;
@@ -139,7 +130,10 @@ $(document).ready(function(){
 
     var gmcAccount = [];
 
-    var gmcTime=[[2,6,17],[3,7,19],[5,9,21],[5,11,23],[9,15],[2,6,11,17],[3,9,15]];
+
+    var zone = "America/Los_Angeles";
+    // Starting hours of GMC (server time), gmcTime[0] is Monday
+    var gmcTime=[[3, 7, 19],[5, 9, 21],[5, 11, 23],[9, 15],[2, 6, 11, 17],[3, 9, 15],[2, 6, 17]];
 
     function gmcSchedule(){
         var nextGMCCount=0;
