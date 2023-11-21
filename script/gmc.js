@@ -1367,17 +1367,22 @@ $(document).ready(function(){
         }, 0);
     })
     $('#load').on('click',function(){
-        var file = new Blob([JSON.stringify(data)], {type: "application/json"});
-        var a = document.createElement("a");
-        var url = URL.createObjectURL(file)
-        a.href = url;
-        a.download = "ro_gmc_data.json";
-        document.body.appendChild(a)
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }, 0);
+        var input = document.createElement('input');
+        input.type = 'file';
+        
+        input.onchange = e => { 
+            var file = e.target.files[0]; 
+
+            var reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+
+            reader.onload = readerEvent => {
+                var content = readerEvent.target.result; // this is the content!
+                set_loaded_data(content)
+            }
+        }
+        
+        input.click();
     })
     function check_box(boxtype,accIndex){
         count=0
@@ -1400,5 +1405,15 @@ $(document).ready(function(){
             data[obj] = localStorage.getItem(obj)
         }
         return data
+    }
+
+    function set_loaded_data(loadedJSON) {
+        var data = JSON.parse(loadedJSON)
+        for (obj in StorageObjects) {
+            if (obj in data) {
+                localStorage.setItem(obj, data[obj])
+            }
+        }
+        window.location.reload();
     }
 });
