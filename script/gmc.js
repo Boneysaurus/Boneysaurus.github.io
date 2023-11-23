@@ -2,10 +2,21 @@
 $(document).ready(function(){
     var locale = window.navigator.userLanguage || window.navigator.language;
     
-    //changelog popup
+    const StorageObjects = Object.freeze({
+        changeLogShow: 'changeLogShow',
+        storeLog: 'storeLog',
+        storeAccount: 'storeAccount',
+        storeNotif: 'storeNotif',
+        storeNote: 'storeNote',
+        waveLog: 'waveLog',
+        currentWave: 'currentWave',
+        ETLog: 'ETLog',
+        currentET: 'currentET'
+    })
 
+    //changelog popup
     var changeLog=0;
-    var loadChangeLog = localStorage.getItem('changeLogShow')
+    var loadChangeLog = localStorage.getItem(StorageObjects.changeLogShow)
     if (loadChangeLog != null){
         changeLog = JSON.parse(loadChangeLog)
     }
@@ -13,7 +24,7 @@ $(document).ready(function(){
         if (changeLog != '3'){$('#changeLog').modal('show');}
     });
     $('#cancelPopup').on('click',function(){
-        localStorage.setItem('changeLogShow',JSON.stringify('3'))
+        localStorage.setItem(StorageObjects.changeLogShow, JSON.stringify('3'))
     })
 
 
@@ -23,6 +34,7 @@ $(document).ready(function(){
         cerulean: ["Charleston Antenna Costume","Clergy Nursing Hat Costume","Magic Stone Grace Costume","Rosary Necklace Costume","Tiny Aqua Egg", "Aqua Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"],
         saffron: ["Khalitzburg Helm Costume","Night Sky Memory Costume","Vicious Aura Costume","Wild Poring Rider Costume","Tiny Ventus Egg", "Ventus Egg","Ancient Gold Adornment Costume", "Magic Stone Hat Costume","Minstrel Song Hat Costume","Oliver Wolf Hood Costume","Reissue Schmitz Helm Costume","Rune Circlet Costume","Sniper Goggles Costume","Whispers of Wind Costume","Resting Swan Costume"]
     }
+
 
     var previousGMC;
     var nextGMC=[];
@@ -57,12 +69,12 @@ $(document).ready(function(){
         this.cooldown = cooldown;
     }
     var logArray=[];
-    var loadLog = localStorage.getItem('storeLog')
+    var loadLog = localStorage.getItem(StorageObjects.storeLog)
     if (loadLog != null){
         logArray = JSON.parse(loadLog)
     }
     function storeLogA (){
-        localStorage.setItem('storeLog',JSON.stringify(logArray))
+        localStorage.setItem(StorageObjects.storeLog,JSON.stringify(logArray))
     }
     
     /*account object*/
@@ -313,15 +325,15 @@ $(document).ready(function(){
       $this.css('margin-top', $this.parent().height() - $this.height())
     });
     //load accounts from local
-    var loadAcc = localStorage.getItem("storeAccount");
+    var loadAcc = localStorage.getItem(StorageObjects.storeAccount);
     if(loadAcc != null){
         gmcAccount = JSON.parse(loadAcc);
     }
     function storeAcc(){
-        localStorage.setItem("storeAccount",JSON.stringify(gmcAccount));
+        localStorage.setItem(StorageObjects.storeAccount,JSON.stringify(gmcAccount));
     }
     //load notification settings from local
-    var loadNot = localStorage.getItem("storeNotif");
+    var loadNot = localStorage.getItem(StorageObjects.storeNotif);
     if(loadNot != null){
         notifSet = JSON.parse(loadNot);
         $.ajax({
@@ -329,7 +341,7 @@ $(document).ready(function(){
         });
     }
     function storeNotification(){
-        localStorage.setItem("storeNotif",JSON.stringify(notifSet));
+        localStorage.setItem(StorageObjects.storeNotif,JSON.stringify(notifSet));
         $.ajax({
             url: '../sound/'+notifSet.sound+'.ogg',
         });
@@ -908,12 +920,12 @@ $(document).ready(function(){
     
     
     //note taking function
-    var newNote = localStorage.getItem('storeNote');
+    var newNote = localStorage.getItem(StorageObjects.storeNote);
     var newNoteText = JSON.parse(newNote);
     $('#noteArea').val(newNoteText);
     $('#noteArea').on('change', function(){
         var getNote = $('#noteArea').val();
-        localStorage.setItem('storeNote', JSON.stringify(getNote))
+        localStorage.setItem(StorageObjects.storeNote, JSON.stringify(getNote))
     })
     
     
@@ -1033,20 +1045,20 @@ $(document).ready(function(){
     })
     //wave
     var waveLog=[];
-    var loadWaveLog = localStorage.getItem('waveLog')
+    var loadWaveLog = localStorage.getItem(StorageObjects.waveLog)
     if (loadWaveLog != null){
         waveLog = JSON.parse(loadWaveLog)
     }
     function store_wave_log (){
-        localStorage.setItem('waveLog',JSON.stringify(waveLog))
+        localStorage.setItem(StorageObjects.waveLog,JSON.stringify(waveLog))
     }
     var currentWave =[];
-    var loadCWaveLog = localStorage.getItem('currentWave')
+    var loadCWaveLog = localStorage.getItem(StorageObjects.currentWave)
     if (loadCWaveLog != null){
         currentWave = JSON.parse(loadCWaveLog)
     }
     function store_current_wave(){
-        localStorage.setItem('currentWave',JSON.stringify(currentWave))
+        localStorage.setItem(StorageObjects.currentWave,JSON.stringify(currentWave))
     }
     $('#buttonAddWave').on('click',function(){
         var name = $('#formAddWave').val();
@@ -1138,20 +1150,20 @@ $(document).ready(function(){
     }
     //ET
     var ETLog=[];
-    var loadETLog = localStorage.getItem('ETLog')
+    var loadETLog = localStorage.getItem(StorageObjects.ETLog)
     if (loadETLog != null){
         ETLog = JSON.parse(loadETLog)
     }
     function store_ET_log (){
-        localStorage.setItem('ETLog',JSON.stringify(ETLog))
+        localStorage.setItem(StorageObjects.ETLog,JSON.stringify(ETLog))
     }
     var currentET =[];
-    var loadCETLog = localStorage.getItem('currentET')
+    var loadCETLog = localStorage.getItem(StorageObjects.currentET)
     if (loadCETLog != null){
         currentET = JSON.parse(loadCETLog)
     }
     function store_current_ET(){
-        localStorage.setItem('currentET',JSON.stringify(currentET))
+        localStorage.setItem(StorageObjects.currentET,JSON.stringify(currentET))
     }
     $('#buttonAddET').on('click',function(){
         var name = $('#formAddET').val();
@@ -1340,6 +1352,38 @@ $(document).ready(function(){
         }
 
     })
+    $('#save').on('click',function(){
+        data = get_save_data()
+        var file = new Blob([JSON.stringify(data)], {type: "application/json"});
+        var a = document.createElement("a");
+        var url = URL.createObjectURL(file)
+        a.href = url;
+        a.download = "ro_gmc_data.json";
+        document.body.appendChild(a)
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    })
+    $('#load').on('click',function(){
+        var input = document.createElement('input');
+        input.type = 'file';
+        
+        input.onchange = e => { 
+            var file = e.target.files[0]; 
+
+            var reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+
+            reader.onload = readerEvent => {
+                var content = readerEvent.target.result; // this is the content!
+                set_loaded_data(content)
+            }
+        }
+        
+        input.click();
+    })
     function check_box(boxtype,accIndex){
         count=0
         for (var i = 0; i < gmcList.length; i++){
@@ -1353,5 +1397,23 @@ $(document).ready(function(){
         else {
             return false
         }
+    }
+
+    function get_save_data() {
+        var data = {}
+        for (obj in StorageObjects) {
+            data[obj] = localStorage.getItem(obj)
+        }
+        return data
+    }
+
+    function set_loaded_data(loadedJSON) {
+        var data = JSON.parse(loadedJSON)
+        for (obj in StorageObjects) {
+            if (obj in data) {
+                localStorage.setItem(obj, data[obj])
+            }
+        }
+        window.location.reload();
     }
 });
